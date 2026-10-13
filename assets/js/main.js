@@ -101,25 +101,40 @@
 	var paradaKlard = null;
 	var ultimoX = null;
 
-	// Misma recta que assets/img/ladera.svg: de (0 %, 52 %) a (100 %, 88 %)
-	function alturaNieve(x) { return 52 + 0.36 * x; }
+	// Misma curva que assets/img/ladera.svg: de (0, 56) a (100, 96) con control en (50, 84), en %
+	function alturaNieve(x) {
+		var t = Math.min(1, Math.max(0, x / 100));
+		return (1 - t) * (1 - t) * 56 + 2 * t * (1 - t) * 84 + t * t * 96;
+	}
+	// Pendiente de la curva (en % de alto por % de ancho) para inclinar a Klard
+	function pendienteNieve(x) {
+		var t = Math.min(1, Math.max(0, x / 100));
+		return 0.56 * (1 - t) + 0.24 * t;
+	}
 
 	function actualizarKlard() {
 		var r = ladera.getBoundingClientRect();
 		var vh = window.innerHeight;
-		var avance = Math.min(1, Math.max(0, (vh - r.top) / (r.height + vh * 0.2)));
-		var x = estrechoLadera.matches ? -12 + avance * 124 : -8 + avance * 46;
-		// En una columna la ladera ocupa solo la franja de arriba, hasta un poco por debajo del hueco
 		var banda = r.height;
+		var avance;
 		if (estrechoLadera.matches) {
+			// En una columna la ladera ocupa solo la franja de arriba, hasta un poco por debajo del hueco.
+			// Klard la cruza mientras esa franja está a la vista: desde que asoma entera por abajo hasta que llega a la cabecera.
 			var hueco = ladera.querySelector('.ficha__hueco');
 			banda = hueco.offsetTop + hueco.offsetHeight + 60;
 			ladera.style.setProperty('--banda', banda + 'px');
+			var cabecera = 64;
+			avance = (vh - banda - r.top) / (vh - banda - cabecera);
+		} else {
+			avance = (vh - r.top) / (r.height + vh * 0.2);
 		}
+		avance = Math.min(1, Math.max(0, avance));
+		// Movimiento uniformemente acelerado: la posición crece con el cuadrado del avance
+		var x = -12 + 124 * avance * avance;
 		klard.style.setProperty('--x', x.toFixed(2));
 		klard.style.setProperty('--y', (alturaNieve(x) * banda / r.height).toFixed(2));
 		// Inclinación real de la ladera según su tamaño
-		var giro = Math.atan2(0.36 * banda, r.width) * 180 / Math.PI;
+		var giro = Math.atan2(pendienteNieve(x) * banda, r.width) * 180 / Math.PI;
 		klard.style.setProperty('--giro', (giro * 0.8).toFixed(1) + 'deg');
 		if (reducido || ultimoX === null || Math.abs(x - ultimoX) < 0.05) { ultimoX = x; return; }
 		ultimoX = x;
