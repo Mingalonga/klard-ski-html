@@ -71,6 +71,27 @@
 		aparecen.forEach(function (el) { el.classList.add('es-visible'); });
 	}
 
+	/* ---------- 2. Parallax de las tarjetas de clases ---------- */
+	// Cada columna sube a una velocidad distinta y la foto de dentro va más lenta que la tarjeta
+	var tarjetas = document.querySelectorAll('.tarjeta');
+	var unaColumna = window.matchMedia('(max-width: 1000px)');
+	var VELOCIDADES = [0.08, 0.2, 0.32];
+
+	function actualizarTarjetas() {
+		if (reducido) return;
+		var vh = window.innerHeight;
+		tarjetas.forEach(function (t, i) {
+			var r = t.getBoundingClientRect();
+			// Distancia del centro de la tarjeta al centro de la pantalla, sin el desplazamiento ya aplicado
+			var py = parseFloat(t.style.getPropertyValue('--py')) || 0;
+			var d = r.top - py + r.height / 2 - vh / 2;
+			if (Math.abs(d) > vh * 1.5) return;
+			var v = unaColumna.matches ? 0.06 : VELOCIDADES[i % 3];
+			t.style.setProperty('--py', Math.max(-160, Math.min(160, d * v)).toFixed(1) + 'px');
+			t.style.setProperty('--iy', (d * -0.06).toFixed(1) + 'px');
+		});
+	}
+
 	/* ---------- 3. Frases que cambian sobre el fondo fijo ---------- */
 	var lema = document.querySelector('[data-lema]');
 	var frases = lema.querySelectorAll('.lema__frase');
@@ -144,6 +165,7 @@
 	function tick() {
 		pendiente = false;
 		alHacerScroll();
+		actualizarTarjetas();
 		actualizarLema();
 		actualizarPista();
 	}
