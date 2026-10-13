@@ -164,11 +164,15 @@
 			</div>
 		</div>
 
-		<div class="ficha envoltura">
-			<div class="ficha__foto aparece">
-				<div class="ficha__disco" aria-hidden="true"></div>
-				<img src="assets/img/klard-salto.webp" alt="Klard saltando con los esquís cruzados, con chaqueta verde y pantalón naranja" width="500" height="424" loading="lazy">
+		<!-- Ladera nevada de fondo: Klard baja deslizándose al hacer scroll (main.js) -->
+		<div class="ladera" data-ladera>
+			<div class="ladera__fondo" aria-hidden="true"></div>
+			<div class="ladera__klard" data-klard>
+				<span class="ladera__estela" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+				<img src="assets/img/klard-salto.webp" alt="Klard esquiando, con chaqueta verde y pantalón naranja" width="500" height="424" loading="lazy">
 			</div>
+		<div class="ficha envoltura">
+			<div class="ficha__hueco" aria-hidden="true"></div>
 			<div class="ficha__texto aparece">
 				<h3 class="ficha__titulo">Hola, soy Klard</h3>
 				<p>Nací a una hora de la sierra y llevo esquiando desde que tengo memoria. Desde 2011 enseño a niños, a adultos que empiezan de cero y a quien quiere pulir su técnica. Me gusta ir a tu ritmo: nadie se queda atrás y nadie se aburre.</p>
@@ -187,6 +191,7 @@
 				</ul>
 				<p class="ficha__nota">Sustituir por los logos oficiales de cada federación o certificado.</p>
 			</div>
+		</div>
 		</div>
 	</section>
 

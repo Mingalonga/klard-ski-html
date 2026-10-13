@@ -94,6 +94,41 @@
 		marcas.forEach(function (m, n) { m.classList.toggle('es-activa', n <= i); });
 	}
 
+	/* ---------- 3b. Klard bajando por la ladera ---------- */
+	var ladera = document.querySelector('[data-ladera]');
+	var klard = ladera.querySelector('[data-klard]');
+	var estrechoLadera = window.matchMedia('(max-width: 1000px)');
+	var paradaKlard = null;
+	var ultimoX = null;
+
+	// Misma recta que assets/img/ladera.svg: de (0 %, 52 %) a (100 %, 88 %)
+	function alturaNieve(x) { return 52 + 0.36 * x; }
+
+	function actualizarKlard() {
+		var r = ladera.getBoundingClientRect();
+		var vh = window.innerHeight;
+		var avance = Math.min(1, Math.max(0, (vh - r.top) / (r.height + vh * 0.2)));
+		var x = estrechoLadera.matches ? -12 + avance * 124 : -8 + avance * 46;
+		// En una columna la ladera ocupa solo la franja de arriba, hasta un poco por debajo del hueco
+		var banda = r.height;
+		if (estrechoLadera.matches) {
+			var hueco = ladera.querySelector('.ficha__hueco');
+			banda = hueco.offsetTop + hueco.offsetHeight + 60;
+			ladera.style.setProperty('--banda', banda + 'px');
+		}
+		klard.style.setProperty('--x', x.toFixed(2));
+		klard.style.setProperty('--y', (alturaNieve(x) * banda / r.height).toFixed(2));
+		// Inclinación real de la ladera según su tamaño
+		var giro = Math.atan2(0.36 * banda, r.width) * 180 / Math.PI;
+		klard.style.setProperty('--giro', (giro * 0.8).toFixed(1) + 'deg');
+		if (reducido || ultimoX === null || Math.abs(x - ultimoX) < 0.05) { ultimoX = x; return; }
+		ultimoX = x;
+		// Mientras se mueve, se balancea y levanta nieve
+		klard.classList.add('en-marcha');
+		clearTimeout(paradaKlard);
+		paradaKlard = setTimeout(function () { klard.classList.remove('en-marcha'); }, 180);
+	}
+
 	/* ---------- 4. Ficha técnica de la pista ---------- */
 	var anatomia = document.querySelector('[data-anatomia]');
 	var monte = anatomia.querySelector('.anatomia__monte');
@@ -145,6 +180,7 @@
 		pendiente = false;
 		alHacerScroll();
 		actualizarLema();
+		actualizarKlard();
 		actualizarPista();
 	}
 	window.addEventListener('scroll', function () {

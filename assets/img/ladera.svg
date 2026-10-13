@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+<!-- Ladera en primer plano. La superficie va en línea recta de (0, 52) a (100, 88):
+     main.js usa esa misma recta para colocar a Klard sobre la nieve. -->
+<defs>
+<linearGradient id="n" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".55" stop-color="#eef4f8"/><stop offset="1" stop-color="#d3e2ee"/></linearGradient>
+<linearGradient id="s" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8cb2d6" stop-opacity=".55"/><stop offset="1" stop-color="#8cb2d6" stop-opacity="0"/></linearGradient>
+</defs>
+<path d="M0 52 L100 88 L100 100 L0 100 Z" fill="url(#n)"/>
+<path d="M0 52 L100 88 L100 91 L0 56 Z" fill="url(#s)"/>
+<g fill="none" stroke="#b9cfe2" stroke-width=".25" vector-effect="non-scaling-stroke">
+<path d="M0 60 L100 96"/><path d="M0 61 L100 97"/><path d="M0 70 C 30 82, 60 90, 100 99"/>
+</g>
+</svg>
