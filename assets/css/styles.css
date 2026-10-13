@@ -237,73 +237,57 @@ ul[role="list"], ol[role="list"] { list-style: none; margin: 0; padding: 0; }
 .ficha__nota { margin-top: 0.75rem; font-size: 0.9rem; color: var(--c-muted); font-style: italic; }
 
 /* ---------- 4. La pista ---------- */
-.pista { position: relative; background: linear-gradient(180deg, var(--c-ink) 0%, var(--c-ink-2) 60%, #1b3150 100%); color: #fff; padding-block: clamp(5rem, 10vw, 9rem); overflow: hidden; }
+.pista { position: relative; background: linear-gradient(180deg, var(--c-ink) 0%, var(--c-ink-2) 60%, #1b3150 100%); color: #fff; padding-block: clamp(5rem, 10vw, 9rem); overflow: clip; }
 .pista__cabecera { max-width: 760px; }
 .pista__intro { color: #c9d6e3; margin-top: 1.5rem; }
 
-.mapa { margin-top: clamp(1rem, 3vw, 2rem); perspective: 1600px; perspective-origin: 50% 20%; }
-.mapa__escena {
-	position: relative;
-	aspect-ratio: 12 / 7;
-	transform-style: preserve-3d;
-	transform: rotateX(calc(18deg + var(--rx, 0deg))) rotateY(var(--ry, 0deg)) scale(0.92);
-	transition: transform 0.4s ease-out;
-}
-.mapa__capa { position: absolute; inset: 0; width: 100%; height: 100%; }
-.mapa__capa--fondo { transform: translateZ(-160px) scale(1.12) translateY(-6%); }
-.mapa__capa--monte { transform: translateZ(0); filter: drop-shadow(0 40px 40px rgb(0 0 0 / 0.35)); }
-.mapa__capa--pines { transform: translateZ(30px); pointer-events: none; }
-.mapa__klard { width: 20%; height: auto; inset: auto; right: 2%; top: -6%; transform: translateZ(150px) translateY(var(--ky, 0)) rotate(var(--kr, 0deg)); filter: drop-shadow(0 25px 18px rgb(0 0 0 / 0.4)); pointer-events: none; }
-.trazo { transition: stroke-width 0.3s, opacity 0.3s; }
-.mapa.tiene-sel .trazo { opacity: 0.35; }
-.mapa.tiene-sel .trazo.es-activo { opacity: 1; stroke-width: 14; }
-.pin {
-	position: absolute;
-	left: var(--x);
-	top: var(--y);
-	transform: translate(-50%, -50%);
-	pointer-events: auto;
-	display: inline-flex;
-	align-items: center;
-	gap: 0.5rem;
-	min-height: 44px;
-	padding: 0.35rem 0.9rem 0.35rem 0.35rem;
-	border: 0;
-	border-radius: 999px;
-	background: #fff;
-	color: var(--c-ink);
-	font: 700 1rem var(--f-head);
-	box-shadow: 0 10px 24px rgb(0 0 0 / 0.3);
-	cursor: pointer;
-	transition: transform 0.25s var(--ease), background-color 0.25s;
-}
-.pin:hover, .pin[aria-expanded="true"] { transform: translate(-50%, -50%) scale(1.1); }
-.pin[aria-expanded="true"] { background: var(--c-ink); color: #fff; outline: 3px solid #fff; }
-.pin__punto { width: 30px; height: 30px; border-radius: 50%; background: var(--pc); position: relative; }
-.pin__punto::after { content: ""; position: absolute; inset: -6px; border-radius: 50%; border: 2px solid var(--pc); animation: latido 2.2s ease-out infinite; }
-@keyframes latido { from { transform: scale(0.7); opacity: 1; } to { transform: scale(1.5); opacity: 0; } }
-.pin--verde { --pc: #1f9d55; } .pin--azul { --pc: var(--c-glacier); } .pin--roja { --pc: #d93025; } .pin--negra { --pc: var(--c-ink); }
-.pin--negra .pin__punto { box-shadow: inset 0 0 0 3px #fff; }
-.mapa__pueblo { position: absolute; left: var(--x); top: var(--y); transform: translate(-50%, 0); font-size: 0.9rem; font-weight: 600; color: var(--c-ink); background: rgb(255 255 255 / 0.85); padding: 0.15rem 0.6rem; border-radius: 6px; white-space: nowrap; }
-.mapa__leyenda { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem 1.5rem; font-size: 1rem; color: #c9d6e3; margin-top: 1rem; }
-.mapa__leyenda span { display: inline-flex; align-items: center; gap: 0.45rem; }
-.l { display: inline-block; width: 22px; height: 6px; border-radius: 3px; flex: none; }
-.l--verde { background: #1f9d55; } .l--azul { background: var(--c-glacier-light); } .l--roja { background: #ff5c50; } .l--negra { background: #fff; box-shadow: inset 0 0 0 2px #0e1a2b, 0 0 0 1px #fff; }
-.l--remonte { background: repeating-linear-gradient(90deg, #fff 0 3px, transparent 3px 9px); height: 3px; }
+/* Ficha técnica de la pista: cada punto del monte es una pista */
+.anatomia { position: relative; height: 420vh; margin-top: clamp(1rem, 3vw, 2rem); }
+.anatomia__fijo { position: sticky; top: var(--cab-h); height: calc(100vh - var(--cab-h)); display: grid; place-items: center; padding-inline: var(--margen); }
+.anatomia__escena { position: relative; width: min(100%, 1400px, (100vh - var(--cab-h) - 2rem) * 16 / 9); aspect-ratio: 16 / 9; container-type: inline-size; }
+.anatomia__monte { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.anatomia__macizo { filter: drop-shadow(0 30px 40px rgb(0 0 0 / 0.35)); }
+.anatomia__trazo { opacity: 0.3; transition: opacity 0.5s, stroke-width 0.5s; }
+.anatomia__trazo.es-activo { opacity: 1; stroke-width: 15; }
+.anatomia__guia { stroke-dasharray: 700; stroke-dashoffset: 700; opacity: 0.4; transition: stroke-dashoffset 0.9s var(--ease), opacity 0.4s; }
+.anatomia__guia.es-activa { stroke-dashoffset: 0; opacity: 1; }
+.anatomia__punto circle:first-child { fill: rgb(255 255 255 / 0.18); stroke: #fff; stroke-width: 2; transition: transform 0.4s var(--ease); }
+.anatomia__punto circle:last-child { fill: #fff; }
+.anatomia__punto.es-activo circle:first-child { fill: var(--c-energy); transform: scale(1.35); }
+.anatomia__punto.es-activo { animation: latido-svg 1.6s ease-in-out infinite; }
+@keyframes latido-svg { 50% { opacity: 0.75; } }
 
-.zonas { display: grid; grid-template-columns: 4fr 8fr; gap: clamp(1.5rem, 3vw, 3rem); margin-top: clamp(3rem, 6vw, 5rem); }
-.zonas__general { background: rgb(255 255 255 / 0.06); border: 1px solid rgb(255 255 255 / 0.14); border-radius: var(--radio); padding: 1.75rem; align-self: start; }
-.zonas__general h3 { font-size: var(--fs-h3); text-transform: uppercase; margin-bottom: 1.25rem; }
-.zonas__general dl { margin: 0; display: grid; gap: 1rem; }
-.zonas__general dt { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--c-glacier-light); }
-.zonas__general dd { margin: 0; }
-.zonas__lista { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
-.zona { border-radius: var(--radio); padding: 1.5rem; background: rgb(255 255 255 / 0.04); border: 1px solid rgb(255 255 255 / 0.12); transition: background-color 0.3s, border-color 0.3s, transform 0.3s var(--ease); }
-.zona.es-activa { background: rgb(255 255 255 / 0.12); border-color: var(--c-glacier-light); transform: translateY(-4px); }
-.zona h3 { font-size: 1.35rem; display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 0.7rem; margin-bottom: 0.75rem; }
-.zona__nivel { width: 100%; font: 600 0.95rem var(--f-body); color: #c9d6e3; letter-spacing: 0; }
-.zona p { color: #dbe4ee; margin-bottom: 0.5rem; }
-.zona__remonte { font-size: 1rem; color: #b8c7d6 !important; }
+.fichas { position: absolute; inset: 0; pointer-events: none; }
+.ficha-pista {
+	position: absolute;
+	width: 25%;
+	opacity: 0.32;
+	transform: translateY(10px);
+	transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
+	font-size: clamp(0.95rem, 1.25cqi, 1.15rem);
+	line-height: 1.5;
+}
+.ficha-pista.es-activa { opacity: 1; transform: none; }
+.ficha-pista[data-n="0"] { left: 2%; top: 13%; }
+.ficha-pista[data-n="1"] { left: 2%; top: 58%; }
+.ficha-pista[data-n="2"] { right: 2%; top: 26%; text-align: right; }
+.ficha-pista[data-n="3"] { right: 2%; top: 66%; text-align: right; }
+.ficha-pista p { margin: 0 0 0.5em; color: #dbe4ee; }
+.ficha-pista__num { font: 800 0.95em var(--f-head); color: var(--c-glacier-light) !important; letter-spacing: 0.1em; }
+.ficha-pista__nombre { font-size: clamp(1.4rem, 2.2cqi, 2.1rem); font-weight: 800; text-transform: uppercase; margin-bottom: 0.3em; display: flex; align-items: center; gap: 0.5em; flex-wrap: wrap; }
+.ficha-pista[data-n="2"] .ficha-pista__nombre, .ficha-pista[data-n="3"] .ficha-pista__nombre { justify-content: flex-end; }
+.ficha-pista__lema { font-weight: 600; color: #fff !important; }
+.ficha-pista__datos { display: flex; flex-wrap: wrap; gap: 0.3em 0.9em; font-size: 0.85em; color: #a9bccf !important; text-transform: uppercase; letter-spacing: 0.06em; }
+.ficha-pista[data-n="2"] .ficha-pista__datos, .ficha-pista[data-n="3"] .ficha-pista__datos { justify-content: flex-end; }
+.etiqueta { font: 700 0.42em/1 var(--f-body); letter-spacing: 0.12em; padding: 0.55em 0.8em; border-radius: 999px; color: #fff; }
+.etiqueta--negra { background: #000; box-shadow: inset 0 0 0 1.5px #fff; }
+.etiqueta--roja { background: #c5221f; }
+.etiqueta--azul { background: var(--c-glacier); }
+.etiqueta--verde { background: #17733e; }
+
+.pista__datos { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem 4rem; margin: clamp(2rem, 5vw, 4rem) 0 0; text-align: center; }
+.pista__datos dt { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--c-glacier-light); }
+.pista__datos dd { margin: 0; font-weight: 600; }
 
 .pista__cta { margin-top: clamp(3rem, 7vw, 6rem); text-align: center; display: flex; flex-direction: column; align-items: center; gap: 1.25rem; }
 .pista__cta-titulo { font: 800 var(--fs-h2)/1 var(--f-head); text-transform: uppercase; margin: 0; }
@@ -334,11 +318,24 @@ ul[role="list"], ol[role="list"] { list-style: none; margin: 0; padding: 0; }
 .js .tarjeta.aparece.es-visible:hover { transform: translateY(-8px); }
 
 /* ---------- Responsive ---------- */
+/* Ficha técnica en pantallas estrechas: el monte queda fijo arriba y las fichas pasan por debajo */
+@media (max-width: 900px) {
+	.anatomia { height: auto; }
+	.anatomia__fijo { position: static; height: auto; display: block; padding-inline: 0; }
+	.anatomia__escena { width: 100%; aspect-ratio: auto; }
+	.anatomia__monte { position: sticky; top: var(--cab-h); z-index: 1; height: 42vh; height: 42svh; width: 100%; background: linear-gradient(180deg, var(--c-ink) 80%, rgb(14 26 43 / 0)); }
+	.anatomia__guias { display: none; }
+	.fichas { position: static; pointer-events: auto; padding: 1rem var(--margen) 0; display: grid; gap: 1rem; }
+	.ficha-pista, .ficha-pista[data-n] { position: static; width: auto; text-align: left; font-size: 1.05rem; padding: 1.25rem; border-radius: var(--radio); background: rgb(255 255 255 / 0.04); border: 1px solid rgb(255 255 255 / 0.12); opacity: 0.5; min-height: 38vh; }
+	.ficha-pista.es-activa { opacity: 1; border-color: var(--c-glacier-light); background: rgb(255 255 255 / 0.08); }
+	.ficha-pista[data-n] .ficha-pista__nombre, .ficha-pista[data-n] .ficha-pista__datos { justify-content: flex-start; }
+	.ficha-pista__nombre { font-size: 1.7rem; }
+}
+
 @media (max-width: 1000px) {
 	.tarjetas { grid-template-columns: 1fr; max-width: 560px; }
 	.ficha { grid-template-columns: 1fr; }
 	.ficha__foto { max-width: 420px; }
-	.zonas { grid-template-columns: 1fr; }
 	.pie__columnas { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 760px) {
@@ -352,17 +349,6 @@ ul[role="list"], ol[role="list"] { list-style: none; margin: 0; padding: 0; }
 	.lema { height: 400vh; }
 	.lema__progreso { display: none; }
 	.sellos { grid-template-columns: 1fr; }
-	.zonas__lista { grid-template-columns: 1fr; }
-	/* En pantallas pequeñas el mapa se inclina menos y los pines son más pequeños */
-	.mapa { margin-inline: calc(-1 * var(--margen) + 4px); }
-	.mapa__escena { transform: rotateX(calc(10deg + var(--rx, 0deg))) scale(1); }
-	.mapa__capa--fondo { transform: translateZ(-60px) scale(1.06) translateY(-4%); }
-	.mapa__capa--pines { transform: translateZ(12px); }
-	.pin { min-height: 36px; padding: 0.2rem; font-size: 0; gap: 0; }
-	.pin__punto { width: 26px; height: 26px; }
-	.pin[aria-expanded="true"] .pin__nombre { font-size: 0.85rem; padding-inline: 0.4rem 0.5rem; }
-	.mapa__pueblo { font-size: 0.75rem; }
-	.mapa__klard { width: 26%; top: -10%; transform: translateZ(60px) translateY(var(--ky, 0)) rotate(var(--kr, 0deg)); }
 	.pie__columnas { grid-template-columns: 1fr; }
 	body { padding-bottom: 76px; }
 	.barra-llamar {
@@ -393,7 +379,10 @@ ul[role="list"], ol[role="list"] { list-style: none; margin: 0; padding: 0; }
 	.lema__frases { gap: 1.5rem; }
 	.lema__frase { grid-area: auto; opacity: 1; transform: none; filter: none; font-size: clamp(1.8rem, 1rem + 3vw, 3.5rem); }
 	.lema__progreso { display: none; }
-	.mapa__escena { transform: rotateX(12deg) !important; }
+	.anatomia { height: auto; }
+	.anatomia__fijo { position: relative; height: auto; top: 0; }
+	.anatomia__guia { stroke-dashoffset: 0; }
+	.ficha-pista { opacity: 1; }
 }
 
 /* ---------- Páginas legales ---------- */

@@ -3,7 +3,6 @@
 	'use strict';
 
 	var reducido = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-	var movil = window.matchMedia('(max-width: 760px)');
 
 	/* ---------- Cabecera sólida y barra de llamada al salir de la portada ---------- */
 	var cabecera = document.querySelector('[data-cabecera]');
@@ -95,58 +94,49 @@
 		marcas.forEach(function (m, n) { m.classList.toggle('es-activa', n <= i); });
 	}
 
-	/* ---------- 4. Mapa pseudo-3D de la pista ---------- */
-	var mapa = document.querySelector('[data-mapa]');
-	var escena = mapa.querySelector('[data-escena]');
-	var pines = mapa.querySelectorAll('.pin');
-	var zonas = document.querySelectorAll('.zona');
-	var trazos = mapa.querySelectorAll('.trazo');
-	var tiltPuntero = { x: 0, y: 0 };
+	/* ---------- 4. Ficha técnica de la pista ---------- */
+	var anatomia = document.querySelector('[data-anatomia]');
+	var monte = anatomia.querySelector('.anatomia__monte');
+	var fichas = anatomia.querySelectorAll('.ficha-pista');
+	var partes = anatomia.querySelectorAll('.anatomia__trazo, .anatomia__guia, .anatomia__punto');
+	var estrecho = window.matchMedia('(max-width: 900px)');
+	var pistaActual = -1;
 
-	function seleccionar(id) {
-		var yaActiva = mapa.dataset.sel === id;
-		var nueva = yaActiva ? '' : id;
-		mapa.dataset.sel = nueva;
-		mapa.classList.toggle('tiene-sel', !!nueva);
-		pines.forEach(function (p) { p.setAttribute('aria-expanded', String(p.dataset.zona === nueva)); });
-		trazos.forEach(function (t) { t.classList.toggle('es-activo', t.dataset.zona === nueva); });
-		zonas.forEach(function (z) { z.classList.toggle('es-activa', z.dataset.zona === nueva); });
-	}
-	pines.forEach(function (p) {
-		p.setAttribute('aria-expanded', 'false');
-		p.addEventListener('click', function () {
-			seleccionar(p.dataset.zona);
-			// En móvil la ficha de texto queda debajo del mapa: la acercamos
-			if (movil.matches && mapa.dataset.sel) {
-				document.getElementById('zona-' + p.dataset.zona).scrollIntoView({ behavior: reducido ? 'auto' : 'smooth', block: 'center' });
-			}
+	function activarPista(i) {
+		if (i === pistaActual) return;
+		pistaActual = i;
+		fichas.forEach(function (f, n) { f.classList.toggle('es-activa', n === i); });
+		partes.forEach(function (p) {
+			var activo = Number(p.getAttribute('data-n')) === i;
+			p.classList.toggle(p.classList.contains('anatomia__guia') ? 'es-activa' : 'es-activo', activo);
 		});
-	});
-	zonas.forEach(function (z) {
-		z.addEventListener('mouseenter', function () { if (mapa.dataset.sel !== z.dataset.zona) seleccionar(z.dataset.zona); });
-	});
+	}
 
-	// Inclinación con el ratón (solo escritorio)
-	mapa.addEventListener('pointermove', function (e) {
-		if (reducido || e.pointerType !== 'mouse') return;
-		var r = mapa.getBoundingClientRect();
-		tiltPuntero.x = ((e.clientX - r.left) / r.width - 0.5) * 2;
-		tiltPuntero.y = ((e.clientY - r.top) / r.height - 0.5) * 2;
-		actualizarMapa();
-	});
-	mapa.addEventListener('pointerleave', function () { tiltPuntero.x = tiltPuntero.y = 0; actualizarMapa(); });
+	function encuadrarMonte() {
+		// En móvil solo se ve el monte, sin las fichas a los lados
+		monte.setAttribute('viewBox', estrecho.matches ? '430 70 740 830' : '0 0 1600 900');
+	}
+	estrecho.addEventListener('change', function () { encuadrarMonte(); pistaActual = -1; tick(); });
+	encuadrarMonte();
 
-	function actualizarMapa() {
-		if (reducido) return;
-		var r = mapa.getBoundingClientRect();
-		var vh = window.innerHeight;
-		// -1 al entrar por abajo, 1 al salir por arriba
-		var p = Math.min(1, Math.max(-1, ((r.top + r.height / 2) - vh / 2) / (vh / 2 + r.height / 2)));
-		var fuerza = movil.matches ? 0.5 : 1;
-		escena.style.setProperty('--rx', (p * 14 * fuerza - tiltPuntero.y * 5).toFixed(2) + 'deg');
-		escena.style.setProperty('--ry', (tiltPuntero.x * 8).toFixed(2) + 'deg');
-		escena.style.setProperty('--ky', (p * 60).toFixed(1) + 'px');
-		escena.style.setProperty('--kr', (p * -12).toFixed(1) + 'deg');
+	function actualizarPista() {
+		if (reducido) { activarPista(-1); fichas.forEach(function (f) { f.classList.add('es-activa'); }); return; }
+		if (estrecho.matches) {
+			// La ficha más cercana a la mitad inferior de la pantalla manda
+			var objetivo = window.innerHeight * 0.7;
+			var mejor = 0, distancia = Infinity;
+			fichas.forEach(function (f, n) {
+				var r = f.getBoundingClientRect();
+				var d = Math.abs(r.top + r.height / 2 - objetivo);
+				if (d < distancia) { distancia = d; mejor = n; }
+			});
+			activarPista(mejor);
+			return;
+		}
+		var caja = anatomia.getBoundingClientRect();
+		var recorrido = caja.height - window.innerHeight;
+		var avance = Math.min(0.999, Math.max(0, -caja.top / recorrido));
+		activarPista(Math.floor(avance * fichas.length));
 	}
 
 	/* ---------- Bucle de scroll ---------- */
@@ -155,7 +145,7 @@
 		pendiente = false;
 		alHacerScroll();
 		actualizarLema();
-		actualizarMapa();
+		actualizarPista();
 	}
 	window.addEventListener('scroll', function () {
 		if (!pendiente) { pendiente = true; requestAnimationFrame(tick); }
