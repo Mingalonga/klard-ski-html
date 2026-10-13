@@ -35,5 +35,6 @@ En móvil aparece una barra fija «Llamar para reservar» al salir de la portada
 - Teléfono `+34 600 000 000`, WhatsApp `34600000000` y email `hola@example.com`: buscar y reemplazar en los tres HTML.
 - Nombre, años, idiomas y titulaciones del profesor. Los sellos (TD2, FAD...) son texto: cambiarlos por los logos oficiales.
 - Datos de las zonas de la pista, remontes, cotas y horarios de temporada.
+- Foto de fondo de «Hola, soy Klard»: guardar una foto horizontal de montaña o pista nevada como `assets/img/ladera-foto.jpg` (unos 2000 px de ancho, menos de 400 KB). Si no existe, se usa la ilustración.
 - Fotos reales: sustituir los SVG de `assets/img/hero-*.svg` y `clase-*.svg` por fotos (o un `<video autoplay muted loop playsinline>` en la portada) y actualizar sus `alt`.
 - Rellenar los corchetes de `aviso-legal.html` y `privacidad.html`.

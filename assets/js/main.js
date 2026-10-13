@@ -94,51 +94,57 @@
 		marcas.forEach(function (m, n) { m.classList.toggle('es-activa', n <= i); });
 	}
 
-	/* ---------- 3b. Klard bajando por la ladera ---------- */
+	/* ---------- 3b. Klard cruza la ficha de un salto ---------- */
 	var ladera = document.querySelector('[data-ladera]');
 	var klard = ladera.querySelector('[data-klard]');
+	var hueco = ladera.querySelector('.ficha__hueco');
 	var estrechoLadera = window.matchMedia('(max-width: 1000px)');
 	var paradaKlard = null;
-	var ultimoX = null;
+	var ultimoAvance = null;
 
-	// Misma curva que assets/img/ladera.svg: de (0, 56) a (100, 96) con control en (50, 84), en %
-	function alturaNieve(x) {
-		var t = Math.min(1, Math.max(0, x / 100));
-		return (1 - t) * (1 - t) * 56 + 2 * t * (1 - t) * 84 + t * t * 96;
-	}
-	// Pendiente de la curva (en % de alto por % de ancho) para inclinar a Klard
-	function pendienteNieve(x) {
-		var t = Math.min(1, Math.max(0, x / 100));
-		return 0.56 * (1 - t) + 0.24 * t;
-	}
+	// Foto real de fondo: si existe assets/img/ladera-foto.jpg se usa; si no, queda la ilustración
+	var foto = new Image();
+	foto.onload = function () { ladera.classList.add('tiene-foto'); };
+	foto.src = 'assets/img/ladera-foto.jpg';
 
 	function actualizarKlard() {
 		var r = ladera.getBoundingClientRect();
 		var vh = window.innerHeight;
-		var banda = r.height;
-		var avance;
-		if (estrechoLadera.matches) {
-			// En una columna la ladera ocupa solo la franja de arriba, hasta un poco por debajo del hueco.
-			// Klard la cruza mientras esa franja está a la vista: desde que asoma entera por abajo hasta que llega a la cabecera.
-			var hueco = ladera.querySelector('.ficha__hueco');
-			banda = hueco.offsetTop + hueco.offsetHeight + 60;
-			ladera.style.setProperty('--banda', banda + 'px');
-			var cabecera = 64;
-			avance = (vh - banda - r.top) / (vh - banda - cabecera);
-		} else {
-			avance = (vh - r.top) / (r.height + vh * 0.2);
-		}
+		var ancho = r.width;
+		var alto = klard.offsetHeight;
+		var movil = estrechoLadera.matches;
+		if (movil) ladera.style.setProperty('--banda', (hueco.offsetTop + hueco.offsetHeight + 60) + 'px');
+
+		// Despegue y aterrizaje (en px dentro de la sección). El punto de referencia son los esquís.
+		var margen = klard.offsetWidth * 0.55;
+		var x0 = margen, x1 = ancho - margen;
+		var y0 = movil ? hueco.offsetTop + hueco.offsetHeight - 20 : r.height * 0.42;
+		var y1 = y0 + (movil ? 30 : r.height * 0.12);
+		var apice = vh * (movil ? 0.16 : 0.24); // altura del salto sobre la recta despegue-aterrizaje
+		var recorrido = vh * (movil ? 0.5 : 0.65); // px de scroll que dura el salto
+
+		// El salto empieza cuando Klard se ve entero en su punto de despegue (con los esquís por encima del borde inferior)
+		var piesEnPantalla = r.top + y0 + alto * 0.35 + 8;
+		// En móvil la barra fija de «Llamar» tapa el borde inferior
+		var bordeInferior = movil ? vh - 76 : vh;
+		var avance = (bordeInferior - piesEnPantalla) / recorrido;
 		avance = Math.min(1, Math.max(0, avance));
-		// Movimiento uniformemente acelerado: la posición crece con el cuadrado del avance
-		var x = -12 + 124 * avance * avance;
-		klard.style.setProperty('--x', x.toFixed(2));
-		klard.style.setProperty('--y', (alturaNieve(x) * banda / r.height).toFixed(2));
-		// Inclinación real de la ladera según su tamaño
-		var giro = Math.atan2(pendienteNieve(x) * banda, r.width) * 180 / Math.PI;
-		klard.style.setProperty('--giro', (giro * 0.8).toFixed(1) + 'deg');
-		if (reducido || ultimoX === null || Math.abs(x - ultimoX) < 0.05) { ultimoX = x; return; }
-		ultimoX = x;
-		// Mientras se mueve, se balancea y levanta nieve
+
+		// Trayectoria de un salto: avance horizontal uniforme y parábola en vertical
+		var x = x0 + (x1 - x0) * avance;
+		var y = y0 + (y1 - y0) * avance - apice * 4 * avance * (1 - avance);
+		// Inclinación según la dirección del movimiento en cada punto
+		var dx = x1 - x0;
+		var dy = (y1 - y0) - apice * 4 * (1 - 2 * avance);
+		var giro = Math.atan2(dy, dx) * 180 / Math.PI * 0.6;
+
+		klard.style.setProperty('--kx', x.toFixed(1) + 'px');
+		klard.style.setProperty('--ky', y.toFixed(1) + 'px');
+		klard.style.setProperty('--giro', giro.toFixed(1) + 'deg');
+
+		if (reducido || ultimoAvance === null || Math.abs(avance - ultimoAvance) < 0.001 || avance === 0 || avance === 1) { ultimoAvance = avance; klard.classList.remove('en-marcha'); return; }
+		ultimoAvance = avance;
+		// En el aire se balancea un poco mientras se mueve
 		klard.classList.add('en-marcha');
 		clearTimeout(paradaKlard);
 		paradaKlard = setTimeout(function () { klard.classList.remove('en-marcha'); }, 180);

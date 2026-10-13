@@ -219,37 +219,32 @@ ul[role="list"], ol[role="list"] { list-style: none; margin: 0; padding: 0; }
 .lema__progreso span { width: 3px; height: 28px; border-radius: 2px; background: rgb(255 255 255 / 0.3); transition: background-color 0.3s; }
 .lema__progreso span.es-activa { background: var(--c-energy); }
 
-/* Ladera nevada que cubre toda la ficha; Klard baja por ella con el scroll */
+/* Fondo de montaña nevada que cubre toda la ficha; Klard la cruza de un salto con el scroll */
 .ladera { position: relative; overflow: clip; }
 .ladera__fondo {
 	position: absolute; inset: 0;
+	/* Respaldo ilustrado mientras no haya foto (o si no carga) */
 	background:
 		url("../img/ladera.svg") center / 100% 100% no-repeat,
 		url("../img/hero-mediodia.svg") center 15% / cover no-repeat;
 }
-.ladera__klard {
-	position: absolute; z-index: 1;
-	width: clamp(170px, 20vw, 300px);
-	/* --x y --y (en %) los calcula main.js sobre la recta de la ladera */
-	left: calc(var(--x, 10) * 1%);
-	top: calc(var(--y, 55.6) * 1%);
-	translate: -50% -80%;
-	rotate: var(--giro, 10deg);
-	pointer-events: none;
+/* Con foto real: main.js añade .tiene-foto cuando assets/img/ladera-foto.jpg carga bien */
+.ladera.tiene-foto .ladera__fondo {
+	background:
+		linear-gradient(180deg, rgb(14 26 43 / 0.15), rgb(14 26 43 / 0) 30%, rgb(255 255 255 / 0) 70%, rgb(255 255 255 / 0.35)),
+		url("../img/ladera-foto.jpg") center / cover no-repeat;
 }
-.ladera__klard img { position: relative; width: 100%; height: auto; filter: drop-shadow(0 18px 14px rgb(14 26 43 / 0.25)); animation: deslizar 1.1s ease-in-out infinite; animation-play-state: paused; }
+.ladera__klard {
+	position: absolute; z-index: 3; left: 0; top: 0;
+	width: clamp(170px, 18vw, 280px);
+	/* main.js coloca a Klard en px (--kx, --ky) y lo inclina según la trayectoria (--giro) */
+	transform: translate3d(var(--kx, 0px), var(--ky, 0px), 0) translate(-50%, -80%) rotate(var(--giro, 0deg));
+	pointer-events: none;
+	will-change: transform;
+}
+.ladera__klard img { width: 100%; height: auto; filter: drop-shadow(0 24px 18px rgb(14 26 43 / 0.3)); animation: vuelo 1.4s ease-in-out infinite; animation-play-state: paused; }
 .ladera__klard.en-marcha img { animation-play-state: running; }
-@keyframes deslizar { 50% { transform: translateY(-4px) rotate(-1.5deg); } }
-/* Polvo de nieve que levantan los esquís */
-.ladera__estela { position: absolute; left: 18%; bottom: 4%; width: 45%; height: 30%; opacity: 0; transition: opacity 0.4s; }
-.ladera__klard.en-marcha .ladera__estela { opacity: 1; }
-.ladera__estela i { position: absolute; bottom: 0; width: 18px; height: 18px; border-radius: 50%; background: #fff; box-shadow: 0 0 12px 6px rgb(255 255 255 / 0.9); animation: polvo 0.9s ease-out infinite; }
-.ladera__estela i:nth-child(1) { left: 5%; }
-.ladera__estela i:nth-child(2) { left: 25%; animation-delay: -0.2s; width: 12px; height: 12px; }
-.ladera__estela i:nth-child(3) { left: 45%; animation-delay: -0.4s; }
-.ladera__estela i:nth-child(4) { left: 65%; animation-delay: -0.6s; width: 10px; height: 10px; }
-.ladera__estela i:nth-child(5) { left: 80%; animation-delay: -0.75s; width: 14px; height: 14px; }
-@keyframes polvo { from { transform: translate(0, 0) scale(0.6); opacity: 0.95; } to { transform: translate(-60px, -40px) scale(1.6); opacity: 0; } }
+@keyframes vuelo { 50% { transform: rotate(-3deg) translateY(-3px); } }
 
 .ficha { position: relative; z-index: 2; display: grid; grid-template-columns: 5fr 7fr; gap: clamp(2rem, 6vw, 6rem); align-items: center; padding-block: clamp(5rem, 10vw, 9rem) clamp(9rem, 20vw, 18rem); }
 .ficha__texto { background: rgb(255 255 255 / 0.9); backdrop-filter: blur(8px); border-radius: var(--radio); padding: clamp(1.5rem, 3vw, 2.75rem); box-shadow: var(--sombra-g); }
@@ -365,12 +360,12 @@ ul[role="list"], ol[role="list"] { list-style: none; margin: 0; padding: 0; }
 	.tarjetas { grid-template-columns: 1fr; max-width: 560px; }
 	.ficha { grid-template-columns: 1fr; padding-top: 0; }
 	.ficha__hueco { height: 72vw; min-height: 260px; }
-	/* En una columna la ladera solo ocupa la franja de arriba (--banda la pone main.js) y el resto es nieve */
-	.ladera__fondo { background:
+	/* Sin foto, en una columna la ladera ilustrada solo ocupa la franja de arriba (--banda la pone main.js) */
+	.ladera:not(.tiene-foto) .ladera__fondo { background:
 		url("../img/ladera.svg") top / 100% var(--banda, 400px) no-repeat,
 		url("../img/hero-mediodia.svg") center top / auto var(--banda, 400px) no-repeat,
 		linear-gradient(#e3eef6, #e3eef6) 0 calc(var(--banda, 400px) - 2px) / 100% 100% no-repeat; }
-	.ladera__klard { width: 150px; }
+	.ladera__klard { width: 140px; }
 	.pie__columnas { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 760px) {
@@ -408,7 +403,6 @@ ul[role="list"], ol[role="list"] { list-style: none; margin: 0; padding: 0; }
 	html { scroll-behavior: auto; }
 	*, *::before, *::after { animation: none !important; transition-duration: 0.01ms !important; }
 	.js .aparece { opacity: 1; transform: none; }
-	.ladera__estela { display: none; }
 	/* Sin animación: las frases se muestran todas, una debajo de otra */
 	.lema { height: auto; }
 	.lema__fijo { position: relative; height: auto; padding-block: 6rem; }
