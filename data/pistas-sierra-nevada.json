@@ -1,0 +1,77 @@
+{
+  "fuente": "Datos orientativos recopilados de guías públicas de la estación (andaltura.com, tecnicasierranevada.com, buendia.travel). Los marcados con \"verificado\": false son estimaciones y hay que contrastarlos con el plano oficial de Cetursa.",
+  "pistas": [
+    {
+      "id": "aguila", "nombre": "Águila", "dificultad": "roja", "zona": "Veleta",
+      "longitud": 6000, "desnivel": 1200, "verificado": true,
+      "frase": "La más larga de la estación: del Veleta a Pradollano. Piernas frescas.",
+      "trazado": "M300 120 C 330 220, 250 290, 320 370 S 430 520, 520 615"
+    },
+    {
+      "id": "olimpica", "nombre": "Olímpica", "dificultad": "roja", "zona": "Laguna de las Yeguas",
+      "longitud": 3500, "desnivel": null, "verificado": true,
+      "frase": "Ancha y rápida, con historia de competición. Ideal para pulir el carving.",
+      "trazado": "M640 150 C 610 210, 680 250, 640 300"
+    },
+    {
+      "id": "fuente-del-tesoro", "nombre": "Fuente del Tesoro", "dificultad": "negra", "zona": "Loma de Dílar",
+      "longitud": 950, "desnivel": 330, "verificado": false,
+      "frase": "Solo expertos. Nieve dura frecuente y mucha pendiente.",
+      "trazado": "M930 250 C 900 320, 960 380, 880 450"
+    },
+    {
+      "id": "neveros", "nombre": "Neveros", "dificultad": "negra", "zona": "Loma de Dílar",
+      "longitud": 800, "desnivel": 280, "verificado": false,
+      "frase": "Corta e intensa. Entra solo con buena técnica y buena visibilidad.",
+      "trazado": "M1005 265 C 1015 330, 980 380, 1010 440"
+    },
+    {
+      "id": "diploma", "nombre": "Diploma", "dificultad": "negra", "zona": "Loma de Dílar",
+      "longitud": 980, "desnivel": 340, "verificado": false,
+      "frase": "La negra más larga de la estación. Para quien ya lo domina todo.",
+      "trazado": "M870 225 C 840 290, 865 340, 820 400"
+    },
+    {
+      "id": "loma-dilar", "nombre": "Loma Dílar", "dificultad": "azul", "zona": "Loma de Dílar",
+      "longitud": 3833, "desnivel": 670, "verificado": true,
+      "frase": "Larga y amable, con vistas a toda la sierra. Perfecta para coger kilómetros.",
+      "trazado": "M960 215 C 1070 320, 1000 420, 1050 520 S 900 600, 720 612"
+    },
+    {
+      "id": "el-rio", "nombre": "El Río", "dificultad": "azul", "zona": "Río",
+      "longitud": 3000, "desnivel": 450, "verificado": false,
+      "frase": "La bajada hasta el pueblo bajo las telecabinas. Tranquila y muy larga.",
+      "trazado": "M610 370 C 570 430, 650 500, 590 560 S 560 610, 565 628"
+    },
+    {
+      "id": "cecilio", "nombre": "Cecilio", "dificultad": "azul", "zona": "Loma de Dílar",
+      "longitud": 1200, "desnivel": 150, "verificado": false,
+      "frase": "El enlace cómodo entre Loma de Dílar y Borreguiles.",
+      "trazado": "M840 300 C 790 330, 730 315, 680 345"
+    },
+    {
+      "id": "maribel", "nombre": "Maribel", "dificultad": "roja", "zona": "Borreguiles",
+      "longitud": 1300, "desnivel": 300, "verificado": false,
+      "frase": "Con algo más de pendiente. El siguiente paso tras dominar las azules.",
+      "trazado": "M520 330 C 480 400, 530 460, 470 525"
+    },
+    {
+      "id": "zorro", "nombre": "Zorro", "dificultad": "azul", "zona": "Borreguiles",
+      "longitud": 900, "desnivel": 120, "verificado": false,
+      "frase": "Suave y con curvas. Para soltar los primeros giros en paralelo.",
+      "trazado": "M540 285 C 580 310, 620 290, 660 315"
+    },
+    {
+      "id": "principiantes", "nombre": "Principiantes", "dificultad": "verde", "zona": "Borreguiles",
+      "longitud": 400, "desnivel": 40, "verificado": false,
+      "frase": "Casi llana y con cintas. Aquí das tus primeros pasos con los esquís.",
+      "trazado": "M560 345 C 600 365, 640 352, 690 375"
+    },
+    {
+      "id": "genciana", "nombre": "Genciana", "dificultad": "verde", "zona": "Loma de Dílar",
+      "longitud": 600, "desnivel": 60, "verificado": false,
+      "frase": "Zona de aprendizaje amplia y tranquila, lejos del bullicio.",
+      "trazado": "M790 420 C 830 440, 870 430, 910 455"
+    }
+  ]
+}

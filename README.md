@@ -25,7 +25,7 @@ python3 -m http.server 8000
 1. **Portada**: carrusel de tres fondos con zoom lento, titular, botón de llamada y «Ver las clases ↓». Se puede pausar.
 2. **Las clases**: tres tarjetas (iniciación, perfeccionamiento, privadas) con duración, precio orientativo, a quién va dirigida y «Reservar por teléfono».
 3. **Sobre el profesor**: fondo fijo con frases que cambian al hacer scroll, y después la ficha con el sprite de Klard, cifras y titulaciones.
-4. **La pista**: ficha técnica al estilo «producto con puntos»: el monte en el centro y cada punto es una pista (negra, roja, azul, verde) con su ficha y una línea guía. Al hacer scroll se va iluminando una pista tras otra; en móvil el monte queda fijo arriba y las fichas pasan por debajo. Cierra con «¿Quieres esquiar aquí? Llámame».
+4. **La pista** («Conoce Sierra Nevada»): mapa ilustrado en tres capas (cumbres, ladera y primer plano) con parallax suave al mover el ratón. Las pistas salen de `data/pistas-sierra-nevada.json` (si no carga, hay un respaldo mínimo en el JS). Filtros por color, tooltip al pasar por encima, ficha al pulsar, navegable con teclado y con la misma información en texto para lectores de pantalla. En móvil el mapa se desliza en horizontal y no hay parallax ni brillo. Código en `assets/css/la-pista.css` y `assets/js/la-pista.js`.
 5. **Pie**: teléfono grande, WhatsApp, email, zona con Google Maps, temporada, redes y enlaces legales.
 
 En móvil aparece una barra fija «Llamar para reservar» al salir de la portada. Con «reducir movimiento» activado en el sistema, todo se muestra sin animaciones.
@@ -34,6 +34,6 @@ En móvil aparece una barra fija «Llamar para reservar» al salir de la portada
 
 - Teléfono `+34 600 000 000`, WhatsApp `34600000000` y email `hola@example.com`: buscar y reemplazar en los tres HTML.
 - Nombre, años, idiomas y titulaciones del profesor. Los sellos (TD2, FAD...) son texto: cambiarlos por los logos oficiales.
-- Datos de las zonas de la pista, remontes, cotas y horarios de temporada.
+- Datos de las pistas en `data/pistas-sierra-nevada.json`: las que llevan `"verificado": false` tienen color, longitud o desnivel estimados; contrastarlos con el plano oficial de Cetursa. Horarios de temporada.
 - Fotos reales: sustituir los SVG de `assets/img/hero-*.svg` y `clase-*.svg` por fotos (o un `<video autoplay muted loop playsinline>` en la portada) y actualizar sus `alt`.
 - Rellenar los corchetes de `aviso-legal.html` y `privacidad.html`.

@@ -9,6 +9,7 @@
 	<link rel="preload" href="assets/fonts/montserrat-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
 	<link rel="preload" href="assets/fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 	<link rel="stylesheet" href="assets/css/styles.css">
+	<link rel="stylesheet" href="assets/css/la-pista.css">
 	<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 	<script>document.documentElement.classList.add('js');</script>
 </head>
@@ -31,7 +32,7 @@
 			<ul>
 				<li><a href="#clases">Clases</a></li>
 				<li><a href="#profesor">El profesor</a></li>
-				<li><a href="#pista">La pista</a></li>
+				<li><a href="#la-pista">La pista</a></li>
 				<li><a href="#contacto">Contacto</a></li>
 			</ul>
 		</nav>
@@ -190,111 +191,96 @@
 		</div>
 	</section>
 
-	<!-- 4. LA PISTA: ficha técnica, cada punto es una pista -->
-	<section class="pista" id="pista" aria-labelledby="pista-titulo">
+	<!-- 4. LA PISTA: mapa interactivo de Sierra Nevada (assets/css/la-pista.css + assets/js/la-pista.js) -->
+	<section class="lp" id="la-pista" aria-labelledby="lp-titulo">
 		<div class="envoltura">
-			<div class="pista__cabecera aparece">
-				<p class="antetitulo antetitulo--claro">Dónde damos las clases</p>
-				<h2 id="pista-titulo" class="titulo-seccion">La pista</h2>
-				<p class="pista__intro">Una montaña, cuatro niveles. Empezamos en la zona más tranquila y subimos cuando tú quieras.</p>
+			<div class="lp__cabecera aparece">
+				<p class="antetitulo antetitulo--claro">La pista</p>
+				<h2 id="lp-titulo" class="titulo-seccion">Conoce Sierra Nevada</h2>
+				<p class="lp__intro">Más de cien kilómetros para todos los niveles. Filtra por color o toca una pista para ver su ficha.</p>
 			</div>
-		</div>
 
-		<div class="anatomia" data-anatomia>
-			<div class="anatomia__fijo">
-				<div class="anatomia__escena">
-					<svg class="anatomia__monte" viewBox="0 0 1600 900" aria-hidden="true">
-						<defs>
-							<linearGradient id="a-nieve" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".6" stop-color="#dfeaf3"/><stop offset="1" stop-color="#9fbad3"/></linearGradient>
-							<linearGradient id="a-sombra" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#0e1a2b" stop-opacity=".05"/><stop offset="1" stop-color="#0e1a2b" stop-opacity=".4"/></linearGradient>
-							<linearGradient id="a-lejos" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8cb2d6" stop-opacity=".55"/><stop offset="1" stop-color="#8cb2d6" stop-opacity="0"/></linearGradient>
-							<radialGradient id="a-halo"><stop offset="0" stop-color="#1f6fb2" stop-opacity=".5"/><stop offset="1" stop-color="#1f6fb2" stop-opacity="0"/></radialGradient>
-						</defs>
-						<ellipse cx="800" cy="480" rx="520" ry="420" fill="url(#a-halo)"/>
-						<path d="M420 860 L520 520 L600 600 L680 380 L720 430 L800 90 L880 330 L940 280 L1020 520 L1080 470 L1180 860 Z" fill="url(#a-lejos)" transform="translate(0 -30) scale(1 1)" opacity=".5"/>
-						<!-- Macizo -->
-						<path class="anatomia__macizo" d="M470 860 L560 640 L620 600 L690 420 L740 360 L800 100 L860 300 L930 360 L990 520 L1060 600 L1130 860 Z" fill="url(#a-nieve)"/>
-						<path d="M800 100 L860 300 L930 360 L990 520 L1060 600 L1130 860 L900 860 L860 560 L830 300 Z" fill="url(#a-sombra)"/>
-						<ellipse cx="800" cy="864" rx="380" ry="14" fill="#060d18" opacity=".5"/>
-						<!-- Remontes -->
-						<g fill="none" stroke="#0e1a2b" stroke-width="2.5" stroke-dasharray="2 8" stroke-linecap="round" opacity=".6">
-							<path d="M600 830 L760 420"/><path d="M780 400 L812 140"/><path d="M960 800 L900 380"/>
-						</g>
-						<!-- Pistas -->
-						<g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="10">
-							<path class="anatomia__trazo" data-n="0" stroke="#0e1a2b" d="M805 130 C 790 190, 830 230, 800 290 S 760 350, 770 400"/>
-							<path class="anatomia__trazo" data-n="1" stroke="#d93025" d="M750 420 C 700 480, 740 540, 680 600 S 620 700, 620 820"/>
-							<path class="anatomia__trazo" data-n="2" stroke="#1f6fb2" d="M880 360 C 930 420, 900 480, 960 540 S 1000 660, 980 780"/>
-							<path class="anatomia__trazo" data-n="3" stroke="#1f9d55" d="M770 640 C 800 670, 850 650, 870 690 S 840 760, 880 800"/>
-						</g>
-						<!-- Líneas guía hacia cada ficha -->
-						<g class="anatomia__guias" fill="none" stroke="#8cc4f0" stroke-width="1.5">
-							<path class="anatomia__guia" data-n="0" d="M440 200 H 640 L 800 290"/>
-							<path class="anatomia__guia" data-n="1" d="M440 610 H 560 L 680 600"/>
-							<path class="anatomia__guia" data-n="2" d="M1160 330 H 1040 L 960 520"/>
-							<path class="anatomia__guia" data-n="3" d="M1160 690 H 1000 L 870 690"/>
-						</g>
-						<!-- Puntos -->
-						<g class="anatomia__puntos">
-							<g class="anatomia__punto" data-n="0" transform="translate(800 290)"><circle r="22"/><circle r="9"/></g>
-							<g class="anatomia__punto" data-n="1" transform="translate(680 600)"><circle r="22"/><circle r="9"/></g>
-							<g class="anatomia__punto" data-n="2" transform="translate(960 520)"><circle r="22"/><circle r="9"/></g>
-							<g class="anatomia__punto" data-n="3" transform="translate(870 690)"><circle r="22"/><circle r="9"/></g>
-						</g>
-						<!-- Pueblo -->
-						<g fill="#16263c"><path d="M560 846h18v-14l9-8 9 8v14h10v-20l10-9 10 9v20h12v-12l8-7 8 7v12Z"/></g>
-						<text x="560" y="884" fill="#c9d6e3" font-family="Inter, sans-serif" font-size="20" font-weight="600">Pradollano · 2.100 m</text>
-					</svg>
-
-					<ol class="fichas" role="list">
-						<li class="ficha-pista ficha-pista--negra es-activa" id="pista-veleta" data-n="0">
-							<p class="ficha-pista__num" aria-hidden="true">01</p>
-							<h3 class="ficha-pista__nombre">Veleta <span class="etiqueta etiqueta--negra">Negra</span></h3>
-							<p class="ficha-pista__lema">Pendiente fuerte, respuesta inmediata.</p>
-							<p>La parte alta de la estación, con más inclinación y viento. Solo con buen nivel y buenas condiciones.</p>
-							<p class="ficha-pista__datos"><span>Expertos</span><span>Telesilla Veleta</span><span>3.300 m</span></p>
-						</li>
-						<li class="ficha-pista ficha-pista--roja" id="pista-rio" data-n="1">
-							<p class="ficha-pista__num" aria-hidden="true">02</p>
-							<h3 class="ficha-pista__nombre">El Río <span class="etiqueta etiqueta--roja">Roja</span></h3>
-							<p class="ficha-pista__lema">Larga, técnica y con mucho ritmo.</p>
-							<p>La bajada hasta el pueblo. Un clásico para las clases de perfeccionamiento y el carving.</p>
-							<p class="ficha-pista__datos"><span>Nivel medio-alto</span><span>Telecabina Al-Andalus</span><span>2.650 m</span></p>
-						</li>
-						<li class="ficha-pista ficha-pista--azul" id="pista-laguna" data-n="2">
-							<p class="ficha-pista__num" aria-hidden="true">03</p>
-							<h3 class="ficha-pista__nombre">Laguna <span class="etiqueta etiqueta--azul">Azul</span></h3>
-							<p class="ficha-pista__lema">Ancha, estable y con margen.</p>
-							<p>Pistas amplias con buena nieve hasta tarde. Perfecta para pasar a los giros en paralelo.</p>
-							<p class="ficha-pista__datos"><span>Nivel medio</span><span>Telesilla Laguna</span><span>2.900 m</span></p>
-						</li>
-						<li class="ficha-pista ficha-pista--verde" id="pista-borreguiles" data-n="3">
-							<p class="ficha-pista__num" aria-hidden="true">04</p>
-							<h3 class="ficha-pista__nombre">Borreguiles <span class="etiqueta etiqueta--verde">Verde</span></h3>
-							<p class="ficha-pista__lema">Suave, tranquila, para empezar.</p>
-							<p>Una meseta amplia donde damos casi todas las clases de iniciación. Apta para principiantes.</p>
-							<p class="ficha-pista__datos"><span>Principiantes</span><span>Cintas y telecabina</span><span>2.650 m</span></p>
-						</li>
-					</ol>
-				</div>
+			<div class="lp__filtros" role="group" aria-label="Filtrar pistas por dificultad">
+				<button type="button" class="lp__filtro" data-filtro="todas" aria-pressed="true">Todas</button>
+				<button type="button" class="lp__filtro" data-filtro="negra" aria-pressed="false"><i class="lp__color lp__color--negra" aria-hidden="true"></i>Negras</button>
+				<button type="button" class="lp__filtro" data-filtro="roja" aria-pressed="false"><i class="lp__color lp__color--roja" aria-hidden="true"></i>Rojas</button>
+				<button type="button" class="lp__filtro" data-filtro="azul" aria-pressed="false"><i class="lp__color lp__color--azul" aria-hidden="true"></i>Azules</button>
+				<button type="button" class="lp__filtro" data-filtro="verde" aria-pressed="false"><i class="lp__color lp__color--verde" aria-hidden="true"></i>Verdes</button>
 			</div>
-		</div>
 
-		<div class="envoltura">
-			<dl class="pista__datos aparece">
-				<div><dt>Cota</dt><dd>2.100 a 3.300 m</dd></div>
-				<div><dt>Temporada</dt><dd>Noviembre a abril</dd></div>
-				<div><dt>Punto de encuentro</dt><dd>Plaza de Andalucía, Pradollano</dd></div>
-			</dl>
+			<div class="lp__mapa" data-lp-mapa>
+				<svg class="lp__svg" viewBox="0 0 1200 700" role="group" aria-label="Mapa ilustrado de las pistas de Sierra Nevada">
+					<defs>
+						<linearGradient id="lp-cielo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9cc3e6"/><stop offset="1" stop-color="#e8f1f8"/></linearGradient>
+						<linearGradient id="lp-cumbres" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4f7fa"/><stop offset=".5" stop-color="#aab8c7"/><stop offset="1" stop-color="#8496aa"/></linearGradient>
+						<linearGradient id="lp-ladera" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".7" stop-color="#e6eef5"/><stop offset="1" stop-color="#cbdbe8"/></linearGradient>
+						<linearGradient id="lp-sombra" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5a7391" stop-opacity="0"/><stop offset="1" stop-color="#5a7391" stop-opacity=".22"/></linearGradient>
+					</defs>
+					<rect width="1200" height="700" fill="url(#lp-cielo)"/>
+
+					<!-- Capa 1: cumbres lejanas -->
+					<g class="lp__capa" data-profundidad="0.3" aria-hidden="true">
+						<path d="M-40 330 L120 250 L230 180 L300 95 L370 170 L470 210 L560 160 L640 205 L760 150 L860 70 L940 140 L1060 160 L1240 260 L1240 420 L-40 420 Z" fill="url(#lp-cumbres)"/>
+						<text class="lp__cima" x="300" y="80" text-anchor="middle">Veleta · 3.398 m</text>
+						<text class="lp__cima" x="860" y="55" text-anchor="middle">Mulhacén · 3.481 m</text>
+					</g>
+
+					<!-- Capa 2: ladera media con las pistas -->
+					<g class="lp__capa" data-profundidad="0.6">
+						<path d="M-40 640 L-40 360 L140 300 L300 115 L420 230 L520 270 L640 140 L760 210 L870 200 L960 205 L1080 300 L1240 380 L1240 640 Z" fill="url(#lp-ladera)" aria-hidden="true"/>
+						<path d="M300 115 L420 230 L520 270 L470 520 L360 600 Z M960 205 L1080 300 L1240 380 L1240 640 L1040 600 Z" fill="url(#lp-sombra)" aria-hidden="true"/>
+						<g class="lp__zonas" aria-hidden="true">
+							<text x="120" y="300">Veleta</text>
+							<text x="640" y="128">Laguna de las Yeguas</text>
+							<text x="600" y="430" class="lp__zona--destacada">Borreguiles</text>
+							<text x="1170" y="200" text-anchor="end">Loma de Dílar</text>
+							<text x="690" y="530">Río</text>
+						</g>
+						<g class="lp__pistas" data-lp-pistas></g>
+					</g>
+
+					<!-- Capa 3: primer plano con Pradollano -->
+					<g class="lp__capa" data-profundidad="1" aria-hidden="true">
+						<path d="M-40 700 L-40 630 C 200 600, 380 650, 560 628 S 900 600, 1240 640 L1240 700 Z" fill="#16263c"/>
+						<g fill="#0e1a2b"><path d="M60 650 72 616 84 650Z M90 655 104 612 118 655Z M1080 650 1094 610 1108 650Z M1115 658 1130 618 1145 658Z M1150 650 1162 620 1174 650Z"/></g>
+						<g fill="#e8f1f8"><path d="M520 636h14v-12l8-7 8 7v12h8v-18l9-8 9 8v18h10v-10l7-6 7 6v10Z"/></g>
+						<text class="lp__pueblo" x="565" y="672" text-anchor="middle">Pradollano · 2.100 m</text>
+					</g>
+				</svg>
+				<div class="lp__tooltip" data-lp-tooltip hidden></div>
+			</div>
+
+			<p class="lp__deslizar" aria-hidden="true">Desliza el mapa para verlo entero →</p>
+			<ul class="lp__leyenda" aria-label="Leyenda de colores">
+				<li><i class="lp__color lp__color--verde" aria-hidden="true"></i>Verde: muy fácil, para empezar</li>
+				<li><i class="lp__color lp__color--azul" aria-hidden="true"></i>Azul: fácil</li>
+				<li><i class="lp__color lp__color--roja" aria-hidden="true"></i>Roja: intermedia</li>
+				<li><i class="lp__color lp__color--negra" aria-hidden="true"></i>Negra: difícil, solo expertos</li>
+			</ul>
+
+			<!-- Las mismas fichas en texto, para lectores de pantalla -->
+			<ul class="sr-only" data-lp-lista aria-label="Lista de pistas"></ul>
+
+			<aside class="lp__panel" data-lp-panel role="dialog" aria-modal="false" aria-labelledby="lp-panel-titulo" hidden>
+				<button type="button" class="lp__cerrar" data-lp-cerrar aria-label="Cerrar ficha">×</button>
+				<p class="lp__panel-nivel" data-lp-nivel></p>
+				<h3 id="lp-panel-titulo" class="lp__panel-titulo" tabindex="-1"></h3>
+				<p class="lp__panel-frase" data-lp-frase></p>
+				<dl class="lp__panel-datos">
+					<div><dt>Zona</dt><dd data-lp-zona></dd></div>
+					<div><dt>Longitud</dt><dd data-lp-longitud></dd></div>
+					<div><dt>Desnivel</dt><dd data-lp-desnivel></dd></div>
+				</dl>
+			</aside>
 
 			<div class="pista__cta aparece">
-				<p class="pista__cta-titulo">¿Quieres esquiar aquí?</p>
+				<p class="pista__cta-titulo">¿Quieres bajar estas pistas conmigo?</p>
 				<a class="boton boton--llamar boton--grande" href="tel:+34600000000">
 					<svg class="icono" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1Z" fill="currentColor"/></svg>
 					<span>Llámame: <strong>600 000 000</strong></span>
 				</a>
-				<a class="pista__arriba" href="#clases">o vuelve a ver las clases <span aria-hidden="true">↑</span></a>
 			</div>
+			<p class="lp__aviso">Mapa ilustrativo basado en el plano oficial Cetursa. Verifica apertura de pistas y remontes en <a href="https://sierranevada.es/">sierranevada.es</a>.</p>
 		</div>
 	</section>
 </main>
@@ -351,5 +337,6 @@
 </a>
 
 <script src="assets/js/main.js" defer></script>
+<script src="assets/js/la-pista.js" defer></script>
 </body>
 </html>

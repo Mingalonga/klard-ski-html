@@ -237,57 +237,7 @@ ul[role="list"], ol[role="list"] { list-style: none; margin: 0; padding: 0; }
 .ficha__nota { margin-top: 0.75rem; font-size: 0.9rem; color: var(--c-muted); font-style: italic; }
 
 /* ---------- 4. La pista ---------- */
-.pista { position: relative; background: linear-gradient(180deg, var(--c-ink) 0%, var(--c-ink-2) 60%, #1b3150 100%); color: #fff; padding-block: clamp(5rem, 10vw, 9rem); overflow: clip; }
-.pista__cabecera { max-width: 760px; }
-.pista__intro { color: #c9d6e3; margin-top: 1.5rem; }
 
-/* Ficha técnica de la pista: cada punto del monte es una pista */
-.anatomia { position: relative; height: 420vh; margin-top: clamp(1rem, 3vw, 2rem); }
-.anatomia__fijo { position: sticky; top: var(--cab-h); height: calc(100vh - var(--cab-h)); display: grid; place-items: center; padding-inline: var(--margen); }
-.anatomia__escena { position: relative; width: min(100%, 1400px, (100vh - var(--cab-h) - 2rem) * 16 / 9); aspect-ratio: 16 / 9; container-type: inline-size; }
-.anatomia__monte { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-.anatomia__macizo { filter: drop-shadow(0 30px 40px rgb(0 0 0 / 0.35)); }
-.anatomia__trazo { opacity: 0.3; transition: opacity 0.5s, stroke-width 0.5s; }
-.anatomia__trazo.es-activo { opacity: 1; stroke-width: 15; }
-.anatomia__guia { stroke-dasharray: 700; stroke-dashoffset: 700; opacity: 0.4; transition: stroke-dashoffset 0.9s var(--ease), opacity 0.4s; }
-.anatomia__guia.es-activa { stroke-dashoffset: 0; opacity: 1; }
-.anatomia__punto circle:first-child { fill: rgb(255 255 255 / 0.18); stroke: #fff; stroke-width: 2; transition: transform 0.4s var(--ease); }
-.anatomia__punto circle:last-child { fill: #fff; }
-.anatomia__punto.es-activo circle:first-child { fill: var(--c-energy); transform: scale(1.35); }
-.anatomia__punto.es-activo { animation: latido-svg 1.6s ease-in-out infinite; }
-@keyframes latido-svg { 50% { opacity: 0.75; } }
-
-.fichas { position: absolute; inset: 0; pointer-events: none; }
-.ficha-pista {
-	position: absolute;
-	width: 25%;
-	opacity: 0.32;
-	transform: translateY(10px);
-	transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
-	font-size: clamp(0.95rem, 1.25cqi, 1.15rem);
-	line-height: 1.5;
-}
-.ficha-pista.es-activa { opacity: 1; transform: none; }
-.ficha-pista[data-n="0"] { left: 2%; top: 13%; }
-.ficha-pista[data-n="1"] { left: 2%; top: 58%; }
-.ficha-pista[data-n="2"] { right: 2%; top: 26%; text-align: right; }
-.ficha-pista[data-n="3"] { right: 2%; top: 66%; text-align: right; }
-.ficha-pista p { margin: 0 0 0.5em; color: #dbe4ee; }
-.ficha-pista__num { font: 800 0.95em var(--f-head); color: var(--c-glacier-light) !important; letter-spacing: 0.1em; }
-.ficha-pista__nombre { font-size: clamp(1.4rem, 2.2cqi, 2.1rem); font-weight: 800; text-transform: uppercase; margin-bottom: 0.3em; display: flex; align-items: center; gap: 0.5em; flex-wrap: wrap; }
-.ficha-pista[data-n="2"] .ficha-pista__nombre, .ficha-pista[data-n="3"] .ficha-pista__nombre { justify-content: flex-end; }
-.ficha-pista__lema { font-weight: 600; color: #fff !important; }
-.ficha-pista__datos { display: flex; flex-wrap: wrap; gap: 0.3em 0.9em; font-size: 0.85em; color: #a9bccf !important; text-transform: uppercase; letter-spacing: 0.06em; }
-.ficha-pista[data-n="2"] .ficha-pista__datos, .ficha-pista[data-n="3"] .ficha-pista__datos { justify-content: flex-end; }
-.etiqueta { font: 700 0.42em/1 var(--f-body); letter-spacing: 0.12em; padding: 0.55em 0.8em; border-radius: 999px; color: #fff; }
-.etiqueta--negra { background: #000; box-shadow: inset 0 0 0 1.5px #fff; }
-.etiqueta--roja { background: #c5221f; }
-.etiqueta--azul { background: var(--c-glacier); }
-.etiqueta--verde { background: #17733e; }
-
-.pista__datos { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem 4rem; margin: clamp(2rem, 5vw, 4rem) 0 0; text-align: center; }
-.pista__datos dt { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--c-glacier-light); }
-.pista__datos dd { margin: 0; font-weight: 600; }
 
 .pista__cta { margin-top: clamp(3rem, 7vw, 6rem); text-align: center; display: flex; flex-direction: column; align-items: center; gap: 1.25rem; }
 .pista__cta-titulo { font: 800 var(--fs-h2)/1 var(--f-head); text-transform: uppercase; margin: 0; }
@@ -318,20 +268,6 @@ ul[role="list"], ol[role="list"] { list-style: none; margin: 0; padding: 0; }
 .js .tarjeta.aparece.es-visible:hover { transform: translateY(-8px); }
 
 /* ---------- Responsive ---------- */
-/* Ficha técnica en pantallas estrechas: el monte queda fijo arriba y las fichas pasan por debajo */
-@media (max-width: 900px) {
-	.anatomia { height: auto; }
-	.anatomia__fijo { position: static; height: auto; display: block; padding-inline: 0; }
-	.anatomia__escena { width: 100%; aspect-ratio: auto; }
-	.anatomia__monte { position: sticky; top: var(--cab-h); z-index: 1; height: 42vh; height: 42svh; width: 100%; background: linear-gradient(180deg, var(--c-ink) 80%, rgb(14 26 43 / 0)); }
-	.anatomia__guias { display: none; }
-	.fichas { position: static; pointer-events: auto; padding: 1rem var(--margen) 0; display: grid; gap: 1rem; }
-	.ficha-pista, .ficha-pista[data-n] { position: static; width: auto; text-align: left; font-size: 1.05rem; padding: 1.25rem; border-radius: var(--radio); background: rgb(255 255 255 / 0.04); border: 1px solid rgb(255 255 255 / 0.12); opacity: 0.5; min-height: 38vh; }
-	.ficha-pista.es-activa { opacity: 1; border-color: var(--c-glacier-light); background: rgb(255 255 255 / 0.08); }
-	.ficha-pista[data-n] .ficha-pista__nombre, .ficha-pista[data-n] .ficha-pista__datos { justify-content: flex-start; }
-	.ficha-pista__nombre { font-size: 1.7rem; }
-}
-
 @media (max-width: 1000px) {
 	.tarjetas { grid-template-columns: 1fr; max-width: 560px; }
 	.ficha { grid-template-columns: 1fr; }
@@ -379,10 +315,6 @@ ul[role="list"], ol[role="list"] { list-style: none; margin: 0; padding: 0; }
 	.lema__frases { gap: 1.5rem; }
 	.lema__frase { grid-area: auto; opacity: 1; transform: none; filter: none; font-size: clamp(1.8rem, 1rem + 3vw, 3.5rem); }
 	.lema__progreso { display: none; }
-	.anatomia { height: auto; }
-	.anatomia__fijo { position: relative; height: auto; top: 0; }
-	.anatomia__guia { stroke-dashoffset: 0; }
-	.ficha-pista { opacity: 1; }
 }
 
 /* ---------- Páginas legales ---------- */

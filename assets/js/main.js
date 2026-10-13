@@ -94,58 +94,12 @@
 		marcas.forEach(function (m, n) { m.classList.toggle('es-activa', n <= i); });
 	}
 
-	/* ---------- 4. Ficha técnica de la pista ---------- */
-	var anatomia = document.querySelector('[data-anatomia]');
-	var monte = anatomia.querySelector('.anatomia__monte');
-	var fichas = anatomia.querySelectorAll('.ficha-pista');
-	var partes = anatomia.querySelectorAll('.anatomia__trazo, .anatomia__guia, .anatomia__punto');
-	var estrecho = window.matchMedia('(max-width: 900px)');
-	var pistaActual = -1;
-
-	function activarPista(i) {
-		if (i === pistaActual) return;
-		pistaActual = i;
-		fichas.forEach(function (f, n) { f.classList.toggle('es-activa', n === i); });
-		partes.forEach(function (p) {
-			var activo = Number(p.getAttribute('data-n')) === i;
-			p.classList.toggle(p.classList.contains('anatomia__guia') ? 'es-activa' : 'es-activo', activo);
-		});
-	}
-
-	function encuadrarMonte() {
-		// En móvil solo se ve el monte, sin las fichas a los lados
-		monte.setAttribute('viewBox', estrecho.matches ? '430 70 740 830' : '0 0 1600 900');
-	}
-	estrecho.addEventListener('change', function () { encuadrarMonte(); pistaActual = -1; tick(); });
-	encuadrarMonte();
-
-	function actualizarPista() {
-		if (reducido) { activarPista(-1); fichas.forEach(function (f) { f.classList.add('es-activa'); }); return; }
-		if (estrecho.matches) {
-			// La ficha más cercana a la mitad inferior de la pantalla manda
-			var objetivo = window.innerHeight * 0.7;
-			var mejor = 0, distancia = Infinity;
-			fichas.forEach(function (f, n) {
-				var r = f.getBoundingClientRect();
-				var d = Math.abs(r.top + r.height / 2 - objetivo);
-				if (d < distancia) { distancia = d; mejor = n; }
-			});
-			activarPista(mejor);
-			return;
-		}
-		var caja = anatomia.getBoundingClientRect();
-		var recorrido = caja.height - window.innerHeight;
-		var avance = Math.min(0.999, Math.max(0, -caja.top / recorrido));
-		activarPista(Math.floor(avance * fichas.length));
-	}
-
 	/* ---------- Bucle de scroll ---------- */
 	var pendiente = false;
 	function tick() {
 		pendiente = false;
 		alHacerScroll();
 		actualizarLema();
-		actualizarPista();
 	}
 	window.addEventListener('scroll', function () {
 		if (!pendiente) { pendiente = true; requestAnimationFrame(tick); }
