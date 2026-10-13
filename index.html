@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="es">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Klard Ski · Clases de esquí en Sierra Nevada</title>
+	<meta name="description" content="Clases de esquí en Sierra Nevada para principiantes, perfeccionamiento y clases privadas. Reserva por teléfono.">
+	<meta name="theme-color" content="#0e1a2b">
+	<link rel="preload" href="assets/fonts/montserrat-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
+	<link rel="preload" href="assets/fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+	<link rel="stylesheet" href="assets/css/styles.css">
+	<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+	<script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+<a class="skip" href="#contenido">Saltar al contenido</a>
+
+<!--
+	DATOS DE RELLENO: el teléfono +34 600 000 000, el email, el nombre del
+	profesor, las certificaciones, los horarios y los datos de las pistas son
+	provisionales. Están señalados con «relleno» en el README.
+-->
+
+<header class="cabecera" data-cabecera>
+	<div class="cabecera__in">
+		<a class="logo" href="#inicio" aria-label="Klard Ski, ir al inicio">
+			<svg class="logo__icono" viewBox="0 0 32 32" aria-hidden="true"><path d="M2 26 12 9l5 8 4-6 9 15Z" fill="currentColor"/><path d="m12 9 2.6 4.4-2.6-1.2-2.4 1.4Z" fill="#fff"/></svg>
+			<span>Klard Ski</span>
+		</a>
+		<nav class="menu" aria-label="Principal">
+			<ul>
+				<li><a href="#clases">Clases</a></li>
+				<li><a href="#profesor">El profesor</a></li>
+				<li><a href="#pista">La pista</a></li>
+				<li><a href="#contacto">Contacto</a></li>
+			</ul>
+		</nav>
+		<a class="boton boton--llamar boton--peque" href="tel:+34600000000">
+			<svg class="icono" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1Z" fill="currentColor"/></svg>
+			<span class="solo-escritorio">600 000 000</span><span class="solo-movil">Llamar</span>
+		</a>
+	</div>
+</header>
+
+<main id="contenido">
+
+	<!-- 1. PORTADA -->
+	<section class="hero" id="inicio" aria-labelledby="hero-titulo">
+		<div class="hero__fondo" data-carrusel>
+			<!-- Sustituir por fotos reales (o un <video autoplay muted loop playsinline>) -->
+			<figure class="hero__slide es-activa">
+				<img src="assets/img/hero-manana.svg" alt="Ilustración: pistas nevadas por la mañana con el sol sobre las cumbres" fetchpriority="high">
+			</figure>
+			<figure class="hero__slide">
+				<img src="assets/img/hero-mediodia.svg" alt="Ilustración: la estación a mediodía con el cielo despejado" loading="lazy">
+			</figure>
+			<figure class="hero__slide">
+				<img src="assets/img/hero-tarde.svg" alt="Ilustración: atardecer rosado sobre la sierra" loading="lazy">
+			</figure>
+		</div>
+		<div class="hero__velo" aria-hidden="true"></div>
+
+		<div class="hero__contenido envoltura">
+			<p class="antetitulo antetitulo--claro">Profesor titulado · Temporada 2026/27</p>
+			<h1 id="hero-titulo" class="hero__titulo">Clases de esquí<br>en <em>Sierra Nevada</em></h1>
+			<p class="hero__entradilla">Del primer día con esquís a bajar la roja con soltura. Clases cercanas, con calma y en grupos pequeños. Llama y lo cuadramos en un minuto.</p>
+			<div class="hero__acciones">
+				<a class="boton boton--llamar boton--grande" href="tel:+34600000000">
+					<svg class="icono" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1Z" fill="currentColor"/></svg>
+					<span>Llamar al <strong>600 000 000</strong></span>
+				</a>
+				<a class="boton boton--fantasma" href="#clases">Ver las clases <span aria-hidden="true">↓</span></a>
+			</div>
+			<p class="hero__nota">¿Prefieres escribir? <a href="https://wa.me/34600000000">WhatsApp</a></p>
+		</div>
+
+		<div class="hero__controles envoltura">
+			<div class="puntos" role="group" aria-label="Fotos de la portada">
+				<button type="button" class="punto es-activo" aria-label="Foto 1" aria-current="true"></button>
+				<button type="button" class="punto" aria-label="Foto 2"></button>
+				<button type="button" class="punto" aria-label="Foto 3"></button>
+			</div>
+			<button type="button" class="pausa" data-pausa aria-pressed="false">
+				<span class="pausa__icono" aria-hidden="true"></span><span class="pausa__texto">Pausar fotos</span>
+			</button>
+		</div>
+	</section>
+
+	<!-- 2. LAS CLASES -->
+	<section class="clases" id="clases" aria-labelledby="clases-titulo">
+		<div class="envoltura">
+			<div class="clases__cabecera aparece">
+				<p class="antetitulo">Las clases</p>
+				<h2 id="clases-titulo" class="titulo-seccion">Una clase para cada momento<br>de tu esquí</h2>
+				<p class="clases__intro">Precio por clase, no por persona: el mismo profesor para 1 a 4 personas del mismo nivel. Material de alquiler aparte.</p>
+			</div>
+
+			<ul class="tarjetas" role="list">
+				<li class="tarjeta aparece">
+					<div class="tarjeta__imagen">
+						<img src="assets/img/clase-iniciacion.svg" alt="Ilustración: pendiente suave con mucha nieve, ideal para empezar" loading="lazy" width="1600" height="1000">
+						<span class="chip chip--verde">Nivel 0</span>
+					</div>
+					<div class="tarjeta__cuerpo">
+						<h3>Iniciación</h3>
+						<p class="tarjeta__para"><strong>Para quién:</strong> tu primera vez, o vuelves tras años sin esquiar. Niños desde 4 años.</p>
+						<ul class="tarjeta__datos" role="list">
+							<li><span>Duración</span><strong>2 horas</strong></li>
+							<li><span>Precio</span><strong>desde 110 €</strong></li>
+						</ul>
+						<a class="boton boton--llamar boton--bloque" href="tel:+34600000000">Reservar por teléfono</a>
+					</div>
+				</li>
+				<li class="tarjeta tarjeta--destacada aparece">
+					<div class="tarjeta__imagen">
+						<img src="assets/img/clase-perfeccionamiento.svg" alt="Ilustración: cumbres al atardecer y una huella de esquí en curvas" loading="lazy" width="1600" height="1000">
+						<span class="chip chip--naranja">La más pedida</span>
+					</div>
+					<div class="tarjeta__cuerpo">
+						<h3>Perfeccionamiento</h3>
+						<p class="tarjeta__para"><strong>Para quién:</strong> ya bajas azules y quieres girar en paralelo, coger confianza en rojas o empezar con el carving.</p>
+						<ul class="tarjeta__datos" role="list">
+							<li><span>Duración</span><strong>3 horas</strong></li>
+							<li><span>Precio</span><strong>desde 165 €</strong></li>
+						</ul>
+						<a class="boton boton--llamar boton--bloque" href="tel:+34600000000">Reservar por teléfono</a>
+					</div>
+				</li>
+				<li class="tarjeta aparece">
+					<div class="tarjeta__imagen">
+						<img src="assets/img/clase-privada.svg" alt="Ilustración: montañas azules con cielo despejado" loading="lazy" width="1600" height="1000">
+						<span class="chip chip--azul">A tu medida</span>
+					</div>
+					<div class="tarjeta__cuerpo">
+						<h3>Clases privadas</h3>
+						<p class="tarjeta__para"><strong>Para quién:</strong> quieres al profesor solo para ti, o una jornada entera recorriendo la estación.</p>
+						<ul class="tarjeta__datos" role="list">
+							<li><span>Duración</span><strong>2 h a jornada</strong></li>
+							<li><span>Precio</span><strong>110 € a 345 €</strong></li>
+						</ul>
+						<a class="boton boton--llamar boton--bloque" href="tel:+34600000000">Reservar por teléfono</a>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</section>
+
+	<!-- 3. SOBRE EL PROFESOR: fondo fijo y frases que cambian al hacer scroll -->
+	<section class="profesor" id="profesor" aria-labelledby="profesor-titulo">
+		<div class="lema" data-lema>
+			<div class="lema__fijo">
+				<div class="lema__fondo" aria-hidden="true"></div>
+				<div class="lema__centro">
+					<h2 id="profesor-titulo" class="antetitulo antetitulo--claro">Sobre el profesor</h2>
+					<ol class="lema__frases" role="list">
+						<li class="lema__frase es-activa"><span>15 temporadas</span> enseñando en Sierra Nevada.</li>
+						<li class="lema__frase">Técnico Deportivo <span>titulado</span> en esquí alpino.</li>
+						<li class="lema__frase">La <span>seguridad</span> va siempre primero.</li>
+						<li class="lema__frase">Grupos de <span>4 personas</span> como máximo.</li>
+						<li class="lema__frase">Que vuelvas con <span>ganas de más</span>.</li>
+					</ol>
+				</div>
+				<div class="lema__progreso" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+			</div>
+		</div>
+
+		<div class="ficha envoltura">
+			<div class="ficha__foto aparece">
+				<div class="ficha__disco" aria-hidden="true"></div>
+				<img src="assets/img/klard-salto.webp" alt="Klard saltando con los esquís cruzados, con chaqueta verde y pantalón naranja" width="500" height="424" loading="lazy">
+			</div>
+			<div class="ficha__texto aparece">
+				<h3 class="ficha__titulo">Hola, soy Klard</h3>
+				<p>Nací a una hora de la sierra y llevo esquiando desde que tengo memoria. Desde 2011 enseño a niños, a adultos que empiezan de cero y a quien quiere pulir su técnica. Me gusta ir a tu ritmo: nadie se queda atrás y nadie se aburre.</p>
+				<p>Antes de cada clase te pregunto cómo esquías y qué quieres conseguir, y elegimos la zona de la estación que mejor encaja.</p>
+				<dl class="ficha__cifras">
+					<div><dt>Años enseñando</dt><dd>15</dd></div>
+					<div><dt>Alumnos por clase</dt><dd>1–4</dd></div>
+					<div><dt>Idiomas</dt><dd>ES · EN</dd></div>
+				</dl>
+				<h4 class="ficha__subtitulo">Titulación y formación</h4>
+				<ul class="sellos" role="list">
+					<li class="sello"><span class="sello__marca" aria-hidden="true">TD2</span><span>Técnico Deportivo de nivel 2 en esquí alpino</span></li>
+					<li class="sello"><span class="sello__marca" aria-hidden="true">FAD</span><span>Federado en la Federación Andaluza de Deportes de Invierno</span></li>
+					<li class="sello"><span class="sello__marca" aria-hidden="true">+</span><span>Primeros auxilios en montaña, renovado cada temporada</span></li>
+					<li class="sello"><span class="sello__marca" aria-hidden="true">RC</span><span>Seguro de responsabilidad civil para la enseñanza</span></li>
+				</ul>
+				<p class="ficha__nota">Sustituir por los logos oficiales de cada federación o certificado.</p>
+			</div>
+		</div>
+	</section>
+
+	<!-- 4. LA PISTA: mapa pseudo-3D + la misma información en texto -->
+	<section class="pista" id="pista" aria-labelledby="pista-titulo">
+		<div class="envoltura">
+			<div class="pista__cabecera aparece">
+				<p class="antetitulo antetitulo--claro">Dónde damos las clases</p>
+				<h2 id="pista-titulo" class="titulo-seccion">La pista</h2>
+				<p class="pista__intro">Sierra Nevada tiene sitio para todos los niveles. Empezamos en la zona más tranquila y subimos cuando tú quieras. Toca un punto del mapa para ver cada zona.</p>
+			</div>
+
+			<div class="mapa" data-mapa>
+				<div class="mapa__escena" data-escena>
+					<svg class="mapa__capa mapa__capa--fondo" viewBox="0 0 1200 700" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
+						<defs>
+							<linearGradient id="mf-lejos" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".45" stop-color="#8cb2d6"/><stop offset=".8" stop-color="#3b6390" stop-opacity=".6"/><stop offset="1" stop-color="#3b6390" stop-opacity="0"/></linearGradient>
+						</defs>
+						<path d="M0 360 L120 250 L210 300 L330 170 L430 260 L560 150 L700 230 L860 120 L980 230 L1090 170 L1200 260 L1200 600 L0 600 Z" fill="url(#mf-lejos)" opacity=".7"/>
+					</svg>
+
+					<svg class="mapa__capa mapa__capa--monte" viewBox="0 0 1200 700" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
+						<defs>
+							<linearGradient id="m-nieve" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".55" stop-color="#e3eef6"/><stop offset="1" stop-color="#b9d0e4"/></linearGradient>
+							<linearGradient id="m-sombra" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#16263c" stop-opacity=".35"/><stop offset="1" stop-color="#16263c" stop-opacity="0"/></linearGradient>
+						</defs>
+						<ellipse cx="615" cy="668" rx="600" ry="26" fill="#060d18" opacity=".45"/>
+						<!-- Macizo principal: el Veleta arriba, Pradollano abajo a la izquierda -->
+						<path d="M40 660 L160 520 L260 470 L380 360 L470 330 L560 300 L650 210 L760 90 L820 70 L900 150 L990 220 L1080 300 L1160 420 L1190 660 Z" fill="url(#m-nieve)"/>
+						<path d="M820 70 L900 150 L990 220 L1080 300 L1160 420 L1190 660 L960 660 L900 420 L860 250 Z" fill="url(#m-sombra)"/>
+						<path d="M760 90 L700 250 L640 300 L650 210 Z" fill="#16263c" opacity=".12"/>
+						<!-- Pueblo -->
+						<g fill="#16263c">
+							<rect x="150" y="600" width="26" height="22"/><rect x="182" y="592" width="22" height="30"/><rect x="210" y="604" width="30" height="18"/><rect x="246" y="596" width="18" height="26"/>
+							<path d="M148 600 163 588 178 600Z M180 592 193 580 206 592Z M208 604 225 593 242 604Z M244 596 255 586 266 596Z"/>
+						</g>
+						<!-- Árboles -->
+						<g fill="#173049">
+							<path d="M90 640 100 610 110 640Z M115 645 125 612 135 645Z M300 640 310 612 320 640Z M330 650 341 618 352 650Z M1010 630 1020 600 1030 630Z M1040 645 1051 610 1062 645Z M1080 640 1090 612 1100 640Z"/>
+						</g>
+						<!-- Remontes: líneas discontinuas -->
+						<g class="remonte" fill="none" stroke="#16263c" stroke-width="3" stroke-dasharray="2 9" stroke-linecap="round">
+							<path d="M230 590 L520 350"/>
+							<path d="M560 330 L780 110"/>
+							<path d="M720 470 L930 230"/>
+						</g>
+						<g fill="#16263c"><circle cx="230" cy="590" r="7"/><circle cx="520" cy="350" r="7"/><circle cx="560" cy="330" r="6"/><circle cx="780" cy="110" r="6"/><circle cx="720" cy="470" r="6"/><circle cx="930" cy="230" r="6"/></g>
+						<!-- Pistas -->
+						<g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="9">
+							<path class="trazo" data-zona="borreguiles" stroke="#1f9d55" d="M470 360 C 520 390, 600 370, 620 410 S 560 470, 600 500"/>
+							<path class="trazo" data-zona="laguna" stroke="#1f6fb2" d="M930 240 C 900 300, 960 340, 900 400 S 820 450, 760 470"/>
+							<path class="trazo" data-zona="rio" stroke="#d93025" d="M640 260 C 600 330, 480 400, 430 460 S 330 540, 260 590"/>
+							<path class="trazo" data-zona="veleta" stroke="#0e1a2b" d="M800 90 C 790 150, 740 180, 720 230 S 690 290, 650 300"/>
+						</g>
+					</svg>
+
+					<div class="mapa__capa mapa__capa--pines">
+						<button type="button" class="pin pin--verde" style="--x:51%;--y:60%" data-zona="borreguiles" aria-controls="zona-borreguiles"><span class="pin__punto" aria-hidden="true"></span><span class="pin__nombre">Borreguiles</span></button>
+						<button type="button" class="pin pin--azul" style="--x:76%;--y:47%" data-zona="laguna" aria-controls="zona-laguna"><span class="pin__punto" aria-hidden="true"></span><span class="pin__nombre">Laguna</span></button>
+						<button type="button" class="pin pin--roja" style="--x:31%;--y:72%" data-zona="rio" aria-controls="zona-rio"><span class="pin__punto" aria-hidden="true"></span><span class="pin__nombre">El Río</span></button>
+						<button type="button" class="pin pin--negra" style="--x:65%;--y:24%" data-zona="veleta" aria-controls="zona-veleta"><span class="pin__punto" aria-hidden="true"></span><span class="pin__nombre">Veleta</span></button>
+						<span class="mapa__pueblo" style="--x:17%;--y:93%">Pradollano · 2.100 m</span>
+					</div>
+
+					<img class="mapa__capa mapa__klard" src="assets/img/klard-salto.webp" alt="" aria-hidden="true" width="500" height="424" loading="lazy">
+				</div>
+				<p class="mapa__leyenda" aria-hidden="true">
+					<span><i class="l l--verde"></i>Verde</span><span><i class="l l--azul"></i>Azul</span><span><i class="l l--roja"></i>Roja</span><span><i class="l l--negra"></i>Negra</span><span><i class="l l--remonte"></i>Remonte</span>
+				</p>
+			</div>
+
+			<div class="zonas">
+				<div class="zonas__general aparece">
+					<h3>La estación en datos</h3>
+					<dl>
+						<div><dt>Cota</dt><dd>2.100 a 3.300 m</dd></div>
+						<div><dt>Temporada</dt><dd>De finales de noviembre a abril</dd></div>
+						<div><dt>Punto de encuentro</dt><dd>Plaza de Andalucía, junto a la telecabina Al-Andalus</dd></div>
+						<div><dt>Para principiantes</dt><dd>Sí, zona Borreguiles con cintas y pistas verdes</dd></div>
+					</dl>
+				</div>
+				<ul class="zonas__lista" role="list">
+					<li class="zona aparece" id="zona-borreguiles" data-zona="borreguiles">
+						<h3><i class="l l--verde" aria-hidden="true"></i>Borreguiles <span class="zona__nivel">Verde · Principiantes</span></h3>
+						<p>Una meseta amplia y tranquila a 2.650 m. Aquí damos casi todas las clases de iniciación.</p>
+						<p class="zona__remonte"><strong>Remontes:</strong> telecabina Al-Andalus desde Pradollano y cintas transportadoras.</p>
+					</li>
+					<li class="zona aparece" id="zona-laguna" data-zona="laguna">
+						<h3><i class="l l--azul" aria-hidden="true"></i>Laguna de las Yeguas <span class="zona__nivel">Azul · Nivel medio</span></h3>
+						<p>Pistas anchas con buena nieve hasta tarde. Perfecta para pasar a los giros en paralelo.</p>
+						<p class="zona__remonte"><strong>Remontes:</strong> telesilla Laguna.</p>
+					</li>
+					<li class="zona aparece" id="zona-rio" data-zona="rio">
+						<h3><i class="l l--roja" aria-hidden="true"></i>El Río <span class="zona__nivel">Roja · Con soltura</span></h3>
+						<p>La bajada larga hasta el pueblo. Un clásico para las clases de perfeccionamiento.</p>
+						<p class="zona__remonte"><strong>Remontes:</strong> se vuelve a subir con la telecabina Al-Andalus.</p>
+					</li>
+					<li class="zona aparece" id="zona-veleta" data-zona="veleta">
+						<h3><i class="l l--negra" aria-hidden="true"></i>Veleta <span class="zona__nivel">Negra · Expertos</span></h3>
+						<p>La parte alta, con más pendiente y viento. Solo con buen nivel y buenas condiciones.</p>
+						<p class="zona__remonte"><strong>Remontes:</strong> telesilla Veleta.</p>
+					</li>
+				</ul>
+			</div>
+
+			<div class="pista__cta aparece">
+				<p class="pista__cta-titulo">¿Quieres esquiar aquí?</p>
+				<a class="boton boton--llamar boton--grande" href="tel:+34600000000">
+					<svg class="icono" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1Z" fill="currentColor"/></svg>
+					<span>Llámame: <strong>600 000 000</strong></span>
+				</a>
+				<a class="pista__arriba" href="#clases">o vuelve a ver las clases <span aria-hidden="true">↑</span></a>
+			</div>
+		</div>
+	</section>
+</main>
+
+<!-- 5. PIE -->
+<footer class="pie" id="contacto">
+	<div class="envoltura">
+		<div class="pie__llamada">
+			<h2 class="pie__titulo">Reserva tu clase</h2>
+			<a class="pie__telefono" href="tel:+34600000000">+34 600 000 000</a>
+			<p>Llamadas de 9:00 a 20:00. Si no lo cojo, te devuelvo la llamada en cuanto bajo de la pista.</p>
+		</div>
+		<div class="pie__columnas">
+			<div>
+				<h2 class="pie__h">Contacto</h2>
+				<ul role="list">
+					<li><a href="tel:+34600000000">+34 600 000 000</a></li>
+					<li><a href="https://wa.me/34600000000">WhatsApp</a></li>
+					<li><a href="mailto:hola@example.com">hola@example.com</a></li>
+				</ul>
+			</div>
+			<div>
+				<h2 class="pie__h">Zona</h2>
+				<p>Plaza de Andalucía, Pradollano<br>18196 Sierra Nevada (Granada)</p>
+				<p><a href="https://www.google.com/maps/search/?api=1&amp;query=Plaza+de+Andalucia+Pradollano+Sierra+Nevada">Ver en Google Maps</a></p>
+			</div>
+			<div>
+				<h2 class="pie__h">Temporada</h2>
+				<p>De finales de noviembre a abril, según la nieve.<br>Clases todos los días de 9:00 a 17:00.</p>
+			</div>
+			<div>
+				<h2 class="pie__h">Redes</h2>
+				<ul role="list">
+					<li><a href="https://www.instagram.com/">Instagram</a></li>
+					<li><a href="https://www.youtube.com/">YouTube</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="pie__legal">
+			<p>© 2026 Klard Ski</p>
+			<ul role="list">
+				<li><a href="aviso-legal.html">Aviso legal</a></li>
+				<li><a href="privacidad.html">Política de privacidad</a></li>
+			</ul>
+			<p>Esta web no usa cookies.</p>
+		</div>
+	</div>
+</footer>
+
+<!-- Botón fijo de llamada en móvil -->
+<a class="barra-llamar" href="tel:+34600000000" data-barra>
+	<svg class="icono" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1Z" fill="currentColor"/></svg>
+	Llamar para reservar
+</a>
+
+<script src="assets/js/main.js" defer></script>
+</body>
+</html>
