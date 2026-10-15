@@ -23,16 +23,16 @@ python3 -m http.server 8000
 
 ## Secciones
 
-1. **Portada**: carrusel de tres fondos con zoom lento, titular, botón de llamada y «Ver las clases ↓». Se puede pausar.
-2. **Clases y equipación**: tres tarjetas (iniciación, perfeccionamiento, privadas) con duración, precio orientativo, a quién va dirigida y «Reservar por teléfono». Debajo, «Qué llevar a la clase» con lo imprescindible y lo recomendado.
+1. **Portada**: carrusel de tres fondos con zoom lento, titular, botón de llamada, botón de WhatsApp con el mensaje ya escrito y el horario de llamadas. «Pausar fotos» para también el zoom. Las fotos 2 y 3 van en `data-src` y se descargan cuando la página ya ha cargado.
+2. **Clases y equipación**: tres tarjetas (iniciación, perfeccionamiento, privadas) con duración, precio orientativo, a quién va dirigida y «Llamar para reservar». Debajo, «Qué llevar a la clase» con lo imprescindible y lo recomendado.
 3. **Sobre el profesor**: fondo fijo con frases que cambian al hacer scroll, y después la ficha con el sprite de Klard, cifras y titulaciones.
 4. **El pueblo y las pistas**: descripción del pueblo y sus servicios, mapa de Google Maps (solo se carga al pulsar «Ver el mapa», para que la web siga sin cookies hasta entonces) y la estación en cifras (pistas, km, remontes, cota, pistas por nivel y enlace al parte de nieve).
-5. **La pista**: ficha técnica al estilo «producto con puntos»: el monte en el centro y cada punto es una pista (negra, roja, azul, verde) con su ficha y una línea guía. Al hacer scroll se va iluminando una pista tras otra; en móvil el monte queda fijo arriba y las fichas pasan por debajo. Cierra con «¿Quieres esquiar aquí? Llámame».
+5. **La pista**: ficha técnica al estilo «producto con puntos»: el monte en el centro y cada punto es una pista con su ficha y una línea guía, ordenadas de la más fácil a la más difícil (verde, azul, roja, negra). Ficha, trazo, guía y punto de cada pista comparten `data-n`; la posición de cada ficha en escritorio va por su clase de color (`.ficha-pista--verde`...). Al hacer scroll se va iluminando una pista tras otra; en móvil el monte queda fijo arriba y las fichas pasan por debajo. Cierra con «¿Quieres esquiar aquí?» y el botón de llamada.
 6. **Forfait y alquiler**: dos tarjetas lado a lado, cada una con su enlace de referido (abren en pestaña nueva con `rel="sponsored noopener noreferrer"`) y un aviso de enlaces de afiliado.
 7. **Contacto**: teléfono en grande y botones directos para llamar, WhatsApp, email e Instagram.
 8. **Pie**: contacto, zona con Google Maps, temporada, redes y enlaces legales.
 
-En móvil aparece una barra fija «Llamar para reservar» al salir de la portada. Con «reducir movimiento» activado en el sistema, todo se muestra sin animaciones.
+En móvil (hasta 800 px) el menú se abre con el botón de la cabecera, y al salir de la portada aparece una barra fija «Llamar para reservar» (hasta 760 px), que se oculta al llegar a «Contacto». Con «reducir movimiento» activado en el sistema, todo se muestra sin animaciones, también si se activa con la página abierta. Sin JavaScript, las frases del profesor y las fichas de la pista se ven todas.
 
 ## Pendiente antes de publicar (datos de relleno)
 

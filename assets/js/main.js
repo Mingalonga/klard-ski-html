@@ -2,39 +2,83 @@
 (function () {
 	'use strict';
 
-	var reducido = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+	// Compatibles con Safari antiguo: NodeList sin forEach y MediaQueryList sin addEventListener
+	function cada(lista, fn) { Array.prototype.forEach.call(lista, fn); }
+	function alCambiar(mq, fn) {
+		if (mq.addEventListener) mq.addEventListener('change', fn);
+		else if (mq.addListener) mq.addListener(fn);
+	}
 
-	/* ---------- Cabecera sólida y barra de llamada al salir de la portada ---------- */
+	var mqReducido = window.matchMedia('(prefers-reduced-motion: reduce)');
+	var reducido = mqReducido.matches;
+	// Mismo corte que styles.css para la ficha de la pista
+	var estrecho = window.matchMedia('(max-width: 900px)');
+
 	var cabecera = document.querySelector('[data-cabecera]');
 	var barra = document.querySelector('[data-barra]');
 	var hero = document.getElementById('inicio');
-	var pie = document.getElementById('contacto');
+	var contacto = document.getElementById('contacto');
 
-	function alHacerScroll() {
-		var y = window.scrollY;
-		var finHero = hero.offsetHeight - 80;
-		cabecera.classList.toggle('es-solida', y > finHero);
-		if (barra) {
-			// En el pie ya está el teléfono en grande: se oculta para no repetirlo
-			var enPie = pie.getBoundingClientRect().top < window.innerHeight * 0.8;
-			barra.classList.toggle('es-visible', y > finHero && !enPie);
-		}
+	// Medidas que solo cambian al redimensionar: se leen en medir(), no en cada frame
+	var m = { vh: 0, cabH: 0, finHero: 0 };
+	var MARGEN_CABECERA = 80; // la cabecera se vuelve sólida un poco antes de que acabe la portada
+
+	/* ---------- Menú en móvil ---------- */
+	var menuBoton = document.querySelector('[data-menu-boton]');
+
+	function abrirMenu(abrir) {
+		menuBoton.setAttribute('aria-expanded', String(abrir));
+		cabecera.classList.toggle('menu-abierto', abrir);
+	}
+	if (menuBoton) {
+		menuBoton.addEventListener('click', function () {
+			abrirMenu(menuBoton.getAttribute('aria-expanded') !== 'true');
+		});
+		cabecera.querySelector('.menu').addEventListener('click', function (e) {
+			if (e.target.closest('a')) abrirMenu(false);
+		});
+		document.addEventListener('keydown', function (e) {
+			if (e.key === 'Escape' && menuBoton.getAttribute('aria-expanded') === 'true') {
+				abrirMenu(false);
+				menuBoton.focus();
+			}
+		});
+	}
+
+	/* ---------- Cabecera sólida y barra de llamada al salir de la portada ---------- */
+	var cabeceraSolida = false;
+	var barraVisible = false;
+
+	function alHacerScroll(y, contactoArriba) {
+		var solida = y > m.finHero;
+		if (solida !== cabeceraSolida) { cabeceraSolida = solida; cabecera.classList.toggle('es-solida', solida); }
+		if (!barra) return;
+		// En «Contacto» ya está el teléfono en grande: se oculta para no repetirlo
+		var visible = solida && contactoArriba >= m.vh * 0.8;
+		if (visible !== barraVisible) { barraVisible = visible; barra.classList.toggle('es-visible', visible); }
 	}
 
 	/* ---------- 1. Carrusel de la portada ---------- */
-	var slides = document.querySelectorAll('.hero__slide');
-	var puntos = document.querySelectorAll('.punto');
-	var pausa = document.querySelector('[data-pausa]');
+	var carrusel = document.querySelector('[data-carrusel]');
+	var slides = carrusel.querySelectorAll('.hero__slide');
+	var puntos = hero.querySelectorAll('[data-punto]');
+	var pausa = hero.querySelector('[data-pausa]');
 	var actual = 0;
 	var temporizador = null;
+	var pausadoPorUsuario = false;
+	var heroALaVista = true;
 
+	// Las fotos 2 y 3 llevan data-src: se descargan después de la carga, sin competir con la primera
+	function cargar(img) {
+		var src = img.getAttribute('data-src');
+		if (src) { img.src = src; img.removeAttribute('data-src'); }
+	}
 	function ir(n) {
 		slides[actual].classList.remove('es-activa');
 		puntos[actual].classList.remove('es-activo');
 		puntos[actual].removeAttribute('aria-current');
 		actual = (n + slides.length) % slides.length;
-		var img = slides[actual].querySelector('img');
-		if (img.loading === 'lazy') img.loading = 'eager';
+		cargar(slides[actual].querySelector('img'));
 		slides[actual].classList.add('es-activa');
 		puntos[actual].classList.add('es-activo');
 		puntos[actual].setAttribute('aria-current', 'true');
@@ -42,21 +86,37 @@
 	function arrancar() { parar(); temporizador = setInterval(function () { ir(actual + 1); }, 6000); }
 	function parar() { clearInterval(temporizador); temporizador = null; }
 
-	puntos.forEach(function (p, i) {
+	// Solo pasa fotos si nadie lo ha pausado, la portada se ve y la pestaña está activa
+	function decidirCarrusel() {
+		var debe = !pausadoPorUsuario && heroALaVista && !document.hidden;
+		if (debe && !temporizador) arrancar();
+		else if (!debe && temporizador) parar();
+	}
+	// La pausa también congela el zoom lento de la foto (.es-pausado en styles.css)
+	function ponerPausa(pausado) {
+		pausadoPorUsuario = pausado;
+		if (pausado) pausa.setAttribute('data-pausado', '');
+		else pausa.removeAttribute('data-pausado');
+		pausa.querySelector('.pausa__texto').textContent = pausado ? 'Reanudar fotos' : 'Pausar fotos';
+		hero.classList.toggle('es-pausado', pausado);
+		decidirCarrusel();
+	}
+
+	cada(puntos, function (p, i) {
 		p.addEventListener('click', function () { ir(i); if (temporizador) arrancar(); });
 	});
-	pausa.addEventListener('click', function () {
-		var pausado = pausa.getAttribute('aria-pressed') === 'true';
-		pausa.setAttribute('aria-pressed', String(!pausado));
-		pausa.querySelector('.pausa__texto').textContent = pausado ? 'Pausar fotos' : 'Reanudar fotos';
-		pausado ? arrancar() : parar();
-	});
-	if (reducido) {
-		pausa.setAttribute('aria-pressed', 'true');
-		pausa.querySelector('.pausa__texto').textContent = 'Reanudar fotos';
-	} else {
-		arrancar();
+	pausa.addEventListener('click', function () { ponerPausa(!pausadoPorUsuario); });
+	document.addEventListener('visibilitychange', decidirCarrusel);
+	if ('IntersectionObserver' in window) {
+		new IntersectionObserver(function (entradas) {
+			heroALaVista = entradas[0].isIntersecting;
+			decidirCarrusel();
+		}).observe(hero);
 	}
+	window.addEventListener('load', function () {
+		cada(carrusel.querySelectorAll('img[data-src]'), cargar);
+	});
+	ponerPausa(reducido);
 
 	/* ---------- Aparición al hacer scroll ---------- */
 	var aparecen = document.querySelectorAll('.aparece');
@@ -66,9 +126,9 @@
 				if (e.isIntersecting) { e.target.classList.add('es-visible'); io.unobserve(e.target); }
 			});
 		}, { rootMargin: '0px 0px -10% 0px' });
-		aparecen.forEach(function (el) { io.observe(el); });
+		cada(aparecen, function (el) { io.observe(el); });
 	} else {
-		aparecen.forEach(function (el) { el.classList.add('es-visible'); });
+		cada(aparecen, function (el) { el.classList.add('es-visible'); });
 	}
 
 	/* ---------- 3. Frases que cambian sobre el fondo fijo ---------- */
@@ -77,21 +137,22 @@
 	var marcas = lema.querySelectorAll('.lema__progreso span');
 	var fondoLema = lema.querySelector('.lema__fondo');
 	var fraseActual = -1;
+	var zoomActual = '';
 
-	function actualizarLema() {
-		if (reducido) return;
-		var caja = lema.getBoundingClientRect();
-		var recorrido = caja.height - window.innerHeight;
+	function actualizarLema(caja) {
+		if (reducido || caja.bottom < 0 || caja.top > m.vh) return;
+		var recorrido = caja.height - m.vh;
 		var avance = Math.min(1, Math.max(0, -caja.top / recorrido));
+		var zoom = (1.15 - avance * 0.12).toFixed(3);
+		if (zoom !== zoomActual) { zoomActual = zoom; fondoLema.style.setProperty('--zoom', zoom); }
 		var i = Math.min(frases.length - 1, Math.floor(avance * frases.length));
-		fondoLema.style.setProperty('--zoom', (1.15 - avance * 0.12).toFixed(3));
 		if (i === fraseActual) return;
 		fraseActual = i;
-		frases.forEach(function (f, n) {
+		cada(frases, function (f, n) {
 			f.classList.toggle('es-activa', n === i);
 			f.classList.toggle('es-pasada', n < i);
 		});
-		marcas.forEach(function (m, n) { m.classList.toggle('es-activa', n <= i); });
+		cada(marcas, function (mk, n) { mk.classList.toggle('es-activa', n <= i); });
 	}
 
 	/* ---------- 4. Ficha técnica de la pista ---------- */
@@ -99,44 +160,43 @@
 	var monte = anatomia.querySelector('.anatomia__monte');
 	var fichas = anatomia.querySelectorAll('.ficha-pista');
 	var partes = anatomia.querySelectorAll('.anatomia__trazo, .anatomia__guia, .anatomia__punto');
-	var estrecho = window.matchMedia('(max-width: 900px)');
+	var TODAS = -2;
 	var pistaActual = -1;
 
+	// Ficha, trazo, guía y punto de cada pista se emparejan por data-n, no por su orden en el HTML
+	function numero(el) { return Number(el.getAttribute('data-n')); }
 	function activarPista(i) {
 		if (i === pistaActual) return;
 		pistaActual = i;
-		fichas.forEach(function (f, n) { f.classList.toggle('es-activa', n === i); });
-		partes.forEach(function (p) {
-			var activo = Number(p.getAttribute('data-n')) === i;
-			p.classList.toggle(p.classList.contains('anatomia__guia') ? 'es-activa' : 'es-activo', activo);
-		});
+		cada(fichas, function (f) { f.classList.toggle('es-activa', i === TODAS || numero(f) === i); });
+		cada(partes, function (p) { p.classList.toggle('es-activa', i === TODAS || numero(p) === i); });
 	}
 
 	function encuadrarMonte() {
 		// En móvil solo se ve el monte, sin las fichas a los lados
 		monte.setAttribute('viewBox', estrecho.matches ? '430 70 740 830' : '0 0 1600 900');
 	}
-	estrecho.addEventListener('change', function () { encuadrarMonte(); pistaActual = -1; tick(); });
 	encuadrarMonte();
 
-	function actualizarPista() {
-		if (reducido) { activarPista(-1); fichas.forEach(function (f) { f.classList.add('es-activa'); }); return; }
-		if (estrecho.matches) {
+	function actualizarPista(caja, cajasFichas) {
+		// Con movimiento reducido se ven todas a la vez
+		if (reducido) { activarPista(TODAS); return; }
+		if (caja.bottom < 0 || caja.top > m.vh) return;
+		if (cajasFichas) {
 			// La ficha más cercana a la mitad inferior de la pantalla manda
-			var objetivo = window.innerHeight * 0.7;
+			var objetivo = m.vh * 0.7;
 			var mejor = 0, distancia = Infinity;
-			fichas.forEach(function (f, n) {
-				var r = f.getBoundingClientRect();
+			cajasFichas.forEach(function (r, n) {
 				var d = Math.abs(r.top + r.height / 2 - objetivo);
-				if (d < distancia) { distancia = d; mejor = n; }
+				if (d < distancia) { distancia = d; mejor = numero(fichas[n]); }
 			});
 			activarPista(mejor);
 			return;
 		}
-		var caja = anatomia.getBoundingClientRect();
-		var recorrido = caja.height - window.innerHeight;
-		var avance = Math.min(0.999, Math.max(0, -caja.top / recorrido));
-		activarPista(Math.floor(avance * fichas.length));
+		// El monte queda fijo bajo la cabecera (sticky en top: --cab-h)
+		var recorrido = caja.height - m.vh + m.cabH;
+		var avance = Math.min(0.999, Math.max(0, (m.cabH - caja.top) / recorrido));
+		activarPista(numero(fichas[Math.floor(avance * fichas.length)]));
 	}
 
 	/* ---------- Enlaces de referido y parte de nieve (assets/js/config.js) ---------- */
@@ -147,7 +207,7 @@
 		return typeof valor === 'string' && valor !== '' && valor.indexOf('[') === -1;
 	}
 
-	document.querySelectorAll('[data-enlace]').forEach(function (a) {
+	cada(document.querySelectorAll('[data-enlace]'), function (a) {
 		var clave = a.getAttribute('data-enlace');
 		var url = config.enlaces[clave];
 		if (rellenado(url)) {
@@ -155,6 +215,8 @@
 		} else {
 			// Mientras falte el enlace, el botón se queda en su sección y no abre otra pestaña
 			a.removeAttribute('target');
+			var aviso = a.querySelector('.nueva-pestana');
+			if (aviso) aviso.parentNode.removeChild(aviso);
 			if (window.console) console.warn('Klard Ski: falta el enlace «' + clave + '» en assets/js/config.js');
 		}
 	});
@@ -191,16 +253,50 @@
 	}
 
 	/* ---------- Bucle de scroll ---------- */
+	function medir() {
+		m.vh = window.innerHeight;
+		m.cabH = cabecera.offsetHeight;
+		m.finHero = hero.offsetHeight - MARGEN_CABECERA;
+	}
+
 	var pendiente = false;
+	var hayQueMedir = true;
+
+	// Primero todas las lecturas de layout y después todas las escrituras, para no forzar recálculos
 	function tick() {
 		pendiente = false;
-		alHacerScroll();
-		actualizarLema();
-		actualizarPista();
+		if (hayQueMedir) { hayQueMedir = false; medir(); }
+
+		var y = window.pageYOffset;
+		var contactoArriba = contacto.getBoundingClientRect().top;
+		var rLema = lema.getBoundingClientRect();
+		var rAnatomia = anatomia.getBoundingClientRect();
+		var rFichas = null;
+		if (estrecho.matches && !reducido && rAnatomia.bottom > 0 && rAnatomia.top < m.vh) {
+			rFichas = Array.prototype.map.call(fichas, function (f) { return f.getBoundingClientRect(); });
+		}
+
+		alHacerScroll(y, contactoArriba);
+		actualizarLema(rLema);
+		actualizarPista(rAnatomia, rFichas);
 	}
-	window.addEventListener('scroll', function () {
+	function programar() {
 		if (!pendiente) { pendiente = true; requestAnimationFrame(tick); }
-	}, { passive: true });
-	window.addEventListener('resize', tick);
+	}
+	function remedir() { hayQueMedir = true; programar(); }
+
+	alCambiar(estrecho, function () { encuadrarMonte(); pistaActual = -1; remedir(); });
+	alCambiar(mqReducido, function (e) {
+		reducido = e.matches;
+		if (reducido) ponerPausa(true);
+		fraseActual = -1;
+		pistaActual = -1;
+		remedir();
+	});
+
+	window.addEventListener('scroll', programar, { passive: true });
+	window.addEventListener('resize', remedir);
+	window.addEventListener('load', remedir);
+	if (document.fonts && document.fonts.ready) document.fonts.ready.then(remedir);
 	tick();
 })();
