@@ -139,6 +139,57 @@
 		activarPista(Math.floor(avance * fichas.length));
 	}
 
+	/* ---------- Enlaces de referido y parte de nieve (assets/js/config.js) ---------- */
+	var config = window.KLARD_CONFIG || { enlaces: {}, mapa: {} };
+
+	function rellenado(valor) {
+		// Un valor sigue siendo placeholder mientras esté vacío o lleve corchetes
+		return typeof valor === 'string' && valor !== '' && valor.indexOf('[') === -1;
+	}
+
+	document.querySelectorAll('[data-enlace]').forEach(function (a) {
+		var clave = a.getAttribute('data-enlace');
+		var url = config.enlaces[clave];
+		if (rellenado(url)) {
+			a.href = url;
+		} else {
+			// Mientras falte el enlace, el botón se queda en su sección y no abre otra pestaña
+			a.removeAttribute('target');
+			if (window.console) console.warn('Klard Ski: falta el enlace «' + clave + '» en assets/js/config.js');
+		}
+	});
+
+	/* ---------- Mapa del pueblo: Google Maps se carga solo al pulsar ---------- */
+	var mapa = document.querySelector('[data-mapa]');
+	if (mapa) {
+		var ubicacion = config.mapa && config.mapa.ubicacion;
+		var consulta = encodeURIComponent(rellenado(ubicacion) ? ubicacion : '');
+		var enlaceMapa = mapa.querySelector('[data-mapa-enlace]');
+		var botonMapa = mapa.querySelector('[data-mapa-cargar]');
+
+		if (rellenado(ubicacion)) {
+			enlaceMapa.href = 'https://www.google.com/maps/search/?api=1&query=' + consulta;
+		} else {
+			// Sin ubicación todavía: el botón no tendría nada que mostrar
+			botonMapa.disabled = true;
+			botonMapa.textContent = 'Falta la ubicación';
+			enlaceMapa.hidden = true;
+		}
+
+		botonMapa.addEventListener('click', function () {
+			var iframe = document.createElement('iframe');
+			iframe.className = 'mapa__iframe';
+			iframe.src = 'https://maps.google.com/maps?q=' + consulta + '&z=' + (config.mapa.zoom || 14) + '&output=embed';
+			iframe.title = 'Mapa de la ubicación en Google Maps';
+			iframe.loading = 'lazy';
+			iframe.referrerPolicy = 'no-referrer-when-downgrade';
+			iframe.setAttribute('allowfullscreen', '');
+			mapa.querySelector('[data-mapa-aviso]').hidden = true;
+			mapa.appendChild(iframe);
+			mapa.classList.add('es-cargado');
+		});
+	}
+
 	/* ---------- Bucle de scroll ---------- */
 	var pendiente = false;
 	function tick() {

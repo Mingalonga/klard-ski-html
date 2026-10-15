@@ -195,6 +195,18 @@ ul[role="list"], ol[role="list"] { list-style: none; margin: 0; padding: 0; }
 .tarjeta--destacada .tarjeta__datos { background: #2a3b52; border-color: #2a3b52; }
 .tarjeta--destacada .tarjeta__datos li { background: var(--c-ink); }
 
+/* Equipación: qué llevar a la clase */
+.equipo { margin-top: clamp(3rem, 6vw, 5rem); padding: clamp(1.5rem, 3vw, 2.75rem); border-radius: var(--radio); background: var(--c-ice); border: 1px solid var(--c-line); display: grid; grid-template-columns: 4fr 8fr; gap: clamp(1.5rem, 4vw, 4rem); }
+.equipo__titulo { font-size: var(--fs-h3); font-weight: 800; text-transform: uppercase; margin-bottom: 1rem; }
+.equipo__intro { color: var(--c-muted); }
+.equipo__columnas { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem 2.5rem; }
+.equipo__subtitulo { font-size: 1rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--c-glacier); margin-bottom: 0.75rem; }
+.equipo__lista li { position: relative; padding: 0.55rem 0 0.55rem 1.9rem; border-bottom: 1px solid var(--c-line); font-size: 1.05rem; line-height: 1.4; }
+.equipo__lista li::before { content: ""; position: absolute; left: 0; top: 0.75rem; width: 1.15rem; height: 1.15rem; border-radius: 50%; background: var(--c-energy-dark) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8.5l2.5 2.5L12 5.5' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 80% no-repeat; }
+.equipo__lista--suave li::before { background-color: var(--c-glacier); }
+.equipo__nota { grid-column: 1 / -1; margin: 0; font-weight: 600; }
+.equipo__nota a { color: var(--c-energy-dark); }
+
 /* ---------- 3. Profesor: fondo fijo + frases ---------- */
 .lema { position: relative; height: 500vh; }
 .lema__fijo { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; display: grid; place-items: center; color: #fff; }
@@ -235,6 +247,46 @@ ul[role="list"], ol[role="list"] { list-style: none; margin: 0; padding: 0; }
 .sello { display: flex; align-items: center; gap: 0.9rem; padding: 0.9rem 1rem; border: 1px solid var(--c-line); border-radius: 14px; font-size: 1rem; line-height: 1.35; background: var(--c-ice); }
 .sello__marca { flex: none; width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center; background: var(--c-ink); color: #fff; font: 800 0.95rem var(--f-head); border: 3px solid var(--c-glacier-light); }
 .ficha__nota { margin-top: 0.75rem; font-size: 0.9rem; color: var(--c-muted); font-style: italic; }
+
+/* ---------- 4. El pueblo y las pistas ---------- */
+.pueblo { background: var(--c-ice); padding-block: clamp(5rem, 10vw, 9rem); }
+.pueblo__cabecera { margin-bottom: clamp(2.5rem, 5vw, 4rem); }
+.pueblo__rejilla { display: grid; grid-template-columns: 6fr 6fr; gap: clamp(2rem, 5vw, 4.5rem); align-items: start; }
+.pueblo__nombre { font-size: var(--fs-h3); font-weight: 800; text-transform: uppercase; margin-bottom: 1rem; }
+.pueblo__texto > p { color: #2c3b4f; max-width: 58ch; }
+.pueblo__subtitulo { font-size: 1rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--c-glacier); margin: 1.75rem 0 0.75rem; }
+.pueblo__servicios { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.pueblo__servicios li { padding: 0.45em 0.95em; border-radius: 999px; background: var(--c-snow); border: 1px solid var(--c-line); font-size: 0.95rem; }
+
+/* Mapa: aviso con botón y, al pulsar, el iframe de Google Maps */
+.mapa { position: relative; aspect-ratio: 4 / 3; border-radius: var(--radio); overflow: hidden; box-shadow: var(--sombra); background:
+	radial-gradient(circle at 30% 30%, rgb(140 196 240 / 0.25), transparent 55%),
+	repeating-linear-gradient(135deg, rgb(255 255 255 / 0.04) 0 2px, transparent 2px 22px),
+	var(--c-ink-2); color: #fff; }
+.mapa__aviso { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.25rem; padding: 1.5rem; text-align: center; }
+.mapa__aviso[hidden] { display: none; }
+.mapa__icono { width: 48px; height: 48px; color: var(--c-energy); margin-bottom: 0.5rem; }
+.mapa__titulo { font: 800 1.35rem/1.2 var(--f-head); text-transform: uppercase; margin: 0; }
+.mapa__texto { color: #c9d6e3; font-size: 0.95rem; margin-bottom: 1rem; }
+.mapa .boton { --bg: var(--c-energy-dark); }
+.mapa .boton:disabled { --bg: #2a3b52; cursor: not-allowed; transform: none; }
+.mapa__enlace { margin-top: 0.75rem; font-size: 0.95rem; color: #fff; }
+.mapa__iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+/* Cifras de la estación */
+.estacion { margin-top: clamp(2.5rem, 5vw, 4rem); padding: clamp(1.5rem, 3vw, 2.75rem); border-radius: var(--radio); background: var(--c-snow); border: 1px solid var(--c-line); box-shadow: var(--sombra); }
+.estacion__titulo { font-size: 1.2rem; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 1.5rem; }
+.estacion__cifras { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem 2rem; margin: 0 0 2rem; }
+.estacion__cifras div { display: flex; flex-direction: column-reverse; }
+.estacion__cifras dt { font-size: 0.95rem; color: var(--c-muted); }
+.estacion__cifras dd { margin: 0; font: 800 clamp(1.5rem, 1.1rem + 1.4vw, 2.4rem)/1.1 var(--f-head); color: var(--c-glacier); overflow-wrap: anywhere; }
+.estacion .estacion__niveles { display: flex; flex-wrap: wrap; gap: 0.75rem 2rem; padding-block: 1.25rem; border-block: 1px solid var(--c-line); }
+.estacion__niveles li { display: flex; align-items: center; gap: 0.6rem; }
+.estacion__niveles .etiqueta { font-size: 0.8rem; }
+.estacion__niveles strong { font: 800 1.2rem var(--f-head); }
+.estacion__nieve { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem 2rem; margin-top: 1.25rem; }
+.estacion__nieve p { margin: 0; color: var(--c-muted); max-width: 60ch; }
+.estacion__nieve strong { color: var(--c-ink); }
 
 /* ---------- 4. La pista ---------- */
 .pista { position: relative; background: linear-gradient(180deg, var(--c-ink) 0%, var(--c-ink-2) 60%, #1b3150 100%); color: #fff; padding-block: clamp(5rem, 10vw, 9rem); overflow: clip; }
@@ -293,10 +345,31 @@ ul[role="list"], ol[role="list"] { list-style: none; margin: 0; padding: 0; }
 .pista__cta-titulo { font: 800 var(--fs-h2)/1 var(--f-head); text-transform: uppercase; margin: 0; }
 .pista__arriba { color: #c9d6e3; font-size: 1rem; }
 
+/* ---------- 5. Forfait y alquiler ---------- */
+.forfait { padding-block: clamp(5rem, 10vw, 9rem); background: var(--c-snow); }
+.tarjetas--dos { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 1040px; }
+.tarjetas--dos .tarjeta__datos strong { overflow-wrap: anywhere; }
+.tarjeta__icono { display: flex; align-items: center; padding: clamp(1.25rem, 2vw, 2rem) clamp(1.25rem, 2vw, 2rem) 0; color: var(--c-glacier); }
+.tarjeta__icono svg { width: 64px; height: 64px; padding: 12px; border-radius: 18px; background: var(--c-ice); }
+.forfait__aviso { margin-top: 1.5rem; font-size: 0.95rem; color: var(--c-muted); font-style: italic; }
+
+/* ---------- 6. Contacto ---------- */
+.contacto { background: linear-gradient(180deg, var(--c-ink) 0%, var(--c-ink-2) 100%); color: #fff; padding-block: clamp(5rem, 10vw, 9rem); }
+.contacto__rejilla { display: grid; grid-template-columns: 7fr 5fr; gap: clamp(2rem, 5vw, 5rem); align-items: center; }
+.contacto .titulo-seccion { margin-bottom: 1.5rem; }
+.contacto__horario { color: #c9d6e3; max-width: 46ch; }
+.contacto__canales { display: grid; gap: 0.75rem; }
+.canal { display: flex; align-items: center; gap: 1rem; min-height: 72px; padding: 1rem 1.25rem; border-radius: 18px; border: 1px solid rgb(255 255 255 / 0.16); background: rgb(255 255 255 / 0.05); color: #fff; text-decoration: none; transition: transform 0.25s var(--ease), background-color 0.25s, border-color 0.25s; }
+.canal:hover { transform: translateY(-2px); background: rgb(255 255 255 / 0.1); border-color: var(--c-glacier-light); }
+.canal .icono { width: 28px; height: 28px; color: var(--c-glacier-light); }
+.canal span { display: flex; flex-direction: column; font-size: 0.95rem; color: #c9d6e3; line-height: 1.35; overflow-wrap: anywhere; }
+.canal strong { font: 700 1.1rem var(--f-head); color: #fff; text-transform: uppercase; letter-spacing: 0.02em; }
+.canal--destacado { background: var(--c-energy-dark); border-color: var(--c-energy-dark); box-shadow: 0 10px 30px rgb(255 90 31 / 0.3); }
+.canal--destacado:hover { background: #a83207; border-color: #a83207; }
+.canal--destacado .icono, .canal--destacado span { color: #fff; }
+
 /* ---------- 5. Pie ---------- */
 .pie { background: #08111d; color: #dbe4ee; padding-block: clamp(4rem, 8vw, 6rem) 2rem; }
-.pie__llamada { border-bottom: 1px solid #22324a; padding-bottom: 3rem; margin-bottom: 3rem; }
-.pie__titulo { font-size: 1rem; text-transform: uppercase; letter-spacing: 0.16em; color: var(--c-glacier-light); font-family: var(--f-body); margin-bottom: 1rem; }
 .pie__telefono { display: inline-block; white-space: nowrap; font: 800 clamp(1.9rem, 0.6rem + 7vw, 6rem)/1 var(--f-head); color: #fff; text-decoration: none; letter-spacing: -0.02em; margin-bottom: 1rem; transition: color 0.25s; }
 .pie__telefono:hover { color: var(--c-energy); }
 .pie__columnas { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2rem; }
@@ -332,11 +405,32 @@ ul[role="list"], ol[role="list"] { list-style: none; margin: 0; padding: 0; }
 	.ficha-pista__nombre { font-size: 1.7rem; }
 }
 
+/* Menú con seis enlaces: menos hueco y botón corto en pantallas medianas */
+.menu a, .logo, .cabecera .boton { white-space: nowrap; }
+.logo, .logo__icono { flex: none; }
+@media (max-width: 1180px) {
+	.menu ul { gap: 1.25rem; }
+	.cabecera__in { gap: 1.25rem; }
+}
+@media (max-width: 1000px) {
+	.cabecera__in { gap: 0.9rem; }
+	.menu ul { gap: 0.75rem; }
+	.menu a { font-size: 0.95rem; }
+	.cabecera .solo-escritorio { display: none; }
+	.cabecera .solo-movil { display: inline; }
+}
+@media (max-width: 800px) {
+	.menu { display: none; }
+	.cabecera__in { justify-content: space-between; }
+}
+
 @media (max-width: 1000px) {
 	.tarjetas { grid-template-columns: 1fr; max-width: 560px; }
 	.ficha { grid-template-columns: 1fr; }
 	.ficha__foto { max-width: 420px; }
 	.pie__columnas { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+	.equipo, .pueblo__rejilla, .contacto__rejilla { grid-template-columns: 1fr; }
+	.estacion__cifras { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 760px) {
 	:root { --cab-h: 64px; }
@@ -349,6 +443,8 @@ ul[role="list"], ol[role="list"] { list-style: none; margin: 0; padding: 0; }
 	.lema { height: 400vh; }
 	.lema__progreso { display: none; }
 	.sellos { grid-template-columns: 1fr; }
+	.equipo__columnas { grid-template-columns: 1fr; }
+	.mapa { aspect-ratio: 1; }
 	.pie__columnas { grid-template-columns: 1fr; }
 	body { padding-bottom: 76px; }
 	.barra-llamar {
