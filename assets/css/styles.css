@@ -57,6 +57,8 @@ ul[role="list"], ol[role="list"] { list-style: none; margin: 0; padding: 0; }
 .skip { position: absolute; left: -9999px; top: 8px; z-index: 100; background: var(--c-ink); color: #fff; padding: 10px 16px; border-radius: 8px; }
 .skip:focus { left: 8px; }
 .icono { width: 1.15em; height: 1.15em; flex: none; }
+/* Texto solo para lectores de pantalla */
+.visualmente-oculto { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 
 .antetitulo {
 	font-family: var(--f-body);
@@ -91,14 +93,17 @@ ul[role="list"], ol[role="list"] { list-style: none; margin: 0; padding: 0; }
 	text-decoration: none;
 	transition: transform 0.25s var(--ease), background-color 0.25s, box-shadow 0.25s;
 }
-.boton:hover { transform: translateY(-2px); }
-.boton--llamar { --bg: var(--c-energy-dark); box-shadow: 0 10px 30px rgb(255 90 31 / 0.35); }
+@media (hover: hover) { .boton:hover { transform: translateY(-2px); } }
+.boton:active { transform: scale(0.98); }
+/* Doble anillo: el blanco se ve sobre fondos oscuros y naranjas, el tinta sobre la nieve */
+.boton:focus-visible, .canal:focus-visible { outline: 3px solid #fff; outline-offset: 2px; box-shadow: 0 0 0 7px var(--c-ink); }
+.boton--llamar { --bg: var(--c-energy-dark); box-shadow: 0 10px 30px rgb(196 61 12 / 0.35); }
 .boton--llamar:hover { --bg: #a83207; }
 .boton--grande { font-size: clamp(1.1rem, 1rem + 0.6vw, 1.35rem); padding: 1em 1.8em; }
 .boton--grande strong { font-weight: 800; letter-spacing: 0.02em; }
 .boton--peque { min-height: 44px; padding: 0.55em 1.1em; font-size: 1rem; box-shadow: none; }
-.boton--fantasma { background: rgb(255 255 255 / 0.08); border-color: rgb(255 255 255 / 0.7); backdrop-filter: blur(6px); }
-.boton--fantasma:hover { background: rgb(255 255 255 / 0.2); }
+.boton--fantasma { background: rgb(14 26 43 / 0.35); border-color: rgb(255 255 255 / 0.7); }
+.boton--fantasma:hover { background: rgb(14 26 43 / 0.6); }
 .boton--bloque { width: 100%; }
 .solo-movil { display: none; }
 
@@ -110,14 +115,16 @@ ul[role="list"], ol[role="list"] { list-style: none; margin: 0; padding: 0; }
 	color: #fff;
 	transition: background-color 0.35s, box-shadow 0.35s, color 0.35s;
 }
-.cabecera.es-solida { background: rgb(14 26 43 / 0.92); box-shadow: 0 1px 0 rgb(255 255 255 / 0.08); backdrop-filter: blur(12px); }
+.cabecera.es-solida { background: rgb(14 26 43 / 0.95); box-shadow: 0 1px 0 rgb(255 255 255 / 0.08); }
 .cabecera__in { height: var(--cab-h); display: flex; align-items: center; gap: 2rem; max-width: 1320px; margin-inline: auto; padding-inline: var(--margen); }
-.logo { display: inline-flex; align-items: center; gap: 0.5rem; font: 800 1.25rem/1 var(--f-head); text-transform: uppercase; letter-spacing: 0.02em; text-decoration: none; }
+.cabecera__accion { margin-left: auto; }
+.logo { display: inline-flex; align-items: center; gap: 0.5rem; min-height: 44px; font: 800 1.25rem/1 var(--f-head); text-transform: uppercase; letter-spacing: 0.02em; text-decoration: none; }
 .logo__icono { width: 30px; height: 30px; color: var(--c-energy); }
 .menu { margin-left: auto; }
 .menu ul { display: flex; gap: 2rem; list-style: none; margin: 0; padding: 0; }
 .menu a { text-decoration: none; font-weight: 600; font-size: 1rem; padding: 0.5em 0; background: linear-gradient(currentColor, currentColor) 0 100% / 0 2px no-repeat; transition: background-size 0.3s var(--ease); }
 .menu a:hover { background-size: 100% 2px; }
+.menu-boton { display: none; }
 
 /* ---------- 1. Portada ---------- */
 .hero {
@@ -133,12 +140,15 @@ ul[role="list"], ol[role="list"] { list-style: none; margin: 0; padding: 0; }
 }
 .hero__fondo, .hero__velo { position: absolute; inset: 0; }
 .hero__slide { position: absolute; inset: 0; margin: 0; opacity: 0; transition: opacity 1.4s ease; }
-.hero__slide img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.12); }
+/* La base es el estado final del zoom: al quitar la animación la foto no pega un salto */
+.hero__slide img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.02) translateY(-1%); }
 .hero__slide.es-activa { opacity: 1; }
-.hero__slide.es-activa img { animation: kenburns 9s linear forwards; }
+.hero__slide.es-activa img { animation: kenburns 7.4s linear forwards; }
+.hero.es-pausado .hero__slide img { animation-play-state: paused; }
 @keyframes kenburns { from { transform: scale(1.12); } to { transform: scale(1.02) translateY(-1%); } }
-/* Velo oscuro: el texto blanco nunca queda sobre nieve */
+/* Velo oscuro: el texto blanco nunca queda sobre nieve (la franja de arriba protege la cabecera) */
 .hero__velo { background:
+	linear-gradient(180deg, rgb(14 26 43 / 0.65) 0, rgb(14 26 43 / 0) 160px),
 	linear-gradient(90deg, rgb(14 26 43 / 0.85) 0%, rgb(14 26 43 / 0.55) 45%, rgb(14 26 43 / 0.05) 80%),
 	linear-gradient(0deg, rgb(14 26 43 / 0.9) 0%, rgb(14 26 43 / 0) 55%); }
 .hero__contenido { position: relative; padding-top: calc(var(--cab-h) + 2rem); padding-bottom: 2rem; }
@@ -147,15 +157,16 @@ ul[role="list"], ol[role="list"] { list-style: none; margin: 0; padding: 0; }
 .hero__entradilla { font-size: clamp(1.15rem, 1rem + 0.5vw, 1.4rem); max-width: 36ch; color: #e6eef5; }
 .hero__acciones { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 2rem; }
 .hero__nota { margin-top: 1.25rem; font-size: 1rem; color: #cfdae5; }
-.hero__nota a { color: #fff; font-weight: 600; }
 .hero__controles { position: relative; display: flex; align-items: center; justify-content: space-between; padding-bottom: 2rem; }
 .puntos { display: flex; gap: 0.25rem; }
 .punto { width: 44px; height: 44px; padding: 0; border: 0; background: none; cursor: pointer; position: relative; }
 .punto::after { content: ""; position: absolute; left: 6px; right: 6px; top: 50%; height: 3px; border-radius: 2px; background: rgb(255 255 255 / 0.4); transition: background-color 0.3s; }
-.punto.es-activo::after { background: #fff; }
+.punto:hover::after { background: rgb(255 255 255 / 0.75); }
+.punto.es-activo::after { background: #fff; height: 4px; }
 .pausa { display: inline-flex; align-items: center; gap: 0.5rem; min-height: 44px; border: 0; background: none; color: #dfe8f0; font: 600 0.95rem var(--f-body); cursor: pointer; }
+.pausa:hover { color: #fff; }
 .pausa__icono { width: 12px; height: 14px; border-inline: 4px solid currentColor; }
-.pausa[aria-pressed="true"] .pausa__icono { border: 0; border-left: 12px solid currentColor; border-block: 7px solid transparent; width: 0; height: 0; }
+.pausa[data-pausado] .pausa__icono { border: 0; border-left: 12px solid currentColor; border-block: 7px solid transparent; width: 0; height: 0; }
 
 /* ---------- 2. Clases ---------- */
 .clases { padding-block: clamp(5rem, 10vw, 9rem); background: var(--c-snow); }
@@ -172,16 +183,17 @@ ul[role="list"], ol[role="list"] { list-style: none; margin: 0; padding: 0; }
 	border: 1px solid var(--c-line);
 	transition: transform 0.45s var(--ease), box-shadow 0.45s var(--ease);
 }
-.tarjeta:hover { transform: translateY(-8px); box-shadow: var(--sombra-g); }
+/* La tarjeta no es un enlace (solo lo es el botón): se levanta poco */
+@media (hover: hover) { .tarjeta:hover { transform: translateY(-3px); box-shadow: var(--sombra-g); } }
 .tarjeta__imagen { position: relative; aspect-ratio: 4 / 3.4; overflow: hidden; }
-.tarjeta__imagen img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.9s var(--ease); }
-.tarjeta:hover .tarjeta__imagen img { transform: scale(1.07); }
+.tarjeta__imagen img { width: 100%; height: 100%; object-fit: cover; }
 .chip { position: absolute; top: 1rem; left: 1rem; padding: 0.4em 0.9em; border-radius: 999px; font-size: 0.9rem; font-weight: 600; color: #fff; }
 .chip--verde { background: #17733e; }
 .chip--naranja { background: var(--c-energy-dark); }
 .chip--azul { background: var(--c-glacier); }
 .tarjeta__cuerpo { display: flex; flex-direction: column; flex: 1; padding: clamp(1.25rem, 2vw, 2rem); }
-.tarjeta h3 { font-size: var(--fs-h3); font-weight: 800; text-transform: uppercase; margin-bottom: 0.75rem; }
+/* «Perfeccionamiento» en mayúsculas no cabe en una tarjeta estrecha a tamaño h3 completo */
+.tarjeta h3 { font-size: clamp(1.15rem, 0.9rem + 1.1vw, 1.6rem); font-weight: 800; text-transform: uppercase; margin-bottom: 0.75rem; overflow-wrap: anywhere; hyphens: auto; }
 .tarjeta__para { color: var(--c-muted); }
 .tarjeta__para strong { color: var(--c-ink); }
 .tarjeta__datos { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--c-line); border-block: 1px solid var(--c-line); margin: auto 0 1.5rem; }
@@ -208,9 +220,10 @@ ul[role="list"], ol[role="list"] { list-style: none; margin: 0; padding: 0; }
 .equipo__nota a { color: var(--c-energy-dark); }
 
 /* ---------- 3. Profesor: fondo fijo + frases ---------- */
-.lema { position: relative; height: 500vh; }
+/* Sin JS (o con movimiento reducido) las frases se ven todas, una debajo de otra; ver más abajo */
+.js .lema { position: relative; height: 500vh; }
 .lema__fijo { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; display: grid; place-items: center; color: #fff; }
-.lema__fondo { position: absolute; inset: 0; background: url("../img/noche.svg") center 70% / cover no-repeat; transform: scale(var(--zoom, 1.15)); }
+.lema__fondo { position: absolute; inset: 0; background: url("../img/noche.svg") center 70% / cover no-repeat; transform: scale(var(--zoom, 1.15)); will-change: transform; }
 .lema__fondo::after { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgb(6 13 24 / 0.35), rgb(6 13 24 / 0.7)); }
 .lema__centro { position: relative; text-align: center; width: min(1100px, 100% - 2 * var(--margen)); }
 .lema__frases { position: relative; display: grid; }
@@ -219,14 +232,16 @@ ul[role="list"], ol[role="list"] { list-style: none; margin: 0; padding: 0; }
 	font: 800 clamp(2.3rem, 1.2rem + 5vw, 5.75rem)/1 var(--f-head);
 	text-transform: uppercase;
 	letter-spacing: -0.02em;
+}
+.js .lema__frase {
 	opacity: 0;
 	transform: translateY(40px);
-	filter: blur(10px);
+	filter: blur(4px);
 	transition: opacity 0.6s var(--ease), transform 0.6s var(--ease), filter 0.6s var(--ease);
 }
 .lema__frase span { color: var(--c-energy); }
-.lema__frase.es-activa { opacity: 1; transform: none; filter: none; }
-.lema__frase.es-pasada { transform: translateY(-40px); }
+.js .lema__frase.es-activa { opacity: 1; transform: none; filter: none; }
+.js .lema__frase.es-pasada { transform: translateY(-40px); }
 .lema__progreso { position: absolute; right: var(--margen); top: 50%; transform: translateY(-50%); display: grid; gap: 10px; }
 .lema__progreso span { width: 3px; height: 28px; border-radius: 2px; background: rgb(255 255 255 / 0.3); transition: background-color 0.3s; }
 .lema__progreso span.es-activa { background: var(--c-energy); }
@@ -234,7 +249,8 @@ ul[role="list"], ol[role="list"] { list-style: none; margin: 0; padding: 0; }
 .ficha { display: grid; grid-template-columns: 5fr 7fr; gap: clamp(2rem, 6vw, 6rem); align-items: center; padding-block: clamp(5rem, 10vw, 9rem); }
 .ficha__foto { position: relative; }
 .ficha__disco { position: absolute; left: 50%; top: 52%; width: 82%; aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%; background: radial-gradient(circle at 35% 30%, #ff8a55, var(--c-energy) 55%, var(--c-energy-dark)); }
-.ficha__foto img { position: relative; width: 100%; height: auto; filter: drop-shadow(0 30px 30px rgb(14 26 43 / 0.25)); animation: flota 6s ease-in-out infinite; }
+/* Dos vaivenes y quieto: un movimiento que no para (y que no se puede pausar) distrae del texto */
+.ficha__foto img { position: relative; width: 100%; height: auto; filter: drop-shadow(0 30px 30px rgb(14 26 43 / 0.25)); animation: flota 6s ease-in-out 2; }
 @keyframes flota { 50% { transform: translateY(-14px) rotate(-2deg); } }
 .ficha__titulo { font-size: var(--fs-h2); font-weight: 800; text-transform: uppercase; margin-bottom: 1.5rem; }
 .ficha__texto > p { color: #2c3b4f; max-width: 58ch; }
@@ -270,7 +286,7 @@ ul[role="list"], ol[role="list"] { list-style: none; margin: 0; padding: 0; }
 .mapa__texto { color: #c9d6e3; font-size: 0.95rem; margin-bottom: 1rem; }
 .mapa .boton { --bg: var(--c-energy-dark); }
 .mapa .boton:disabled { --bg: #2a3b52; cursor: not-allowed; transform: none; }
-.mapa__enlace { margin-top: 0.75rem; font-size: 0.95rem; color: #fff; }
+.mapa__enlace { display: inline-block; padding-block: 0.6rem; margin-top: 0.25rem; font-size: 0.95rem; color: #fff; }
 .mapa__iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 
 /* Cifras de la estación */
@@ -294,44 +310,50 @@ ul[role="list"], ol[role="list"] { list-style: none; margin: 0; padding: 0; }
 .pista__intro { color: #c9d6e3; margin-top: 1.5rem; }
 
 /* Ficha técnica de la pista: cada punto del monte es una pista */
-.anatomia { position: relative; height: 420vh; margin-top: clamp(1rem, 3vw, 2rem); }
-.anatomia__fijo { position: sticky; top: var(--cab-h); height: calc(100vh - var(--cab-h)); display: grid; place-items: center; padding-inline: var(--margen); }
+.anatomia { position: relative; margin-top: clamp(1rem, 3vw, 2rem); }
+.js .anatomia { height: 420vh; }
+.anatomia__fijo { position: relative; display: grid; place-items: center; padding-inline: var(--margen); }
+.js .anatomia__fijo { position: sticky; top: var(--cab-h); height: calc(100vh - var(--cab-h)); }
 .anatomia__escena { position: relative; width: min(100%, 1400px, (100vh - var(--cab-h) - 2rem) * 16 / 9); aspect-ratio: 16 / 9; container-type: inline-size; }
 .anatomia__monte { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
 .anatomia__macizo { filter: drop-shadow(0 30px 40px rgb(0 0 0 / 0.35)); }
 .anatomia__trazo { opacity: 0.3; transition: opacity 0.5s, stroke-width 0.5s; }
-.anatomia__trazo.es-activo { opacity: 1; stroke-width: 15; }
+.anatomia__trazo.es-activa { opacity: 1; stroke-width: 15; }
 .anatomia__guia { stroke-dasharray: 700; stroke-dashoffset: 700; opacity: 0.4; transition: stroke-dashoffset 0.9s var(--ease), opacity 0.4s; }
 .anatomia__guia.es-activa { stroke-dashoffset: 0; opacity: 1; }
 .anatomia__punto circle:first-child { fill: rgb(255 255 255 / 0.18); stroke: #fff; stroke-width: 2; transition: transform 0.4s var(--ease); }
 .anatomia__punto circle:last-child { fill: #fff; }
-.anatomia__punto.es-activo circle:first-child { fill: var(--c-energy); transform: scale(1.35); }
-.anatomia__punto.es-activo { animation: latido-svg 1.6s ease-in-out infinite; }
+.anatomia__punto.es-activa circle:first-child { fill: var(--c-energy); transform: scale(1.35); }
+/* Tres latidos al activarse y quieto: un latido infinito repinta todo el SVG sin parar */
+.anatomia__punto.es-activa { animation: latido-svg 1.6s ease-in-out 3; }
 @keyframes latido-svg { 50% { opacity: 0.75; } }
 
 .fichas { position: absolute; inset: 0; pointer-events: none; }
 .ficha-pista {
 	position: absolute;
 	width: 25%;
-	opacity: 0.32;
-	transform: translateY(10px);
 	transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
 	font-size: clamp(0.95rem, 1.25cqi, 1.15rem);
 	line-height: 1.5;
 }
-.ficha-pista.es-activa { opacity: 1; transform: none; }
-.ficha-pista[data-n="0"] { left: 2%; top: 13%; }
-.ficha-pista[data-n="1"] { left: 2%; top: 58%; }
-.ficha-pista[data-n="2"] { right: 2%; top: 26%; text-align: right; }
-.ficha-pista[data-n="3"] { right: 2%; top: 66%; text-align: right; }
-.ficha-pista p { margin: 0 0 0.5em; color: #dbe4ee; }
-.ficha-pista__num { font: 800 0.95em var(--f-head); color: var(--c-glacier-light) !important; letter-spacing: 0.1em; }
+/* Inactivas al 80 %: el texto mantiene el contraste AA sobre el fondo oscuro */
+.js .ficha-pista { opacity: 0.8; transform: translateY(10px); }
+.js .ficha-pista.es-activa { opacity: 1; transform: none; }
+/* Cada ficha junto a su pista del monte (el orden del HTML va de la más fácil a la más difícil) */
+@media (min-width: 901px) {
+	.ficha-pista--negra { left: 2%; top: 13%; }
+	.ficha-pista--roja { left: 2%; top: 58%; }
+	.ficha-pista--azul { right: 2%; top: 26%; text-align: right; }
+	.ficha-pista--verde { right: 2%; top: 66%; text-align: right; }
+	.ficha-pista--azul .ficha-pista__nombre, .ficha-pista--verde .ficha-pista__nombre,
+	.ficha-pista--azul .ficha-pista__datos, .ficha-pista--verde .ficha-pista__datos { justify-content: flex-end; }
+}
+:where(.ficha-pista) p { margin: 0 0 0.5em; color: #dbe4ee; }
+.ficha-pista__num { font: 800 0.95em var(--f-head); color: var(--c-glacier-light); letter-spacing: 0.1em; }
 .ficha-pista__nombre { font-size: clamp(1.4rem, 2.2cqi, 2.1rem); font-weight: 800; text-transform: uppercase; margin-bottom: 0.3em; display: flex; align-items: center; gap: 0.5em; flex-wrap: wrap; }
-.ficha-pista[data-n="2"] .ficha-pista__nombre, .ficha-pista[data-n="3"] .ficha-pista__nombre { justify-content: flex-end; }
-.ficha-pista__lema { font-weight: 600; color: #fff !important; }
-.ficha-pista__datos { display: flex; flex-wrap: wrap; gap: 0.3em 0.9em; font-size: 0.85em; color: #a9bccf !important; text-transform: uppercase; letter-spacing: 0.06em; }
-.ficha-pista[data-n="2"] .ficha-pista__datos, .ficha-pista[data-n="3"] .ficha-pista__datos { justify-content: flex-end; }
-.etiqueta { font: 700 0.42em/1 var(--f-body); letter-spacing: 0.12em; padding: 0.55em 0.8em; border-radius: 999px; color: #fff; }
+.ficha-pista__lema { font-weight: 600; color: #fff; }
+.ficha-pista__datos { display: flex; flex-wrap: wrap; gap: 0.3em 0.9em; font-size: 0.85em; color: #a9bccf; text-transform: uppercase; letter-spacing: 0.06em; }
+.etiqueta { font: 600 0.6em/1 var(--f-body); letter-spacing: 0.12em; padding: 0.55em 0.8em; border-radius: 999px; color: #fff; }
 .etiqueta--negra { background: #000; box-shadow: inset 0 0 0 1.5px #fff; }
 .etiqueta--roja { background: #c5221f; }
 .etiqueta--azul { background: var(--c-glacier); }
@@ -343,7 +365,7 @@ ul[role="list"], ol[role="list"] { list-style: none; margin: 0; padding: 0; }
 
 .pista__cta { margin-top: clamp(3rem, 7vw, 6rem); text-align: center; display: flex; flex-direction: column; align-items: center; gap: 1.25rem; }
 .pista__cta-titulo { font: 800 var(--fs-h2)/1 var(--f-head); text-transform: uppercase; margin: 0; }
-.pista__arriba { color: #c9d6e3; font-size: 1rem; }
+.pista__arriba { display: inline-block; padding-block: 0.6rem; color: #c9d6e3; font-size: 1rem; }
 
 /* ---------- 5. Forfait y alquiler ---------- */
 .forfait { padding-block: clamp(5rem, 10vw, 9rem); background: var(--c-snow); }
@@ -360,51 +382,49 @@ ul[role="list"], ol[role="list"] { list-style: none; margin: 0; padding: 0; }
 .contacto__horario { color: #c9d6e3; max-width: 46ch; }
 .contacto__canales { display: grid; gap: 0.75rem; }
 .canal { display: flex; align-items: center; gap: 1rem; min-height: 72px; padding: 1rem 1.25rem; border-radius: 18px; border: 1px solid rgb(255 255 255 / 0.16); background: rgb(255 255 255 / 0.05); color: #fff; text-decoration: none; transition: transform 0.25s var(--ease), background-color 0.25s, border-color 0.25s; }
-.canal:hover { transform: translateY(-2px); background: rgb(255 255 255 / 0.1); border-color: var(--c-glacier-light); }
+.canal:hover { background: rgb(255 255 255 / 0.1); border-color: var(--c-glacier-light); }
+@media (hover: hover) { .canal:hover { transform: translateY(-2px); } }
 .canal .icono { width: 28px; height: 28px; color: var(--c-glacier-light); }
 .canal span { display: flex; flex-direction: column; font-size: 0.95rem; color: #c9d6e3; line-height: 1.35; overflow-wrap: anywhere; }
 .canal strong { font: 700 1.1rem var(--f-head); color: #fff; text-transform: uppercase; letter-spacing: 0.02em; }
-.canal--destacado { background: var(--c-energy-dark); border-color: var(--c-energy-dark); box-shadow: 0 10px 30px rgb(255 90 31 / 0.3); }
+.canal--destacado { background: var(--c-energy-dark); border-color: var(--c-energy-dark); box-shadow: 0 10px 30px rgb(196 61 12 / 0.3); }
 .canal--destacado:hover { background: #a83207; border-color: #a83207; }
 .canal--destacado .icono, .canal--destacado span { color: #fff; }
 
-/* ---------- 5. Pie ---------- */
+/* ---------- 7. Pie ---------- */
 .pie { background: #08111d; color: #dbe4ee; padding-block: clamp(4rem, 8vw, 6rem) 2rem; }
-.pie__telefono { display: inline-block; white-space: nowrap; font: 800 clamp(1.9rem, 0.6rem + 7vw, 6rem)/1 var(--f-head); color: #fff; text-decoration: none; letter-spacing: -0.02em; margin-bottom: 1rem; transition: color 0.25s; }
+.pie__telefono { display: inline-block; white-space: nowrap; font: 800 clamp(1.7rem, 0.6rem + 7vw, 6rem)/1 var(--f-head); color: #fff; text-decoration: none; letter-spacing: -0.02em; margin-bottom: 1rem; transition: color 0.25s; }
 .pie__telefono:hover { color: var(--c-energy); }
 .pie__columnas { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2rem; }
 .pie__h { font: 600 0.9rem var(--f-body); text-transform: uppercase; letter-spacing: 0.14em; color: #8fa3b8; margin-bottom: 1rem; }
-.pie__columnas li { margin-bottom: 0.5rem; }
 .pie__columnas a { color: #fff; }
-.pie__legal { display: flex; flex-wrap: wrap; gap: 1rem 2rem; justify-content: space-between; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #22324a; font-size: 0.95rem; color: #8fa3b8; }
+/* Enlaces del pie con 44px de alto para el dedo */
+.pie__columnas a, .pie__legal a { display: inline-block; padding-block: 0.5rem; }
+.pie__columnas a:hover, .pie__legal a:hover { color: var(--c-glacier-light); }
+.pie__legal { display: flex; flex-wrap: wrap; gap: 1rem 2rem; justify-content: space-between; align-items: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #22324a; font-size: 0.95rem; color: #8fa3b8; }
 .pie__legal p { margin: 0; }
 .pie__legal ul { display: flex; gap: 1.5rem; }
+/* Pie corto de las páginas legales */
+.pie--mini { padding-block: 1rem; }
+.pie--mini .pie__legal { margin-top: 0; padding-top: 0; border-top: 0; }
 
 /* Barra fija de llamada (solo móvil) */
 .barra-llamar { display: none; }
 
-/* ---------- Animación de entrada ---------- */
+/* ---------- Animación de entrada (solo en las cabeceras de sección) ---------- */
 .js .aparece { opacity: 0; transform: translateY(40px); transition: opacity 0.9s var(--ease), transform 0.9s var(--ease); }
 .js .aparece.es-visible { opacity: 1; transform: none; }
-.tarjetas .aparece:nth-child(2) { transition-delay: 0.12s; }
-.tarjetas .aparece:nth-child(3) { transition-delay: 0.24s; }
-.js .tarjeta.aparece.es-visible:hover { transform: translateY(-8px); }
+
+/* ---------- Sin JS: todo a la vista y sin secciones de scroll vacías ---------- */
+html:not(.js) .lema__frases { gap: 1.5rem; }
+html:not(.js) .lema__fijo { position: relative; height: auto; padding-block: 6rem; }
+html:not(.js) .lema__frase { grid-area: auto; font-size: clamp(1.8rem, 1rem + 3vw, 3.5rem); }
+html:not(.js) .lema__progreso { display: none; }
+html:not(.js) .anatomia__guia { stroke-dashoffset: 0; }
+/* El botón del mapa necesita JS; el enlace a Google Maps del pie sigue funcionando */
+html:not(.js) [data-mapa-cargar] { display: none; }
 
 /* ---------- Responsive ---------- */
-/* Ficha técnica en pantallas estrechas: el monte queda fijo arriba y las fichas pasan por debajo */
-@media (max-width: 900px) {
-	.anatomia { height: auto; }
-	.anatomia__fijo { position: static; height: auto; display: block; padding-inline: 0; }
-	.anatomia__escena { width: 100%; aspect-ratio: auto; }
-	.anatomia__monte { position: sticky; top: var(--cab-h); z-index: 1; height: 42vh; height: 42svh; width: 100%; background: linear-gradient(180deg, var(--c-ink) 80%, rgb(14 26 43 / 0)); }
-	.anatomia__guias { display: none; }
-	.fichas { position: static; pointer-events: auto; padding: 1rem var(--margen) 0; display: grid; gap: 1rem; }
-	.ficha-pista, .ficha-pista[data-n] { position: static; width: auto; text-align: left; font-size: 1.05rem; padding: 1.25rem; border-radius: var(--radio); background: rgb(255 255 255 / 0.04); border: 1px solid rgb(255 255 255 / 0.12); opacity: 0.5; min-height: 38vh; }
-	.ficha-pista.es-activa { opacity: 1; border-color: var(--c-glacier-light); background: rgb(255 255 255 / 0.08); }
-	.ficha-pista[data-n] .ficha-pista__nombre, .ficha-pista[data-n] .ficha-pista__datos { justify-content: flex-start; }
-	.ficha-pista__nombre { font-size: 1.7rem; }
-}
-
 /* Menú con seis enlaces: menos hueco y botón corto en pantallas medianas */
 .menu a, .logo, .cabecera .boton { white-space: nowrap; }
 .logo, .logo__icono { flex: none; }
@@ -418,35 +438,64 @@ ul[role="list"], ol[role="list"] { list-style: none; margin: 0; padding: 0; }
 	.menu a { font-size: 0.95rem; }
 	.cabecera .solo-escritorio { display: none; }
 	.cabecera .solo-movil { display: inline; }
-}
-@media (max-width: 800px) {
-	.menu { display: none; }
-	.cabecera__in { justify-content: space-between; }
-}
 
-@media (max-width: 1000px) {
-	.tarjetas { grid-template-columns: 1fr; max-width: 560px; }
+	.tarjetas { grid-template-columns: 1fr; max-width: 560px; margin-inline: auto; }
 	.ficha { grid-template-columns: 1fr; }
 	.ficha__foto { max-width: 420px; }
 	.pie__columnas { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+	.pie__legal { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
 	.equipo, .pueblo__rejilla, .contacto__rejilla { grid-template-columns: 1fr; }
 	.estacion__cifras { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
+
+/* Ficha técnica en pantallas estrechas: el monte queda fijo arriba y las fichas pasan por debajo */
+@media (max-width: 900px) {
+	.js .anatomia { height: auto; }
+	.anatomia__fijo, .js .anatomia__fijo { position: static; height: auto; display: block; padding-inline: 0; }
+	.anatomia__escena { width: 100%; aspect-ratio: auto; }
+	.anatomia__monte { position: sticky; top: var(--cab-h); z-index: 1; height: 42vh; height: 42svh; width: 100%; background: linear-gradient(180deg, var(--c-ink) 80%, rgb(14 26 43 / 0)); }
+	.anatomia__guias { display: none; }
+	.fichas { position: static; pointer-events: auto; padding: 1rem var(--margen) 0; display: grid; gap: 1rem; }
+	/* Todas al 100 %: la activa se marca solo con el borde y el fondo */
+	.ficha-pista, .js .ficha-pista { position: static; width: auto; font-size: 1.05rem; padding: 1.25rem; border-radius: var(--radio); background: rgb(255 255 255 / 0.04); border: 1px solid rgb(255 255 255 / 0.12); opacity: 1; transform: none; min-height: 38vh; }
+	.js .ficha-pista.es-activa { border-color: var(--c-glacier-light); background: rgb(255 255 255 / 0.08); }
+	.ficha-pista__nombre { font-size: 1.7rem; }
+}
+
+/* Menú desplegable bajo la cabecera (el botón solo existe con JS) */
+@media (max-width: 800px) {
+	.cabecera__in { gap: 0.5rem; }
+	.logo { margin-right: auto; }
+	.js .menu-boton {
+		display: inline-grid; place-items: center;
+		flex: none; width: 44px; height: 44px; padding: 0;
+		border: 2px solid rgb(255 255 255 / 0.7); border-radius: 999px;
+		background: none; color: inherit; cursor: pointer;
+	}
+	.menu-boton__icono { width: 18px; height: 2px; background: currentColor; box-shadow: 0 -6px currentColor, 0 6px currentColor; }
+	.menu-boton[aria-expanded="true"] .menu-boton__icono { box-shadow: none; height: 3px; width: 14px; }
+	.menu { display: none; position: absolute; top: 100%; left: 0; right: 0; margin: 0; background: rgb(14 26 43 / 0.98); border-top: 1px solid rgb(255 255 255 / 0.08); box-shadow: 0 20px 40px rgb(14 26 43 / 0.35); }
+	.cabecera.menu-abierto { background: rgb(14 26 43 / 0.98); }
+	.cabecera.menu-abierto .menu { display: block; }
+	.menu ul { flex-direction: column; gap: 0; padding: 0.25rem var(--margen) 1rem; }
+	.menu a { display: block; padding: 0.85rem 0; font-size: 1.15rem; background: none; border-bottom: 1px solid rgb(255 255 255 / 0.08); }
+}
+
 @media (max-width: 760px) {
 	:root { --cab-h: 64px; }
-	.menu { display: none; }
-	.cabecera__in { justify-content: space-between; }
 	.solo-escritorio { display: none; }
 	.solo-movil { display: inline; }
+	.hero__titulo { font-size: clamp(2.3rem, 1.4rem + 6.4vw, 3.5rem); max-width: none; }
 	.hero__acciones .boton { width: 100%; }
-	.hero__velo { background: linear-gradient(0deg, rgb(14 26 43 / 0.95) 0%, rgb(14 26 43 / 0.7) 55%, rgb(14 26 43 / 0.35) 100%); }
-	.lema { height: 400vh; }
+	.hero__velo { background: linear-gradient(0deg, rgb(14 26 43 / 0.95) 0%, rgb(14 26 43 / 0.7) 55%, rgb(14 26 43 / 0.6) 100%); }
+	.js .lema { height: 400vh; }
 	.lema__progreso { display: none; }
 	.sellos { grid-template-columns: 1fr; }
 	.equipo__columnas { grid-template-columns: 1fr; }
 	.mapa { aspect-ratio: 1; }
 	.pie__columnas { grid-template-columns: 1fr; }
-	body { padding-bottom: 76px; }
+	/* La barra fija no debe tapar el elemento con el foco */
+	html { scroll-padding-bottom: 96px; }
 	.barra-llamar {
 		position: fixed;
 		left: 12px; right: 12px; bottom: 12px;
@@ -456,29 +505,37 @@ ul[role="list"], ol[role="list"] { list-style: none; margin: 0; padding: 0; }
 		border-radius: 999px;
 		background: var(--c-energy-dark);
 		color: #fff;
-		font: 700 1.1rem var(--f-body);
+		font: 600 1.1rem var(--f-body);
 		text-decoration: none;
 		box-shadow: 0 12px 30px rgb(14 26 43 / 0.35);
 		transform: translateY(140%);
-		transition: transform 0.4s var(--ease);
+		/* Oculta también para el teclado y el lector de pantalla, no solo fuera de la vista */
+		visibility: hidden;
+		transition: transform 0.4s var(--ease), visibility 0s 0.4s;
 	}
-	.barra-llamar.es-visible { transform: none; }
+	.barra-llamar.es-visible { transform: none; visibility: visible; transition: transform 0.4s var(--ease); }
+}
+
+/* En los móviles más estrechos el logo se queda en el icono (el enlace ya se llama «Klard Ski») */
+@media (max-width: 359px) {
+	.logo span { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
 	html { scroll-behavior: auto; }
-	*, *::before, *::after { animation: none !important; transition-duration: 0.01ms !important; }
+	*, *::before, *::after { animation: none !important; transition-duration: 0.01ms !important; transition-delay: 0s !important; }
 	.js .aparece { opacity: 1; transform: none; }
+	.boton:hover, .boton:active, .tarjeta:hover, .canal:hover { transform: none; }
 	/* Sin animación: las frases se muestran todas, una debajo de otra */
-	.lema { height: auto; }
+	.js .lema { height: auto; }
 	.lema__fijo { position: relative; height: auto; padding-block: 6rem; }
 	.lema__frases { gap: 1.5rem; }
-	.lema__frase { grid-area: auto; opacity: 1; transform: none; filter: none; font-size: clamp(1.8rem, 1rem + 3vw, 3.5rem); }
+	.js .lema__frase, .js .lema__frase.es-pasada { grid-area: auto; opacity: 1; transform: none; filter: none; font-size: clamp(1.8rem, 1rem + 3vw, 3.5rem); }
 	.lema__progreso { display: none; }
-	.anatomia { height: auto; }
-	.anatomia__fijo { position: relative; height: auto; top: 0; }
+	.js .anatomia { height: auto; }
+	.js .anatomia__fijo { position: relative; height: auto; top: 0; }
 	.anatomia__guia { stroke-dashoffset: 0; }
-	.ficha-pista { opacity: 1; }
+	.js .ficha-pista { opacity: 1; transform: none; }
 }
 
 /* ---------- Páginas legales ---------- */

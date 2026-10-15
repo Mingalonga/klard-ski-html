@@ -8,6 +8,7 @@
 	<meta name="theme-color" content="#0e1a2b">
 	<link rel="preload" href="assets/fonts/montserrat-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
 	<link rel="preload" href="assets/fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+	<link rel="preload" href="assets/fonts/inter-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
 	<link rel="stylesheet" href="assets/css/styles.css">
 	<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 	<script>document.documentElement.classList.add('js');</script>
@@ -29,7 +30,11 @@
 			<svg class="logo__icono" viewBox="0 0 32 32" aria-hidden="true"><path d="M2 26 12 9l5 8 4-6 9 15Z" fill="currentColor"/><path d="m12 9 2.6 4.4-2.6-1.2-2.4 1.4Z" fill="#fff"/></svg>
 			<span>Klard Ski</span>
 		</a>
-		<nav class="menu" aria-label="Principal">
+		<!-- En móvil el menú se despliega con este botón (main.js) -->
+		<button type="button" class="menu-boton" data-menu-boton aria-expanded="false" aria-controls="menu">
+			<span class="menu-boton__icono" aria-hidden="true"></span><span class="visualmente-oculto">Menú</span>
+		</button>
+		<nav class="menu" id="menu" aria-label="Principal">
 			<ul>
 				<li><a href="#clases">Clases</a></li>
 				<li><a href="#profesor">El profesor</a></li>
@@ -41,7 +46,7 @@
 		</nav>
 		<a class="boton boton--llamar boton--peque" href="tel:+34600000000">
 			<svg class="icono" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1Z" fill="currentColor"/></svg>
-			<span class="solo-escritorio">600 000 000</span><span class="solo-movil">Llamar</span>
+			<span class="solo-escritorio"><span class="visualmente-oculto">Llamar al </span>600 000 000</span><span class="solo-movil">Llamar</span>
 		</a>
 	</div>
 </header>
@@ -50,16 +55,18 @@
 
 	<!-- 1. PORTADA -->
 	<section class="hero" id="inicio" aria-labelledby="hero-titulo">
-		<div class="hero__fondo" data-carrusel>
-			<!-- Sustituir por fotos reales (o un <video autoplay muted loop playsinline>) -->
+		<!-- Fondo de ambiente: oculto al lector de pantalla (las tres fotos estarían siempre en el árbol) -->
+		<div class="hero__fondo" data-carrusel aria-hidden="true">
+			<!-- Sustituir por fotos reales (o un <video autoplay muted loop playsinline>).
+			     Las fotos 2 y 3 van en data-src: main.js las descarga cuando la página ya ha cargado. -->
 			<figure class="hero__slide es-activa">
 				<img src="assets/img/hero-manana.svg" alt="Ilustración: pistas nevadas por la mañana con el sol sobre las cumbres" fetchpriority="high">
 			</figure>
 			<figure class="hero__slide">
-				<img src="assets/img/hero-mediodia.svg" alt="Ilustración: la estación a mediodía con el cielo despejado" loading="lazy">
+				<img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="assets/img/hero-mediodia.svg" alt="Ilustración: la estación a mediodía con el cielo despejado">
 			</figure>
 			<figure class="hero__slide">
-				<img src="assets/img/hero-tarde.svg" alt="Ilustración: atardecer rosado sobre la sierra" loading="lazy">
+				<img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="assets/img/hero-tarde.svg" alt="Ilustración: atardecer rosado sobre la sierra">
 			</figure>
 		</div>
 		<div class="hero__velo" aria-hidden="true"></div>
@@ -67,24 +74,24 @@
 		<div class="hero__contenido envoltura">
 			<p class="antetitulo antetitulo--claro">Profesor titulado · Temporada 2026/27</p>
 			<h1 id="hero-titulo" class="hero__titulo">Clases de esquí<br>en <em>Sierra Nevada</em></h1>
-			<p class="hero__entradilla">Del primer día con esquís a bajar la roja con soltura. Clases cercanas, con calma y en grupos pequeños. Llama y lo cuadramos en un minuto.</p>
+			<p class="hero__entradilla">Del primer día con esquís a bajar la roja con soltura. <span class="solo-escritorio">Clases cercanas, con calma y en grupos pequeños.</span> Llama y lo cuadramos en un minuto.</p>
 			<div class="hero__acciones">
 				<a class="boton boton--llamar boton--grande" href="tel:+34600000000">
 					<svg class="icono" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1Z" fill="currentColor"/></svg>
 					<span>Llamar al <strong>600 000 000</strong></span>
 				</a>
-				<a class="boton boton--fantasma" href="#clases">Ver las clases <span aria-hidden="true">↓</span></a>
+				<a class="boton boton--fantasma boton--grande" href="https://wa.me/34600000000?text=Hola%20Klard%2C%20quiero%20reservar%20una%20clase%20de%20esqu%C3%AD">Escribir por WhatsApp</a>
 			</div>
-			<p class="hero__nota">¿Prefieres escribir? <a href="https://wa.me/34600000000">WhatsApp</a></p>
+			<p class="hero__nota">Llamadas de 9:00 a 20:00. Si estoy en pista, te devuelvo la llamada en cuanto bajo.</p>
 		</div>
 
 		<div class="hero__controles envoltura">
 			<div class="puntos" role="group" aria-label="Fotos de la portada">
-				<button type="button" class="punto es-activo" aria-label="Foto 1" aria-current="true"></button>
-				<button type="button" class="punto" aria-label="Foto 2"></button>
-				<button type="button" class="punto" aria-label="Foto 3"></button>
+				<button type="button" class="punto es-activo" data-punto aria-label="Foto 1 de 3" aria-current="true"></button>
+				<button type="button" class="punto" data-punto aria-label="Foto 2 de 3"></button>
+				<button type="button" class="punto" data-punto aria-label="Foto 3 de 3"></button>
 			</div>
-			<button type="button" class="pausa" data-pausa aria-pressed="false">
+			<button type="button" class="pausa" data-pausa>
 				<span class="pausa__icono" aria-hidden="true"></span><span class="pausa__texto">Pausar fotos</span>
 			</button>
 		</div>
@@ -100,7 +107,7 @@
 			</div>
 
 			<ul class="tarjetas" role="list">
-				<li class="tarjeta aparece">
+				<li class="tarjeta">
 					<div class="tarjeta__imagen">
 						<img src="assets/img/clase-iniciacion.svg" alt="Ilustración: pendiente suave con mucha nieve, ideal para empezar" loading="lazy" width="1600" height="1000">
 						<span class="chip chip--verde">Nivel 0</span>
@@ -112,10 +119,10 @@
 							<li><span>Duración</span><strong>[DURACIÓN_INICIACIÓN]</strong></li>
 							<li><span>Precio</span><strong>[PRECIO_INICIACIÓN]</strong></li>
 						</ul>
-						<a class="boton boton--llamar boton--bloque" href="tel:+34600000000">Reservar por teléfono</a>
+						<a class="boton boton--llamar boton--bloque" href="tel:+34600000000"><svg class="icono" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1Z" fill="currentColor"/></svg>Llamar para reservar<span class="visualmente-oculto"> la clase de Iniciación</span></a>
 					</div>
 				</li>
-				<li class="tarjeta tarjeta--destacada aparece">
+				<li class="tarjeta tarjeta--destacada">
 					<div class="tarjeta__imagen">
 						<img src="assets/img/clase-perfeccionamiento.svg" alt="Ilustración: cumbres al atardecer y una huella de esquí en curvas" loading="lazy" width="1600" height="1000">
 						<span class="chip chip--naranja">La más pedida</span>
@@ -127,10 +134,10 @@
 							<li><span>Duración</span><strong>[DURACIÓN_PERFECCIONAMIENTO]</strong></li>
 							<li><span>Precio</span><strong>[PRECIO_PERFECCIONAMIENTO]</strong></li>
 						</ul>
-						<a class="boton boton--llamar boton--bloque" href="tel:+34600000000">Reservar por teléfono</a>
+						<a class="boton boton--llamar boton--bloque" href="tel:+34600000000"><svg class="icono" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1Z" fill="currentColor"/></svg>Llamar para reservar<span class="visualmente-oculto"> la clase de Perfeccionamiento</span></a>
 					</div>
 				</li>
-				<li class="tarjeta aparece">
+				<li class="tarjeta">
 					<div class="tarjeta__imagen">
 						<img src="assets/img/clase-privada.svg" alt="Ilustración: montañas azules con cielo despejado" loading="lazy" width="1600" height="1000">
 						<span class="chip chip--azul">A tu medida</span>
@@ -142,13 +149,13 @@
 							<li><span>Duración</span><strong>[DURACIÓN_PRIVADAS]</strong></li>
 							<li><span>Precio</span><strong>[PRECIO_PRIVADAS]</strong></li>
 						</ul>
-						<a class="boton boton--llamar boton--bloque" href="tel:+34600000000">Reservar por teléfono</a>
+						<a class="boton boton--llamar boton--bloque" href="tel:+34600000000"><svg class="icono" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1Z" fill="currentColor"/></svg>Llamar para reservar<span class="visualmente-oculto"> una clase privada</span></a>
 					</div>
 				</li>
 			</ul>
 
 			<!-- Equipación: qué hace falta llevar a la clase -->
-			<div class="equipo aparece" aria-labelledby="equipo-titulo">
+			<div class="equipo">
 				<div class="equipo__cabecera">
 					<h3 id="equipo-titulo" class="equipo__titulo">Qué llevar a la clase</h3>
 					<p class="equipo__intro">[TEXTO_EQUIPACIÓN: si el material está incluido o no en la clase, y cualquier detalle propio]</p>
@@ -187,7 +194,7 @@
 			<div class="lema__fijo">
 				<div class="lema__fondo" aria-hidden="true"></div>
 				<div class="lema__centro">
-					<h2 id="profesor-titulo" class="antetitulo antetitulo--claro">Sobre el profesor</h2>
+					<p class="antetitulo antetitulo--claro">Sobre el profesor</p>
 					<ol class="lema__frases" role="list">
 						<li class="lema__frase es-activa"><span>[Nº] temporadas</span> enseñando en Sierra Nevada.</li>
 						<li class="lema__frase">Técnico Deportivo <span>titulado</span> en esquí alpino.</li>
@@ -201,12 +208,12 @@
 		</div>
 
 		<div class="ficha envoltura">
-			<div class="ficha__foto aparece">
+			<div class="ficha__foto">
 				<div class="ficha__disco" aria-hidden="true"></div>
 				<img src="assets/img/klard-salto.webp" alt="Klard saltando con los esquís cruzados, con chaqueta verde y pantalón naranja" width="500" height="424" loading="lazy">
 			</div>
-			<div class="ficha__texto aparece">
-				<h3 class="ficha__titulo">Hola, soy Klard</h3>
+			<div class="ficha__texto">
+				<h2 id="profesor-titulo" class="ficha__titulo">Hola, soy Klard</h2>
 				<p>Nací a una hora de la sierra y llevo esquiando desde que tengo memoria. Desde [AÑO_INICIO] enseño a niños, a adultos que empiezan de cero y a quien quiere pulir su técnica. Me gusta ir a tu ritmo: nadie se queda atrás y nadie se aburre.</p>
 				<p>Antes de cada clase te pregunto cómo esquías y qué quieres conseguir, y elegimos la zona de la estación que mejor encaja.</p>
 				<dl class="ficha__cifras">
@@ -214,7 +221,7 @@
 					<div><dt>Alumnos por clase</dt><dd>1–4</dd></div>
 					<div><dt>Idiomas</dt><dd>[IDIOMAS]</dd></div>
 				</dl>
-				<h4 class="ficha__subtitulo">Titulación y formación</h4>
+				<h3 class="ficha__subtitulo">Titulación y formación</h3>
 				<ul class="sellos" role="list">
 					<li class="sello"><span class="sello__marca" aria-hidden="true">1</span><span>[CERTIFICACIÓN_1, p. ej. titulación de Técnico Deportivo]</span></li>
 					<li class="sello"><span class="sello__marca" aria-hidden="true">2</span><span>[CERTIFICACIÓN_2, p. ej. federación]</span></li>
@@ -236,7 +243,7 @@
 			</div>
 
 			<div class="pueblo__rejilla">
-				<article class="pueblo__texto aparece" aria-labelledby="pueblo-nombre">
+				<article class="pueblo__texto" aria-labelledby="pueblo-nombre">
 					<h3 id="pueblo-nombre" class="pueblo__nombre">[NOMBRE_PUEBLO]</h3>
 					<p>[DESCRIPCIÓN_PUEBLO: dónde está, a cuánto queda de la ciudad más cercana y cómo se llega]</p>
 					<p>[AMBIENTE_PUEBLO: cómo es el pueblo, qué se respira, qué hacer después de esquiar]</p>
@@ -253,19 +260,19 @@
 
 				<!-- Mapa: Google Maps solo se carga al pulsar el botón (así la web sigue sin cookies
 				     hasta que el visitante decide verlo). La ubicación se cambia en assets/js/config.js -->
-				<div class="mapa aparece" data-mapa>
+				<div class="mapa" data-mapa>
 					<div class="mapa__aviso" data-mapa-aviso>
 						<svg class="mapa__icono" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z" fill="currentColor"/></svg>
 						<p class="mapa__titulo">Mapa de [NOMBRE_PUEBLO]</p>
 						<p class="mapa__texto">Al pulsar se carga Google Maps, que puede usar cookies.</p>
 						<button type="button" class="boton" data-mapa-cargar>Ver el mapa</button>
-						<a class="mapa__enlace" href="#pueblo" data-mapa-enlace target="_blank" rel="noopener noreferrer">Abrir en Google Maps <span aria-hidden="true">↗</span></a>
+						<a class="mapa__enlace" href="#pueblo" data-mapa-enlace target="_blank" rel="noopener noreferrer">Abrir en Google Maps <span aria-hidden="true">↗</span><span class="visualmente-oculto nueva-pestana"> (se abre en una pestaña nueva)</span></a>
 					</div>
 				</div>
 			</div>
 
 			<!-- Cifras de la estación -->
-			<div class="estacion aparece" aria-labelledby="estacion-titulo">
+			<div class="estacion">
 				<h3 id="estacion-titulo" class="estacion__titulo">La estación en cifras</h3>
 				<dl class="estacion__cifras">
 					<div><dt>Pistas</dt><dd>[Nº_PISTAS]</dd></div>
@@ -281,7 +288,7 @@
 				</ul>
 				<div class="estacion__nieve">
 					<p><strong>Estado de la nieve:</strong> el parte oficial se actualiza cada mañana con pistas abiertas, remontes y espesor.</p>
-					<a class="boton boton--peque" href="#pueblo" data-enlace="parteNieve" target="_blank" rel="noopener noreferrer">Ver el parte de nieve <span aria-hidden="true">↗</span></a>
+					<a class="boton boton--peque" href="#pueblo" data-enlace="parteNieve" target="_blank" rel="noopener noreferrer">Ver el parte de nieve <span aria-hidden="true">↗</span><span class="visualmente-oculto nueva-pestana"> (se abre en una pestaña nueva)</span></a>
 				</div>
 			</div>
 		</div>
@@ -319,24 +326,24 @@
 						</g>
 						<!-- Pistas -->
 						<g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="10">
-							<path class="anatomia__trazo" data-n="0" stroke="#0e1a2b" d="M805 130 C 790 190, 830 230, 800 290 S 760 350, 770 400"/>
-							<path class="anatomia__trazo" data-n="1" stroke="#d93025" d="M750 420 C 700 480, 740 540, 680 600 S 620 700, 620 820"/>
-							<path class="anatomia__trazo" data-n="2" stroke="#1f6fb2" d="M880 360 C 930 420, 900 480, 960 540 S 1000 660, 980 780"/>
-							<path class="anatomia__trazo" data-n="3" stroke="#1f9d55" d="M770 640 C 800 670, 850 650, 870 690 S 840 760, 880 800"/>
+							<path class="anatomia__trazo" data-n="3" stroke="#0e1a2b" d="M805 130 C 790 190, 830 230, 800 290 S 760 350, 770 400"/>
+							<path class="anatomia__trazo" data-n="2" stroke="#d93025" d="M750 420 C 700 480, 740 540, 680 600 S 620 700, 620 820"/>
+							<path class="anatomia__trazo" data-n="1" stroke="#1f6fb2" d="M880 360 C 930 420, 900 480, 960 540 S 1000 660, 980 780"/>
+							<path class="anatomia__trazo" data-n="0" stroke="#1f9d55" d="M770 640 C 800 670, 850 650, 870 690 S 840 760, 880 800"/>
 						</g>
 						<!-- Líneas guía hacia cada ficha -->
 						<g class="anatomia__guias" fill="none" stroke="#8cc4f0" stroke-width="1.5">
-							<path class="anatomia__guia" data-n="0" d="M440 200 H 640 L 800 290"/>
-							<path class="anatomia__guia" data-n="1" d="M440 610 H 560 L 680 600"/>
-							<path class="anatomia__guia" data-n="2" d="M1160 330 H 1040 L 960 520"/>
-							<path class="anatomia__guia" data-n="3" d="M1160 690 H 1000 L 870 690"/>
+							<path class="anatomia__guia" data-n="3" d="M440 200 H 640 L 800 290"/>
+							<path class="anatomia__guia" data-n="2" d="M440 610 H 560 L 680 600"/>
+							<path class="anatomia__guia" data-n="1" d="M1160 330 H 1040 L 960 520"/>
+							<path class="anatomia__guia" data-n="0" d="M1160 690 H 1000 L 870 690"/>
 						</g>
 						<!-- Puntos -->
 						<g class="anatomia__puntos">
-							<g class="anatomia__punto" data-n="0" transform="translate(800 290)"><circle r="22"/><circle r="9"/></g>
-							<g class="anatomia__punto" data-n="1" transform="translate(680 600)"><circle r="22"/><circle r="9"/></g>
-							<g class="anatomia__punto" data-n="2" transform="translate(960 520)"><circle r="22"/><circle r="9"/></g>
-							<g class="anatomia__punto" data-n="3" transform="translate(870 690)"><circle r="22"/><circle r="9"/></g>
+							<g class="anatomia__punto" data-n="3" transform="translate(800 290)"><circle r="22"/><circle r="9"/></g>
+							<g class="anatomia__punto" data-n="2" transform="translate(680 600)"><circle r="22"/><circle r="9"/></g>
+							<g class="anatomia__punto" data-n="1" transform="translate(960 520)"><circle r="22"/><circle r="9"/></g>
+							<g class="anatomia__punto" data-n="0" transform="translate(870 690)"><circle r="22"/><circle r="9"/></g>
 						</g>
 						<!-- Pueblo -->
 						<g fill="#16263c"><path d="M560 846h18v-14l9-8 9 8v14h10v-20l10-9 10 9v20h12v-12l8-7 8 7v12Z"/></g>
@@ -344,33 +351,33 @@
 					</svg>
 
 					<ol class="fichas" role="list">
-						<li class="ficha-pista ficha-pista--negra es-activa" id="pista-veleta" data-n="0">
+						<li class="ficha-pista ficha-pista--verde es-activa" id="pista-borreguiles" data-n="0">
 							<p class="ficha-pista__num" aria-hidden="true">01</p>
-							<h3 class="ficha-pista__nombre">Veleta <span class="etiqueta etiqueta--negra">Negra</span></h3>
-							<p class="ficha-pista__lema">Pendiente fuerte, respuesta inmediata.</p>
-							<p>La parte alta de la estación, con más inclinación y viento. Solo con buen nivel y buenas condiciones.</p>
-							<p class="ficha-pista__datos"><span>Expertos</span><span>Telesilla Veleta</span><span>3.300 m</span></p>
+							<h3 class="ficha-pista__nombre">Borreguiles <span class="etiqueta etiqueta--verde">Verde</span></h3>
+							<p class="ficha-pista__lema">Suave, tranquila, para empezar.</p>
+							<p>Una meseta amplia donde damos casi todas las clases de iniciación. Apta para principiantes.</p>
+							<p class="ficha-pista__datos"><span>Principiantes</span><span>Cintas y telecabina</span><span>2.650 m</span></p>
 						</li>
-						<li class="ficha-pista ficha-pista--roja" id="pista-rio" data-n="1">
+						<li class="ficha-pista ficha-pista--azul" id="pista-laguna" data-n="1">
 							<p class="ficha-pista__num" aria-hidden="true">02</p>
-							<h3 class="ficha-pista__nombre">El Río <span class="etiqueta etiqueta--roja">Roja</span></h3>
-							<p class="ficha-pista__lema">Larga, técnica y con mucho ritmo.</p>
-							<p>La bajada hasta el pueblo. Un clásico para las clases de perfeccionamiento y el carving.</p>
-							<p class="ficha-pista__datos"><span>Nivel medio-alto</span><span>Telecabina Al-Andalus</span><span>2.650 m</span></p>
-						</li>
-						<li class="ficha-pista ficha-pista--azul" id="pista-laguna" data-n="2">
-							<p class="ficha-pista__num" aria-hidden="true">03</p>
 							<h3 class="ficha-pista__nombre">Laguna <span class="etiqueta etiqueta--azul">Azul</span></h3>
 							<p class="ficha-pista__lema">Ancha, estable y con margen.</p>
 							<p>Pistas amplias con buena nieve hasta tarde. Perfecta para pasar a los giros en paralelo.</p>
 							<p class="ficha-pista__datos"><span>Nivel medio</span><span>Telesilla Laguna</span><span>2.900 m</span></p>
 						</li>
-						<li class="ficha-pista ficha-pista--verde" id="pista-borreguiles" data-n="3">
+						<li class="ficha-pista ficha-pista--roja" id="pista-rio" data-n="2">
+							<p class="ficha-pista__num" aria-hidden="true">03</p>
+							<h3 class="ficha-pista__nombre">El Río <span class="etiqueta etiqueta--roja">Roja</span></h3>
+							<p class="ficha-pista__lema">Larga, técnica y con mucho ritmo.</p>
+							<p>La bajada hasta el pueblo. Un clásico para las clases de perfeccionamiento y el carving.</p>
+							<p class="ficha-pista__datos"><span>Nivel medio-alto</span><span>Telecabina Al-Andalus</span><span>2.650 m</span></p>
+						</li>
+						<li class="ficha-pista ficha-pista--negra" id="pista-veleta" data-n="3">
 							<p class="ficha-pista__num" aria-hidden="true">04</p>
-							<h3 class="ficha-pista__nombre">Borreguiles <span class="etiqueta etiqueta--verde">Verde</span></h3>
-							<p class="ficha-pista__lema">Suave, tranquila, para empezar.</p>
-							<p>Una meseta amplia donde damos casi todas las clases de iniciación. Apta para principiantes.</p>
-							<p class="ficha-pista__datos"><span>Principiantes</span><span>Cintas y telecabina</span><span>2.650 m</span></p>
+							<h3 class="ficha-pista__nombre">Veleta <span class="etiqueta etiqueta--negra">Negra</span></h3>
+							<p class="ficha-pista__lema">Pendiente fuerte, respuesta inmediata.</p>
+							<p>La parte alta de la estación, con más inclinación y viento. Solo con buen nivel y buenas condiciones.</p>
+							<p class="ficha-pista__datos"><span>Expertos</span><span>Telesilla Veleta</span><span>3.300 m</span></p>
 						</li>
 					</ol>
 				</div>
@@ -378,17 +385,17 @@
 		</div>
 
 		<div class="envoltura">
-			<dl class="pista__datos aparece">
+			<dl class="pista__datos">
 				<div><dt>Cota</dt><dd>2.100 a 3.300 m</dd></div>
 				<div><dt>Temporada</dt><dd>Noviembre a abril</dd></div>
 				<div><dt>Punto de encuentro</dt><dd>Plaza de Andalucía, Pradollano</dd></div>
 			</dl>
 
-			<div class="pista__cta aparece">
+			<div class="pista__cta">
 				<p class="pista__cta-titulo">¿Quieres esquiar aquí?</p>
 				<a class="boton boton--llamar boton--grande" href="tel:+34600000000">
 					<svg class="icono" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1Z" fill="currentColor"/></svg>
-					<span>Llámame: <strong>600 000 000</strong></span>
+					<span>Llamar al <strong>600 000 000</strong></span>
 				</a>
 				<a class="pista__arriba" href="#clases">o vuelve a ver las clases <span aria-hidden="true">↑</span></a>
 			</div>
@@ -406,7 +413,7 @@
 			</div>
 
 			<ul class="tarjetas tarjetas--dos" role="list">
-				<li class="tarjeta aparece">
+				<li class="tarjeta">
 					<div class="tarjeta__icono" aria-hidden="true">
 						<!-- Icono: forfait (tarjeta con remonte) -->
 						<svg viewBox="0 0 48 48"><rect x="6" y="12" width="36" height="24" rx="4" fill="none" stroke="currentColor" stroke-width="3"/><path d="M6 20h36" stroke="currentColor" stroke-width="3"/><path d="M14 30h10" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
@@ -418,10 +425,10 @@
 							<li><span>Desde</span><strong>[PRECIO_FORFAIT]</strong></li>
 							<li><span>Ventaja</span><strong>[VENTAJA_FORFAIT]</strong></li>
 						</ul>
-						<a class="boton boton--bloque" href="#forfait" data-enlace="forfait" target="_blank" rel="sponsored noopener noreferrer">Comprar el forfait <span aria-hidden="true">↗</span></a>
+						<a class="boton boton--bloque" href="#forfait" data-enlace="forfait" target="_blank" rel="sponsored noopener noreferrer">Comprar el forfait <span aria-hidden="true">↗</span><span class="visualmente-oculto nueva-pestana"> (se abre en una pestaña nueva)</span></a>
 					</div>
 				</li>
-				<li class="tarjeta aparece">
+				<li class="tarjeta">
 					<div class="tarjeta__icono" aria-hidden="true">
 						<!-- Icono: esquís cruzados -->
 						<svg viewBox="0 0 48 48"><path d="M12 6l24 36M36 6L12 42" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/><path d="M10 16h10M28 16h10" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
@@ -433,7 +440,7 @@
 							<li><span>Desde</span><strong>[PRECIO_ALQUILER]</strong></li>
 							<li><span>Ventaja</span><strong>[VENTAJA_ALQUILER]</strong></li>
 						</ul>
-						<a class="boton boton--bloque" href="#forfait" data-enlace="alquiler" target="_blank" rel="sponsored noopener noreferrer">Reservar el equipo <span aria-hidden="true">↗</span></a>
+						<a class="boton boton--bloque" href="#forfait" data-enlace="alquiler" target="_blank" rel="sponsored noopener noreferrer">Reservar el equipo <span aria-hidden="true">↗</span><span class="visualmente-oculto nueva-pestana"> (se abre en una pestaña nueva)</span></a>
 					</div>
 				</li>
 			</ul>
@@ -452,7 +459,7 @@
 				<p class="contacto__horario">Llamadas de 9:00 a 20:00. Si no lo cojo, te devuelvo la llamada en cuanto bajo de la pista.</p>
 			</div>
 
-			<ul class="contacto__canales aparece" role="list">
+			<ul class="contacto__canales" role="list">
 				<li>
 					<a class="canal canal--destacado" href="tel:+34600000000">
 						<svg class="icono" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1Z" fill="currentColor"/></svg>
@@ -460,9 +467,9 @@
 					</a>
 				</li>
 				<li>
-					<a class="canal" href="https://wa.me/34600000000" target="_blank" rel="noopener noreferrer">
+					<a class="canal" href="https://wa.me/34600000000?text=Hola%20Klard%2C%20quiero%20reservar%20una%20clase%20de%20esqu%C3%AD" target="_blank" rel="noopener noreferrer">
 						<svg class="icono" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.5-3.9-4.7-4.1-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.3 0 .5l-.3.5-.4.4c-.1.1-.3.3-.1.6.1.3.7 1.1 1.4 1.8 1 .9 1.8 1.2 2.1 1.3.3.1.4.1.6-.1l.8-1c.2-.3.4-.2.6-.1l2 1c.3.1.5.2.5.3.1.1.1.6-.1 1.3Z" fill="currentColor"/></svg>
-						<span><strong>WhatsApp</strong>Escríbeme</span>
+						<span><strong>WhatsApp</strong>Escríbeme<span class="visualmente-oculto nueva-pestana"> (se abre en una pestaña nueva)</span></span>
 					</a>
 				</li>
 				<li>
@@ -474,7 +481,7 @@
 				<li>
 					<a class="canal" href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
 						<svg class="icono" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3Zm5 3.5a4.5 4.5 0 1 1 0 9 4.5 4.5 0 0 1 0-9Zm0 2a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Zm5-3.2a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4Z" fill="currentColor"/></svg>
-						<span><strong>Instagram</strong>[USUARIO_INSTAGRAM]</span>
+						<span><strong>Instagram</strong>[USUARIO_INSTAGRAM]<span class="visualmente-oculto nueva-pestana"> (se abre en una pestaña nueva)</span></span>
 					</a>
 				</li>
 			</ul>
@@ -490,7 +497,7 @@
 				<h2 class="pie__h">Contacto</h2>
 				<ul role="list">
 					<li><a href="tel:+34600000000">+34 600 000 000</a></li>
-					<li><a href="https://wa.me/34600000000">WhatsApp</a></li>
+					<li><a href="https://wa.me/34600000000?text=Hola%20Klard%2C%20quiero%20reservar%20una%20clase%20de%20esqu%C3%AD">WhatsApp</a></li>
 					<li><a href="mailto:hola@example.com">hola@example.com</a></li>
 				</ul>
 			</div>
