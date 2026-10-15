@@ -19,6 +19,8 @@
 	DATOS DE RELLENO: el teléfono +34 600 000 000, el email, el nombre del
 	profesor, las certificaciones, los horarios y los datos de las pistas son
 	provisionales. Están señalados con «relleno» en el README.
+	Todo lo que va entre [CORCHETES] es un hueco para rellenar: búscalos con «[».
+	Los enlaces de referido y el mapa se cambian en assets/js/config.js.
 -->
 
 <header class="cabecera" data-cabecera>
@@ -31,7 +33,9 @@
 			<ul>
 				<li><a href="#clases">Clases</a></li>
 				<li><a href="#profesor">El profesor</a></li>
+				<li><a href="#pueblo">El pueblo</a></li>
 				<li><a href="#pista">La pista</a></li>
+				<li><a href="#forfait">Forfait</a></li>
 				<li><a href="#contacto">Contacto</a></li>
 			</ul>
 		</nav>
@@ -86,7 +90,7 @@
 		</div>
 	</section>
 
-	<!-- 2. LAS CLASES -->
+	<!-- 2. CLASES Y EQUIPACIÓN: tres tarjetas de clase y, debajo, qué llevar -->
 	<section class="clases" id="clases" aria-labelledby="clases-titulo">
 		<div class="envoltura">
 			<div class="clases__cabecera aparece">
@@ -105,8 +109,8 @@
 						<h3>Iniciación</h3>
 						<p class="tarjeta__para"><strong>Para quién:</strong> tu primera vez, o vuelves tras años sin esquiar. Niños desde 4 años.</p>
 						<ul class="tarjeta__datos" role="list">
-							<li><span>Duración</span><strong>2 horas</strong></li>
-							<li><span>Precio</span><strong>desde 110 €</strong></li>
+							<li><span>Duración</span><strong>[DURACIÓN_INICIACIÓN]</strong></li>
+							<li><span>Precio</span><strong>[PRECIO_INICIACIÓN]</strong></li>
 						</ul>
 						<a class="boton boton--llamar boton--bloque" href="tel:+34600000000">Reservar por teléfono</a>
 					</div>
@@ -120,8 +124,8 @@
 						<h3>Perfeccionamiento</h3>
 						<p class="tarjeta__para"><strong>Para quién:</strong> ya bajas azules y quieres girar en paralelo, coger confianza en rojas o empezar con el carving.</p>
 						<ul class="tarjeta__datos" role="list">
-							<li><span>Duración</span><strong>3 horas</strong></li>
-							<li><span>Precio</span><strong>desde 165 €</strong></li>
+							<li><span>Duración</span><strong>[DURACIÓN_PERFECCIONAMIENTO]</strong></li>
+							<li><span>Precio</span><strong>[PRECIO_PERFECCIONAMIENTO]</strong></li>
 						</ul>
 						<a class="boton boton--llamar boton--bloque" href="tel:+34600000000">Reservar por teléfono</a>
 					</div>
@@ -135,13 +139,45 @@
 						<h3>Clases privadas</h3>
 						<p class="tarjeta__para"><strong>Para quién:</strong> quieres al profesor solo para ti, o una jornada entera recorriendo la estación.</p>
 						<ul class="tarjeta__datos" role="list">
-							<li><span>Duración</span><strong>2 h a jornada</strong></li>
-							<li><span>Precio</span><strong>110 € a 345 €</strong></li>
+							<li><span>Duración</span><strong>[DURACIÓN_PRIVADAS]</strong></li>
+							<li><span>Precio</span><strong>[PRECIO_PRIVADAS]</strong></li>
 						</ul>
 						<a class="boton boton--llamar boton--bloque" href="tel:+34600000000">Reservar por teléfono</a>
 					</div>
 				</li>
 			</ul>
+
+			<!-- Equipación: qué hace falta llevar a la clase -->
+			<div class="equipo aparece" aria-labelledby="equipo-titulo">
+				<div class="equipo__cabecera">
+					<h3 id="equipo-titulo" class="equipo__titulo">Qué llevar a la clase</h3>
+					<p class="equipo__intro">[TEXTO_EQUIPACIÓN: si el material está incluido o no en la clase, y cualquier detalle propio]</p>
+				</div>
+				<div class="equipo__columnas">
+					<div class="equipo__bloque">
+						<h4 class="equipo__subtitulo">Imprescindible</h4>
+						<ul class="equipo__lista" role="list">
+							<li>Esquís, botas y bastones (propios o de alquiler)</li>
+							<li>Casco</li>
+							<li>Gafas de ventisca o de sol con protección UV</li>
+							<li>Guantes impermeables</li>
+							<li>Chaqueta y pantalón de nieve</li>
+							<li>Forfait del día</li>
+						</ul>
+					</div>
+					<div class="equipo__bloque">
+						<h4 class="equipo__subtitulo">Recomendado</h4>
+						<ul class="equipo__lista equipo__lista--suave" role="list">
+							<li>Ropa térmica y calcetines altos de esquí</li>
+							<li>Braga de cuello o buff</li>
+							<li>Crema solar y protector labial</li>
+							<li>Agua y algo de comer</li>
+							<li>[OTRO_MATERIAL_RECOMENDADO]</li>
+						</ul>
+					</div>
+				</div>
+				<p class="equipo__nota">¿No tienes material? <a href="#forfait">Alquílalo aquí</a> o pregúntame y te oriento.</p>
+			</div>
 		</div>
 	</section>
 
@@ -153,7 +189,7 @@
 				<div class="lema__centro">
 					<h2 id="profesor-titulo" class="antetitulo antetitulo--claro">Sobre el profesor</h2>
 					<ol class="lema__frases" role="list">
-						<li class="lema__frase es-activa"><span>15 temporadas</span> enseñando en Sierra Nevada.</li>
+						<li class="lema__frase es-activa"><span>[Nº] temporadas</span> enseñando en Sierra Nevada.</li>
 						<li class="lema__frase">Técnico Deportivo <span>titulado</span> en esquí alpino.</li>
 						<li class="lema__frase">La <span>seguridad</span> va siempre primero.</li>
 						<li class="lema__frase">Grupos de <span>4 personas</span> como máximo.</li>
@@ -171,21 +207,82 @@
 			</div>
 			<div class="ficha__texto aparece">
 				<h3 class="ficha__titulo">Hola, soy Klard</h3>
-				<p>Nací a una hora de la sierra y llevo esquiando desde que tengo memoria. Desde 2011 enseño a niños, a adultos que empiezan de cero y a quien quiere pulir su técnica. Me gusta ir a tu ritmo: nadie se queda atrás y nadie se aburre.</p>
+				<p>Nací a una hora de la sierra y llevo esquiando desde que tengo memoria. Desde [AÑO_INICIO] enseño a niños, a adultos que empiezan de cero y a quien quiere pulir su técnica. Me gusta ir a tu ritmo: nadie se queda atrás y nadie se aburre.</p>
 				<p>Antes de cada clase te pregunto cómo esquías y qué quieres conseguir, y elegimos la zona de la estación que mejor encaja.</p>
 				<dl class="ficha__cifras">
-					<div><dt>Años enseñando</dt><dd>15</dd></div>
+					<div><dt>Años enseñando</dt><dd>[AÑOS]</dd></div>
 					<div><dt>Alumnos por clase</dt><dd>1–4</dd></div>
-					<div><dt>Idiomas</dt><dd>ES · EN</dd></div>
+					<div><dt>Idiomas</dt><dd>[IDIOMAS]</dd></div>
 				</dl>
 				<h4 class="ficha__subtitulo">Titulación y formación</h4>
 				<ul class="sellos" role="list">
-					<li class="sello"><span class="sello__marca" aria-hidden="true">TD2</span><span>Técnico Deportivo de nivel 2 en esquí alpino</span></li>
-					<li class="sello"><span class="sello__marca" aria-hidden="true">FAD</span><span>Federado en la Federación Andaluza de Deportes de Invierno</span></li>
-					<li class="sello"><span class="sello__marca" aria-hidden="true">+</span><span>Primeros auxilios en montaña, renovado cada temporada</span></li>
-					<li class="sello"><span class="sello__marca" aria-hidden="true">RC</span><span>Seguro de responsabilidad civil para la enseñanza</span></li>
+					<li class="sello"><span class="sello__marca" aria-hidden="true">1</span><span>[CERTIFICACIÓN_1, p. ej. titulación de Técnico Deportivo]</span></li>
+					<li class="sello"><span class="sello__marca" aria-hidden="true">2</span><span>[CERTIFICACIÓN_2, p. ej. federación]</span></li>
+					<li class="sello"><span class="sello__marca" aria-hidden="true">3</span><span>[CERTIFICACIÓN_3, p. ej. primeros auxilios]</span></li>
+					<li class="sello"><span class="sello__marca" aria-hidden="true">4</span><span>[CERTIFICACIÓN_4, p. ej. seguro de responsabilidad civil]</span></li>
 				</ul>
 				<p class="ficha__nota">Sustituir por los logos oficiales de cada federación o certificado.</p>
+			</div>
+		</div>
+	</section>
+
+	<!-- 4. EL PUEBLO Y LAS PISTAS: el pueblo, las cifras de la estación y el mapa.
+	     La ficha de cada zona sigue justo debajo, en la sección «La pista». -->
+	<section class="pueblo" id="pueblo" aria-labelledby="pueblo-titulo">
+		<div class="envoltura">
+			<div class="pueblo__cabecera aparece">
+				<p class="antetitulo">Dónde estamos</p>
+				<h2 id="pueblo-titulo" class="titulo-seccion">El pueblo<br>y las pistas</h2>
+			</div>
+
+			<div class="pueblo__rejilla">
+				<article class="pueblo__texto aparece" aria-labelledby="pueblo-nombre">
+					<h3 id="pueblo-nombre" class="pueblo__nombre">[NOMBRE_PUEBLO]</h3>
+					<p>[DESCRIPCIÓN_PUEBLO: dónde está, a cuánto queda de la ciudad más cercana y cómo se llega]</p>
+					<p>[AMBIENTE_PUEBLO: cómo es el pueblo, qué se respira, qué hacer después de esquiar]</p>
+					<h4 class="pueblo__subtitulo">Servicios</h4>
+					<ul class="pueblo__servicios" role="list">
+						<li>[SERVICIO_1, p. ej. aparcamiento]</li>
+						<li>[SERVICIO_2, p. ej. tiendas de alquiler]</li>
+						<li>[SERVICIO_3, p. ej. restaurantes]</li>
+						<li>[SERVICIO_4, p. ej. guardería de esquí]</li>
+						<li>[SERVICIO_5, p. ej. centro médico]</li>
+						<li>[SERVICIO_6, p. ej. alojamiento]</li>
+					</ul>
+				</article>
+
+				<!-- Mapa: Google Maps solo se carga al pulsar el botón (así la web sigue sin cookies
+				     hasta que el visitante decide verlo). La ubicación se cambia en assets/js/config.js -->
+				<div class="mapa aparece" data-mapa>
+					<div class="mapa__aviso" data-mapa-aviso>
+						<svg class="mapa__icono" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z" fill="currentColor"/></svg>
+						<p class="mapa__titulo">Mapa de [NOMBRE_PUEBLO]</p>
+						<p class="mapa__texto">Al pulsar se carga Google Maps, que puede usar cookies.</p>
+						<button type="button" class="boton" data-mapa-cargar>Ver el mapa</button>
+						<a class="mapa__enlace" href="#pueblo" data-mapa-enlace target="_blank" rel="noopener noreferrer">Abrir en Google Maps <span aria-hidden="true">↗</span></a>
+					</div>
+				</div>
+			</div>
+
+			<!-- Cifras de la estación -->
+			<div class="estacion aparece" aria-labelledby="estacion-titulo">
+				<h3 id="estacion-titulo" class="estacion__titulo">La estación en cifras</h3>
+				<dl class="estacion__cifras">
+					<div><dt>Pistas</dt><dd>[Nº_PISTAS]</dd></div>
+					<div><dt>Km esquiables</dt><dd>[KM]</dd></div>
+					<div><dt>Remontes</dt><dd>[Nº_REMONTES]</dd></div>
+					<div><dt>Cota</dt><dd>[COTA_MÍN–MÁX]</dd></div>
+				</dl>
+				<ul class="estacion__niveles" role="list" aria-label="Pistas por nivel">
+					<li><span class="etiqueta etiqueta--verde">Verdes</span><strong>[Nº_VERDES]</strong></li>
+					<li><span class="etiqueta etiqueta--azul">Azules</span><strong>[Nº_AZULES]</strong></li>
+					<li><span class="etiqueta etiqueta--roja">Rojas</span><strong>[Nº_ROJAS]</strong></li>
+					<li><span class="etiqueta etiqueta--negra">Negras</span><strong>[Nº_NEGRAS]</strong></li>
+				</ul>
+				<div class="estacion__nieve">
+					<p><strong>Estado de la nieve:</strong> el parte oficial se actualiza cada mañana con pistas abiertas, remontes y espesor.</p>
+					<a class="boton boton--peque" href="#pueblo" data-enlace="parteNieve" target="_blank" rel="noopener noreferrer">Ver el parte de nieve <span aria-hidden="true">↗</span></a>
+				</div>
 			</div>
 		</div>
 	</section>
@@ -297,16 +394,97 @@
 			</div>
 		</div>
 	</section>
+
+	<!-- 5. FORFAIT Y ALQUILER: dos tarjetas con enlace de referido.
+	     Los enlaces se cambian en assets/js/config.js (enlaces.forfait y enlaces.alquiler). -->
+	<section class="forfait" id="forfait" aria-labelledby="forfait-titulo">
+		<div class="envoltura">
+			<div class="clases__cabecera aparece">
+				<p class="antetitulo">Antes de subir</p>
+				<h2 id="forfait-titulo" class="titulo-seccion">Forfait<br>y alquiler</h2>
+				<p class="clases__intro">[TEXTO_INTRO_FORFAIT: por qué conviene sacarlos por adelantado desde aquí]</p>
+			</div>
+
+			<ul class="tarjetas tarjetas--dos" role="list">
+				<li class="tarjeta aparece">
+					<div class="tarjeta__icono" aria-hidden="true">
+						<!-- Icono: forfait (tarjeta con remonte) -->
+						<svg viewBox="0 0 48 48"><rect x="6" y="12" width="36" height="24" rx="4" fill="none" stroke="currentColor" stroke-width="3"/><path d="M6 20h36" stroke="currentColor" stroke-width="3"/><path d="M14 30h10" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+					</div>
+					<div class="tarjeta__cuerpo">
+						<h3>Forfait de esquí</h3>
+						<p class="tarjeta__para">[DESCRIPCIÓN_FORFAIT: tipos de forfait, dónde se recoge, ventaja del enlace]</p>
+						<ul class="tarjeta__datos" role="list">
+							<li><span>Desde</span><strong>[PRECIO_FORFAIT]</strong></li>
+							<li><span>Ventaja</span><strong>[VENTAJA_FORFAIT]</strong></li>
+						</ul>
+						<a class="boton boton--bloque" href="#forfait" data-enlace="forfait" target="_blank" rel="sponsored noopener noreferrer">Comprar el forfait <span aria-hidden="true">↗</span></a>
+					</div>
+				</li>
+				<li class="tarjeta aparece">
+					<div class="tarjeta__icono" aria-hidden="true">
+						<!-- Icono: esquís cruzados -->
+						<svg viewBox="0 0 48 48"><path d="M12 6l24 36M36 6L12 42" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/><path d="M10 16h10M28 16h10" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+					</div>
+					<div class="tarjeta__cuerpo">
+						<h3>Alquiler de equipo</h3>
+						<p class="tarjeta__para">[DESCRIPCIÓN_ALQUILER: qué incluye el pack, dónde está la tienda, ventaja del enlace]</p>
+						<ul class="tarjeta__datos" role="list">
+							<li><span>Desde</span><strong>[PRECIO_ALQUILER]</strong></li>
+							<li><span>Ventaja</span><strong>[VENTAJA_ALQUILER]</strong></li>
+						</ul>
+						<a class="boton boton--bloque" href="#forfait" data-enlace="alquiler" target="_blank" rel="sponsored noopener noreferrer">Reservar el equipo <span aria-hidden="true">↗</span></a>
+					</div>
+				</li>
+			</ul>
+			<!-- Aviso de enlaces de afiliado: conviene mantenerlo por transparencia -->
+			<p class="forfait__aviso">Son enlaces de afiliado: si compras a través de ellos, puedo recibir una pequeña comisión sin que a ti te cueste más.</p>
+		</div>
+	</section>
+
+	<!-- 6. CONTACTO: teléfono en grande y botones directos (llamar, WhatsApp, email, redes) -->
+	<section class="contacto" id="contacto" aria-labelledby="contacto-titulo">
+		<div class="envoltura contacto__rejilla">
+			<div class="contacto__llamada aparece">
+				<p class="antetitulo antetitulo--claro">Contacto</p>
+				<h2 id="contacto-titulo" class="titulo-seccion">Reserva<br>tu clase</h2>
+				<a class="pie__telefono" href="tel:+34600000000">+34 600 000 000</a>
+				<p class="contacto__horario">Llamadas de 9:00 a 20:00. Si no lo cojo, te devuelvo la llamada en cuanto bajo de la pista.</p>
+			</div>
+
+			<ul class="contacto__canales aparece" role="list">
+				<li>
+					<a class="canal canal--destacado" href="tel:+34600000000">
+						<svg class="icono" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1Z" fill="currentColor"/></svg>
+						<span><strong>Llamar</strong>600 000 000</span>
+					</a>
+				</li>
+				<li>
+					<a class="canal" href="https://wa.me/34600000000" target="_blank" rel="noopener noreferrer">
+						<svg class="icono" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.5-3.9-4.7-4.1-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.3 0 .5l-.3.5-.4.4c-.1.1-.3.3-.1.6.1.3.7 1.1 1.4 1.8 1 .9 1.8 1.2 2.1 1.3.3.1.4.1.6-.1l.8-1c.2-.3.4-.2.6-.1l2 1c.3.1.5.2.5.3.1.1.1.6-.1 1.3Z" fill="currentColor"/></svg>
+						<span><strong>WhatsApp</strong>Escríbeme</span>
+					</a>
+				</li>
+				<li>
+					<a class="canal" href="mailto:hola@example.com">
+						<svg class="icono" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm9 7.2L4.5 7.3v.1L12 13l7.5-5.6v-.1Z" fill="currentColor"/></svg>
+						<span><strong>Email</strong>hola@example.com</span>
+					</a>
+				</li>
+				<li>
+					<a class="canal" href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
+						<svg class="icono" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3Zm5 3.5a4.5 4.5 0 1 1 0 9 4.5 4.5 0 0 1 0-9Zm0 2a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Zm5-3.2a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4Z" fill="currentColor"/></svg>
+						<span><strong>Instagram</strong>[USUARIO_INSTAGRAM]</span>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</section>
 </main>
 
-<!-- 5. PIE -->
-<footer class="pie" id="contacto">
+<!-- 7. PIE -->
+<footer class="pie" id="pie">
 	<div class="envoltura">
-		<div class="pie__llamada">
-			<h2 class="pie__titulo">Reserva tu clase</h2>
-			<a class="pie__telefono" href="tel:+34600000000">+34 600 000 000</a>
-			<p>Llamadas de 9:00 a 20:00. Si no lo cojo, te devuelvo la llamada en cuanto bajo de la pista.</p>
-		</div>
 		<div class="pie__columnas">
 			<div>
 				<h2 class="pie__h">Contacto</h2>
@@ -350,6 +528,8 @@
 	Llamar para reservar
 </a>
 
+<!-- config.js: enlaces de referido y ubicación del mapa (un solo sitio para cambiarlos) -->
+<script src="assets/js/config.js" defer></script>
 <script src="assets/js/main.js" defer></script>
 </body>
 </html>
